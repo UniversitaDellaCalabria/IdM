@@ -1,0 +1,48 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          django_identity
+# Required-Start:    mysql nginx
+# Required-Stop:
+# Should-Start:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Create dynamic part of /etc/motd
+# Description:       /etc/motd is user-editable and static.  This script
+#                    creates the initial dynamic part, by default the
+#                    output of uname, and stores it in /var/run/motd.dynamic.
+#                    Both parts are output by pam_motd.
+### END INIT INFO
+
+# and then
+# update-rc.d this_uwsgi defaults
+# update-rc.d this_uwsgi enable
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+BASEDIR="/opt"
+APPNAME="identita_unical"
+ENVDIR="$BASEDIR/$APPNAME.env"
+APPDIR="$BASEDIR/$APPNAME"
+RUNAS="wert"
+#DEBUG=""
+COMMAND="uwsgi --ini $APPDIR/uwsgi_setup/uwsgi.ini &"
+# COMMAND="uwsgi --emperor $APPDIR/uwsgi_setup &"
+STOP_CMD="source $ENVDIR/bin/activate && uwsgi --stop /tmp/$APPNAME.pid"
+RELOAD_CMD="source $ENVDIR/bin/activate && uwsgi --reload /tmp/$APPNAME.pid"
+
+case "$1" in
+  start)
+	su -l $RUNAS -c "source $ENVDIR/bin/activate && $COMMAND"
+	;;
+  stop)
+	su -l $RUNAS -c "$STOP_CMD"
+	;;
+  restart)
+	su -l $RUNAS -c "$RELOAD_CMD"
+	;;
+  *)
+	echo "Usage: motd [start|stop|restart]" >&2
+	exit 1
+	;;
+esac
+
+exit 0

@@ -1,0 +1,16 @@
+db.sqlite3
+*.pyc
+*~
+*__pycache__
+django_idm/settingslocal.py
+data/static/*
+data/media/*
+!data/static/README.md
+!data/media/README.md
+unical_template/node_modules/*
+*/.~lock*
+django-ldap-academia-ou-manager/*
+data/media/identity_attachments/*
+certificates/*
+!certificates/README.md
+cineca_repl/cineca_repl.py

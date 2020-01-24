@@ -1,0 +1,32 @@
+{% extends "page.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block page_content %}
+<!-- contact section -->
+<section id="login" class="section intro ">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 conForm ui form">
+        <h5>{% trans "Welcome in" %} {{ APP_NAME|default_if_none:"Unical ID" }}</h5>
+        <p>{% trans "Please fill this form to create your brand new account." %}</p>
+        <div id="message">
+        {% for msg in messages %}
+            <li>{{ msg }}</li>
+        {% endfor %}
+        </div>
+        <form method="post" action="#" name="cform" class="idm_form">
+          {% csrf_token %}
+          <table >
+            {{ form }}
+          </table>
+          <input type="submit" id="submit_login" name="send" class="submitBnt btn btn-large" value="{% trans 'Save' %}">
+          <div id="simple-msg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- contact section -->
+{% endblock page_content %}

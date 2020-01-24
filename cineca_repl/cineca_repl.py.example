@@ -1,0 +1,114 @@
+import datetime
+
+from identity.models import (Identity,
+                             IdentityExtendendStatus,
+                             AdditionalAffiliation)
+from provisioning.utils import get_date_from_string
+from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey
+from sqlalchemy.orm import Session
+from sqlalchemy import desc, asc
+
+
+CINECA_DB_URL = "oracle://thatUSER:thetPassw@192.168.1.3:1521/DBVISTE"
+
+engine = create_engine(CINECA_DB_URL)
+metadata = MetaData()
+
+# TB_IDENTITA_DIGITALI
+# tabella locale oracle, aggiornata ogni notte alle 2 coi dati di CSA ed ESSE3
+# contiene sia gli utenti attivi che quelli non attivi.
+# Riesci a distinguere le tipologie di utenze dal suffisso -legacy
+# per gli utenti non più attivi, utilizzerei questa tabella in tutti i casi,
+# ispezionerei le altre solo nel caso in cui non trovi un account in questa tabella
+identita_digitale = Table('TB_IDENTITA_DIGITALI', metadata,
+                          autoload=True, autoload_with=engine,
+                          oracle_resolve_synonyms=True)
+
+identita_digitale.columns.values()
+# [Column('matricola_studente', VARCHAR(length=40), table=<TB_IDENTITA_DIGITALI>),
+# Column('matricola_dipendente', VARCHAR(length=12), table=<TB_IDENTITA_DIGITALI>),
+# Column('cod_fiscale', VARCHAR(length=32), table=<TB_IDENTITA_DIGITALI>, nullable=False),
+# Column('cognome', VARCHAR(length=200), table=<TB_IDENTITA_DIGITALI>, nullable=False),
+# Column('nome', VARCHAR(length=200), table=<TB_IDENTITA_DIGITALI>, nullable=False),
+# Column('email', VARCHAR(length=510), table=<TB_IDENTITA_DIGITALI>),
+# Column('data_nascita', VARCHAR(length=10), table=<TB_IDENTITA_DIGITALI>, nullable=False),
+# Column('comune_nascita', VARCHAR(length=510), table=<TB_IDENTITA_DIGITALI>),
+# Column('gruppo', VARCHAR(length=14), table=<TB_IDENTITA_DIGITALI>, nullable=False)]
+
+# example of an entry
+# {'cod_fiscale': 'dmrgpp83m27d086h',
+#  'cognome': 'de marco',
+#  'comune_nascita': 'COSENZA',
+#  'data_nascita': '27/08/1983',
+#  'email': 'giuseppe.demarco@unical.it',
+#  'gruppo': 'staff, student',
+#  'matricola_dipendente': '017403',
+#  'matricola_studente': '206697',
+#  'nome': 'giuseppe'}
+
+# DEPRECATED
+# engine.execute("select * from user_synonyms").fetchall()
+# engine.execute("select * from TB_IDENTITA_DIGITALI")
+# engine.execute("select * from TB_IDENTITA_DIGITALI").fetchone()
+# engine.execute("select * from V_IDENTITA_DIGITALI").fetchone()
+session = Session(engine)
+
+def fix_matricola(value):
+    if isinstance(value, int):
+        value = str(value)
+    return value.zfill(6)
+
+def fix_date_of_birth(value):
+    return get_date_from_string(value)
+
+def get_affiliations(value_dict):
+    """
+    value = the tuple dictionary
+    gruppo
+    matricola_dipendente
+    matricola_studente
+    """
+    pass
+
+# BEGIN
+table_query = session.query(identita_digitale)
+table_query.filter_by(matricola_dipendente=fix_matricola(17403)).all()
+gruppo = identita_digitale.columns.get('gruppo')
+valid = table_query.filter(~gruppo.contains('legacy'))
+
+# check se ci stanno studenti-expired con ruoli differenti in aggiunta
+# expired = table_query.filter(gruppo.contains('legacy'))
+# for i in expired:
+    # if len(i.gruppo.split(',')) > 1:
+        # print(i)
+
+# key = cineca, value = idm.unical.it
+# IDENTITY_MAP = {'cod_fiscale': 'fiscal_code',
+                # 'cognome': 'surname',
+                # 'comune_nascita': 'place_of_birth',
+                # 'data_nascita': fix_date_of_birth,
+                # 'email': 'email',
+                # 'gruppo': get_affiliations,
+                # 'matricola_dipendente': get_affiliations,
+                # 'matricola_studente': get_affiliations,
+                # 'nome': 'name'}
+
+failed = []
+for guy in valid:
+    # identity = Identity.objects.filter(email=guy.email)
+
+    identity = Identity.objects.create(name = guy.nome,
+                                       surname = guy.cognome,
+                                       place_of_birth = guy.comune_nascita,
+                                       date_of_birth = fix_date_of_birth(guy.data_nascita),
+                                       fiscal_code = guy.cod_fiscale,
+                                       email = guy.email)
+    if guy.matricola_dipendente:
+        AdditionalAffiliation.objects.create(identity = identity,
+                                             name = 'employee',
+                                             unique_code = guy.matricola_dipendente)
+
+    if guy.matricola_studente:
+        AdditionalAffiliation.objects.create(identity = identity,
+                                             name = 'student',
+                                             unique_code = guy.matricola_studente)

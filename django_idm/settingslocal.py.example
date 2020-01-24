@@ -1,0 +1,136 @@
+import ldap
+import os
+
+APP_NAME = 'Unical ID'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# SECURITY WARNING: keep the secret key used in production secret!
+# you can generate a valid one issuing the command:
+#       manage.py generate_secret_key
+SECRET_KEY = '9nv@u)887fsd89fuasdF_W_$%"!£$31249adsf0suw_he9hw20rfya)l!j!'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = 1
+
+HOSTNAME = 'idm.testunical.it'
+ALLOWED_HOSTS = [HOSTNAME,
+                 'ldap.testunical.it',
+                 'localhost']
+
+if DEBUG:
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+else:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+# The maximum number of parameters that may be received via GET or POST before a
+# SuspiciousOperation (TooManyFields) is raised. You can set this to None to disable the check.
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 100
+
+# Database
+# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+
+LDAP_OU = 'people'
+LDAP_BASE_DOMAIN = 'testunical.it'
+LDAP_BASEDN = 'dc={},dc={}'.format('testunical', 'it')
+LDAP_CACERT = os.path.sep.join((BASE_DIR,
+                                'certificates',
+                                'slapd-cacert.pem'))
+LDAP_PEOPLE_DN = 'ou={},{}'.format(LDAP_OU, LDAP_BASEDN)
+
+# Also interesting is their use as values on ldap.OPT_X_TLS_REQUIRE_CERT (TLS equivalent: TLS_REQCERT)
+# demand and hard (default):
+    # no certificate provided: quits
+    # bad certificate provided: quits
+# try
+    # no certificate provided: continues
+    # bad certificate provided: quits
+# allow
+    # no certificate provided: continues
+    # bad certificate provided: continues
+# never
+    # no certificate is requested
+
+LDAP_CONNECTION_OPTIONS = {
+                            # ldap.OPT_REFERRALS: 0,
+                            ldap.OPT_PROTOCOL_VERSION: 3,
+                            ldap.OPT_DEBUG_LEVEL: 0,
+                            ldap.OPT_X_TLS_CACERTFILE: LDAP_CACERT,
+
+                            # force /etc/ldap.conf configuration.
+                            ldap.OPT_X_TLS_REQUIRE_CERT: ldap.OPT_X_TLS_DEMAND,
+                            ldap.OPT_X_TLS: ldap.OPT_X_TLS_DEMAND,
+                            ldap.OPT_X_TLS_DEMAND: True,
+
+
+                            # a cached connection to be dropped an
+                            # recreated after it has been idle for the specified time
+                            ldap.OPT_TIMEOUT: 180,
+
+                            # used to check whether a socket is alive
+                            ldap.OPT_X_KEEPALIVE_IDLE: 120,
+                            ldap.OPT_X_KEEPALIVE_PROBES: 10,
+                            ldap.OPT_X_KEEPALIVE_INTERVAL: 30,
+
+                            ldap.OPT_NETWORK_TIMEOUT: 20,
+                            ldap.OPT_RESTART: True,
+                            #ldap.OPT_ON: True,
+
+                            # ldap.OPT_X_TLS_REQUIRE_CERT: ldap.OPT_X_TLS_NEVER,
+                            # ldap.OPT_X_TLS: ldap.OPT_X_TLS_NEVER,
+                            # ldap.OPT_X_TLS_DEMAND: False,
+                          }
+
+
+DATABASES = {
+    'ldap': {
+        'ENGINE': 'ldapdb.backends.ldap',
+        # only in localhost
+        'NAME': 'ldapi:///',
+        #'NAME': 'ldaps://ldap.testunical.it',
+        # 'NAME': 'ldaps://127.0.0.1/',
+        'USER': 'cn=admin,{}'.format(LDAP_BASEDN),
+        'PASSWORD': 'slapdsecret',
+        'PORT': 636,
+        #'TLS': True,
+        'RETRY_DELAY': 8,
+        'RETRY_MAX': 3,
+        'CONNECTION_OPTIONS': LDAP_CONNECTION_OPTIONS
+     },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'identity',
+        # 'HOST': 'localhost',
+        # 'USER': 'thatuser',
+        # 'PASSWORD': 'thatpassword',
+        # 'PORT': '',
+        # 'TEST': {
+            # 'NAME': 'identity_test',
+        # },
+    # }
+}
+
+DATABASE_ROUTERS = ['ldapdb.router.Router']
+
+LANGUAGE_CODE = 'it-it'
+TIME_ZONE = 'Europe/Rome'
+
+EMAIL_HOST = 'smtp.thathost.it'
+# EMAIL_HOST_USER = 'myemail@hotmail.com'
+# EMAIL_HOST_PASSWORD = 'mypassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'that-noreply@unical.it'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+# deprecated?
+#EMAIL_SEND_TOKEN = True
+ADMINS = [('That guy', 'thatguy@testunical.it'),]
+
+# DEPRECATED, use Cineca Esse3 and CSA API instead of Oracle DB
+CINECA_DB_URL = "oracle://thatuser:thatguy@192.168.1.3:1521/DBVISTE"

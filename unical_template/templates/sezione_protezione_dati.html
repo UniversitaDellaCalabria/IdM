@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load static %}
+<!-- Protezione dei dati personali -->
+<section id="intro" class="section intro">
+  <div class="container">
+
+    <div class="col-md-8 col-md-offset-2 text-center">
+        <h1 class="page_head">{% trans "PROTEZIONE DEI DATI PERSONALI" %}</h1>
+        <br> 
+    </div>
+
+    <div class="col-md-12 col-md-offset-1 text-center">
+      <div class="row">
+          <div class="col-sm-3">
+                <img width="100%;" src="{% static '/images/gdpr.jpg' %}">
+          </div>
+
+          <div class="col-sm-5" style="padding-top: 3px;">
+                <p style="text-align: justify;">{% trans "Dal 25 maggio 2018 è pienamente operativo il Regolamento (UE) 2016/679 del Parlamento europeo e del Consiglio del 27 aprile 2016, Regolamento Generale sulla Protezione dei Dati (RGPD). Titolare del trattamento è: " %}</p>
+                <p style="text-align: left;"><b>Università della Calabria</b>, via Pietro Bucci, 87036 Arcavacata di Rende (CS),  tel. (+39) 0984 491</p>
+                <p style="text-align: justify;">{% trans "Per maggiori informazioni e aggiornamenti su la Protezione dei dati e la Privacy all'interno di Unical consulta la " %}<a href="http://www.unical.it/portale/ateneo/privacy/">{% trans "sezione dedicata nel portale di Ateneo" %}</a>.</p>
+          </div>
+
+      </div>
+          
+    </div>
+  </div>
+</section>
+<!-- intro section -->

@@ -1,0 +1,79 @@
+# the upstream component nginx needs to connect to
+upstream django_idm {
+    server 127.0.0.1:3000; 
+}
+
+# configuration of the server
+server {
+    #if ($host = idm.unical.it) {
+    #    return 301 https://$host$request_uri;
+    #} # managed by Certbot
+    #if ($scheme != "https") {
+    #    rewrite ^ https://$host$uri permanent;
+    #} 
+    #return 301 https://$host$request_uri;   
+
+    # the port your site will be served on
+    listen      80;
+    # the domain name it will serve for
+    server_name idm.unical.it;
+    # substitute your machine's IP address or FQDN
+
+    access_log /var/log/nginx/idm.access.log;
+    error_log  /var/log/nginx/idm.error.log error;
+
+    # Django static
+    location /static  {
+        alias /opt/identita_unical/data/static;  # your Django project's media files - amend as required
+	autoindex off;
+    }
+
+    location /docs  {
+        alias /opt/identita_unical/Documentazione/build/html;  # your Django project's media files - amend as required
+        autoindex off;
+    }
+
+    # Finally, send all non-media requests to the Django server.
+    location / {
+        uwsgi_pass  django_idm;
+        uwsgi_param HTTP_X_FORWARDED_PROTOCOL https;
+	uwsgi_read_timeout 74;
+        include     /opt/identita_unical/uwsgi_setup/uwsgi_params; # the uwsgi_params file you installed
+    }
+
+
+}
+
+server {
+    server_name idm.unical.it;
+    listen 443 ssl;
+
+    #ssl_certificate /etc/letsencrypt/live/idm.unical.it/fullchain.pem; # managed by Certbot
+    #ssl_certificate_key /etc/letsencrypt/live/idm.unical.it/privkey.pem; # managed by Certbot
+
+    access_log /var/log/nginx/idm.access.log;
+    error_log  /var/log/nginx/idm.error.log error;
+
+    # max upload size
+    client_max_body_size 25M;
+
+    # Django static
+    location /static  {
+        alias /opt/identita_unical/data/static;  # your Django project's media files - amend as required
+	autoindex off;
+    }
+
+    location /docs  {
+        alias /opt/identita_unical/Documentazione/build/html;  # your Django project's media files - amend as required
+        autoindex off;
+    }
+
+    # Finally, send all non-media requests to the Django server.
+    location / {
+        uwsgi_pass  django_idm;
+        uwsgi_param HTTP_X_FORWARDED_PROTOCOL https;
+	uwsgi_read_timeout 74;
+        include     /opt/identita_unical/uwsgi_setup/uwsgi_params; # the uwsgi_params file you installed
+    }
+
+}
