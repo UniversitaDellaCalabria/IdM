@@ -33,6 +33,8 @@ _PURGE_LDAP_TEST_USER = True
 _WAIT_FOR_A_CHECK = False
 
 class ProvisioningTestCase(TestCase):
+    databases = '__all__'
+
     def setUp(self):
         """test identity creation"""
         # cleanup
