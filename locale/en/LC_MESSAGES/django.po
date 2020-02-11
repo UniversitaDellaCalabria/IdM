@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 16:21+0100\n"
-"PO-Revision-Date: 2020-01-24 15:03+0100\n"
+"POT-Creation-Date: 2020-02-11 16:45+0100\n"
+"PO-Revision-Date: 2020-02-11 16:48+0100\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,460 +18,151 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin.py:192
-msgid "Status"
+#: accounts/admin.py:18
+msgid "Personal data"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:25
-msgid "Export as JSON"
+#: accounts/admin.py:24
+msgid "Permissions"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:39
-msgid "Export as LDIF"
+#: accounts/admin.py:29
+msgid "System data accesses"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:46
-msgid "{}, email sent"
+#: accounts/apps.py:7
+msgid "Authentication and Authorization about Users"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:47
-msgid "Password reset token sent {}"
+#: accounts/models.py:12
+msgid "Male"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:57
-msgid "{} Token sent via E-Mail"
+#: accounts/models.py:13
+msgid "Female"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:58
-msgid "Send reset Password Token via E-Mail"
+#: accounts/models.py:14
+msgid "Other"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:66
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:85
-msgid "{}, disabled"
+#: accounts/models.py:19
+msgid "active"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:73
-msgid "Locked User (pwdAccountLockedTime)"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:76
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:95
-msgid "{} Accounts disabled"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:77
-msgid "Lock Account with pwdAccountLockedTime: {}"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:92
-msgid "Disabled User (pwdAccountLockedTime)"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:96
-msgid "Disable Account (expire password)"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:105
-msgid "{}, enabled"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:112
-msgid "Enabled User (pwdAccountLockedTime)"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:115
-msgid "{} Accounts enabled"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/admin_actions.py:116
-msgid "Enable Account - Clean pwdAccountLockedTime"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/auth.py:78
-msgid "Access notification"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/forms.py:41
-msgid "{} is not a valid email format!"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/forms.py:45
-#: django-ldap-academia-ou-manager/ldap_peoples/forms.py:262
-msgid "{} is not valid: please use \"value@scope\""
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/forms.py:83
-msgid "New password"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:7
-msgid "assistente universitario [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:8
-msgid "associato (ad es. CNR) [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:9
-msgid "cessato"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:10
-msgid "collaboratore coordinato continuativo [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:11
-msgid "collaboratore linguistico [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:12
-msgid "consorziato (membro del consorzio a cui l'ente appartiene) [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:13
-msgid "convenzionato (cliente delle convenzioni) [affiliate]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:14
-msgid "cultore della materia [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:15
-msgid "dipendente [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:16
-msgid "dipendente altra università [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:17
-msgid "dipendente altro ente di ricerca [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:18
-msgid "dipendente azienda ospedaliera/policlinico [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:19
-msgid "dipendente di altra azienda sanitaria [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:20
-msgid "direttore amministrativo [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:21
-msgid "dirigente [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:22
-msgid "dirigente a contratto [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:23
-msgid "dirigente di ricerca [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:24
-msgid "dirigente tecnologo [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:25
-msgid "docente a contratto [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:26
-msgid "dottorando [staff, member, student]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:27
-msgid "dottorando di altra università (consorziata) [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:28
-msgid "esperto linguistico [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:29
-msgid "fornitore (dipendente o titolare delle ditte fornitrici) [affiliate]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:30
-msgid "interinale [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:31
-msgid "ispettore generale [affiliate]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:32
-msgid ""
-"laureato frequentatore/collaboratore di ricerca (a titolo gratuito) [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:33
-msgid ""
-"lavoratore occasionale (con contratto personale senza partita iva) [staff, "
-"member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:34
-msgid "lettore di scambio [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:35
-msgid ""
-"libero professionista (con contratto personale con partita iva) [staff, "
-"member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:36
-msgid "ospite / visitatore [affiliate]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:37
-msgid "personale tecnico-amministrativo [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:38
-msgid "personale tecnico-amministrativo a tempo determinato [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:39
-msgid "primo ricercatore [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:40
-msgid "primo tecnologo [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:41
-msgid "professore associato [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:42
-msgid "professore emerito [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:43
-msgid "professore incaricato esterno [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:44
-msgid "professore incaricato interno [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:45
-msgid "professore ordinario [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:46
-msgid "ricercatore [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:47
-msgid "specializzando [staff, member, student]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:48
-msgid "studente [student, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:49
-msgid "studente erasmus in ingresso [student]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:50
-msgid "studente fuori sede (tesista, tirocinante, ...) [student, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:51
-msgid "studente laurea specialistica [student, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:52
-msgid "studente master [student, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:53
-msgid "studente siss [student, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:54
-msgid "supervisore siss [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:55
-msgid "supplente docente [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:56
-msgid "tecnologo [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:57
-msgid "titolare di assegno di ricerca [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:58
-msgid "titolare di borsa di studio [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:59
-msgid "tutor [staff, member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/idem_affiliation_mapping.py:60
-msgid "volontario servizio civile nazionale [member]"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:58
-msgid "LDAP MemberOf Group"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:59
-msgid "LDAP MemberOf Groups"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:111
-#: identity/models.py:92 accounts/models.py:25
+#: accounts/models.py:21 identity/models.py:94
 msgid "Name"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:116
-msgid "First Name"
+#: accounts/models.py:22
+msgid "Surname"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:134
-msgid "SAMBA NT Password (freeRadius PEAP)"
+#: accounts/models.py:23
+msgid "Fiscal code"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:138
-msgid "A scoped identifier for a person"
+#: accounts/models.py:25
+msgid "Gender"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:142
-msgid "Membership and affiliation organization"
+#: accounts/models.py:34
+msgid "Send Email notification accesses"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:147
-msgid "Membership and scopedaffiliation organization.Es: affliation@istitution"
+#: accounts/models.py:39
+msgid "Users"
 msgstr ""
 
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:159
-msgid "ORCID user identifier released and managed by orcid.org"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:168
-msgid "Type of a Home Organization"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:182
-msgid "OID 1.3.6.1.4.1.1466.115.121.1.36"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:186
-msgid "OID: 1.3.6.1.4.1.1466.115.121.1.15"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:210
-msgid "LDAP Academia User"
-msgstr ""
-
-#: django-ldap-academia-ou-manager/ldap_peoples/models.py:211
-msgid "LDAP Academia Users"
-msgstr ""
-
-#: identity/models.py:26 unical_template/models.py:31
+#: identity/models.py:28 unical_template/models.py:31
 msgid "created"
 msgstr ""
 
-#: identity/models.py:27 unical_template/models.py:32
+#: identity/models.py:29 unical_template/models.py:32
 msgid "modified"
 msgstr ""
 
-#: identity/models.py:46
+#: identity/models.py:48
 msgid "Import"
 msgstr ""
 
-#: identity/models.py:48
+#: identity/models.py:50
 msgid "Flow"
 msgstr ""
 
-#: identity/models.py:53
+#: identity/models.py:55
 msgid "Flow description"
 msgstr ""
 
-#: identity/models.py:55
+#: identity/models.py:57
 msgid "Record number (Prot.num.)"
 msgstr ""
 
-#: identity/models.py:58
+#: identity/models.py:60
 msgid "Record year (Prot. year)"
 msgstr ""
 
-#: identity/models.py:70
+#: identity/models.py:72
 msgid "Address"
 msgstr ""
 
-#: identity/models.py:71
+#: identity/models.py:73
 msgid "Locality"
 msgstr ""
 
-#: identity/models.py:72
+#: identity/models.py:74
 msgid "Region"
 msgstr ""
 
-#: identity/models.py:73
+#: identity/models.py:75
 msgid "Cap"
 msgstr ""
 
-#: identity/models.py:75 identity/models.py:102
+#: identity/models.py:77 identity/models.py:104
 msgid "Country"
 msgstr ""
 
-#: identity/models.py:77
+#: identity/models.py:79
 msgid "Main delivery address"
 msgstr ""
 
-#: identity/models.py:80
+#: identity/models.py:82
 msgid "Address book"
 msgstr ""
 
-#: identity/models.py:97
+#: identity/models.py:99
 msgid "Common Name"
 msgstr ""
 
-#: identity/models.py:104
+#: identity/models.py:106
 msgid "City"
 msgstr ""
 
-#: identity/models.py:105
+#: identity/models.py:107
 msgid "Fiscal code or uniqueID"
 msgstr ""
 
-#: identity/models.py:110
+#: identity/models.py:112
 msgid "Identity card front"
 msgstr ""
 
-#: identity/models.py:113
+#: identity/models.py:115
 msgid "Identity card retro"
 msgstr ""
 
-#: identity/models.py:130
+#: identity/models.py:132
 msgid "Digital Identities"
 msgstr ""
 
-#: identity/models.py:160
+#: identity/models.py:162
 msgid "Additional Affiliation"
 msgstr ""
 
-#: identity/models.py:161
+#: identity/models.py:163
 msgid "Additional Affiliations"
 msgstr ""
 
-#: identity/models.py:189
+#: identity/models.py:191
 msgid "Addresses"
 msgstr ""
 
@@ -714,63 +405,63 @@ msgstr ""
 msgid "Notify accesses via email"
 msgstr ""
 
-#: provisioning/models.py:27
+#: provisioning/models.py:28
 msgid "disable it if needed"
 msgstr ""
 
-#: provisioning/models.py:71
+#: provisioning/models.py:72
 msgid "New Account creation"
 msgstr ""
 
-#: provisioning/models.py:181
+#: provisioning/models.py:182
 msgid "Identity Account Creation token"
 msgstr ""
 
-#: provisioning/models.py:182
+#: provisioning/models.py:183
 msgid "Identity Account Creation tokens"
 msgstr ""
 
-#: provisioning/models.py:192
+#: provisioning/models.py:193
 msgid "username choosen by user"
 msgstr ""
 
-#: provisioning/models.py:198
+#: provisioning/models.py:199
 msgid "Identity Creation"
 msgstr ""
 
-#: provisioning/models.py:199
+#: provisioning/models.py:200
 msgid "Identity Creations"
 msgstr ""
 
-#: provisioning/models.py:209
+#: provisioning/models.py:210
 msgid "Identity Password Reset Token"
 msgstr ""
 
-#: provisioning/models.py:210
+#: provisioning/models.py:211
 msgid "Identity Password Reset Tokens"
 msgstr ""
 
-#: provisioning/models.py:222
+#: provisioning/models.py:223
 msgid "Identity Ldap Attributes Confirmation Change Token"
 msgstr ""
 
-#: provisioning/models.py:223
+#: provisioning/models.py:224
 msgid "Identity Ldap Attributes Confirmation Change Tokens"
 msgstr ""
 
-#: provisioning/models.py:234
+#: provisioning/models.py:236
 msgid "Identity Ldap account expiration Notification"
 msgstr ""
 
-#: provisioning/models.py:235
+#: provisioning/models.py:237
 msgid "Identity Ldap account expiration Notifications"
 msgstr ""
 
-#: provisioning/settings.py:10
+#: provisioning/settings.py:9
 msgid "Unical ID - Token for your Account"
 msgstr ""
 
-#: provisioning/settings.py:12
+#: provisioning/settings.py:11
 #, python-brace-format
 msgid ""
 "Dear {user},\n"
@@ -778,14 +469,14 @@ msgid ""
 "Please do not reply to this email.\n"
 msgstr ""
 
-#: provisioning/settings.py:17
+#: provisioning/settings.py:16
 msgid ""
 "\n"
 "If you're experiencing in problems please contact our technical staff.\n"
 "Best regards\n"
 msgstr ""
 
-#: provisioning/settings.py:22
+#: provisioning/settings.py:21
 #, python-brace-format
 msgid ""
 "\n"
@@ -797,7 +488,7 @@ msgid ""
 "If the Token is expired you should ask for a new one.\n"
 msgstr ""
 
-#: provisioning/settings.py:31
+#: provisioning/settings.py:30
 #, python-brace-format
 msgid ""
 "\n"
@@ -812,11 +503,11 @@ msgid ""
 "password\" in the {hostname} main page.\n"
 msgstr ""
 
-#: provisioning/settings.py:41
+#: provisioning/settings.py:40
 msgid "Confirmation token: You requested to change your data"
 msgstr ""
 
-#: provisioning/settings.py:43
+#: provisioning/settings.py:42
 #, python-brace-format
 msgid ""
 "\n"
@@ -831,7 +522,7 @@ msgid ""
 "This reset token will be valid until: {valid_until}.\n"
 msgstr ""
 
-#: provisioning/settings.py:59
+#: provisioning/settings.py:58
 #, python-brace-format
 msgid ""
 "\n"
@@ -844,22 +535,27 @@ msgid ""
 "Regards\n"
 msgstr ""
 
-#: provisioning/settings.py:69
-#, python-brace-format
+#: provisioning/settings.py:68
 msgid ""
 "Dear {user},\n"
 "You have accessed to https://{hostname} at: {time}.\n"
 "\n"
-"If it was not you and you think that someone could steal your credential,\n"
-"please renew your password though the website section \"Forgot your Password"
-"\".\n"
+"With this Web Browser (user-agent):\n"
+"{user_agent}\n"
+"\n"
+"And this IP Address:\n"
+"{ipaddress}\n"
+"\n"
+"If it was not you and think that someone could have steal your credentials,\n"
+"please renew your password through the website section called \"Forgot your "
+"Password\".\n"
 msgstr ""
 
-#: provisioning/settings.py:76
+#: provisioning/settings.py:81
 msgid "Unical ID - Password expiration"
 msgstr ""
 
-#: provisioning/settings.py:78
+#: provisioning/settings.py:83
 #, python-brace-format
 msgid ""
 "Your password will expire in date: {datetime}.\n"
@@ -902,10 +598,12 @@ msgid "Change Password"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:16
+#: unical_template/templates/page.html:20
 msgid "Admin"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:19
+#: unical_template/templates/page.html:24
 msgid "Logout / Esci"
 msgstr ""
 
@@ -955,7 +653,7 @@ msgid ""
 "email for check."
 msgstr ""
 
-#: provisioning/views.py:270
+#: provisioning/views.py:289
 msgid "Password changed"
 msgstr ""
 
@@ -1013,64 +711,12 @@ msgstr ""
 msgid "Import in LDAP"
 msgstr ""
 
-#: accounts/admin.py:18
-msgid "Personal data"
-msgstr ""
-
-#: accounts/admin.py:24
-msgid "Permissions"
-msgstr ""
-
-#: accounts/admin.py:29
-msgid "System data accesses"
-msgstr ""
-
-#: accounts/apps.py:7
-msgid "Authentication and Authorization about Users"
-msgstr ""
-
-#: accounts/models.py:12
-msgid "Male"
-msgstr ""
-
-#: accounts/models.py:13
-msgid "Female"
-msgstr ""
-
-#: accounts/models.py:14
-msgid "Other"
-msgstr ""
-
-#: accounts/models.py:19
-msgid "active"
-msgstr ""
-
-#: accounts/models.py:21
-msgid "Matricole/Identification number"
-msgstr ""
-
-#: accounts/models.py:26
-msgid "Surname"
-msgstr ""
-
-#: accounts/models.py:27
-msgid "Fiscal code"
-msgstr ""
-
-#: accounts/models.py:29
-msgid "Gender"
-msgstr ""
-
-#: accounts/models.py:38
-msgid "Send Email notification accesses"
-msgstr ""
-
-#: accounts/models.py:43
-msgid "Users"
-msgstr ""
-
 #: unical_template/breadcrumbs.py:27
 msgid "Pagina principale"
+msgstr ""
+
+#: unical_template/decorators.py:13
+msgid "Questo servizio è in Manutenzione, le attività riprenderanno presto."
 msgstr ""
 
 #: unical_template/templates/admin/base.html:31
@@ -1102,13 +748,13 @@ msgid "Django administration"
 msgstr ""
 
 #: unical_template/templates/base.html:15
-#: unical_template/templates/base.html:59
+#: unical_template/templates/base.html:60
 msgid "APP_NAME"
 msgstr "Unical IDM"
 
 #: unical_template/templates/base.html:44
-#: unical_template/templates/base.html:61
-#: unical_template/templates/page.html:15
+#: unical_template/templates/base.html:62
+#: unical_template/templates/page.html:16
 msgid "Accedi"
 msgstr "Enter"
 
@@ -1132,25 +778,25 @@ msgstr "Forgot your Password?"
 msgid "Menu"
 msgstr ""
 
-#: unical_template/templates/base.html:60
+#: unical_template/templates/base.html:61
 msgid ""
 "Piattaforma per la gestione delle credenziali di accesso ai servizi Unical."
 msgstr "Identity Management System"
 
-#: unical_template/templates/base.html:84
+#: unical_template/templates/base.html:86
 msgid "Titolare del trattamento"
 msgstr ""
 
-#: unical_template/templates/base.html:91
+#: unical_template/templates/base.html:93
 msgid "Altre risorse"
 msgstr "Other resources"
 
-#: unical_template/templates/base.html:94
+#: unical_template/templates/base.html:96
 #: unical_template/templates/sezione_team.html:18
 msgid "Centro ICT di Ateneo"
 msgstr ""
 
-#: unical_template/templates/base.html:95
+#: unical_template/templates/base.html:97
 msgid "Protezione dei dati personali"
 msgstr "Data Protection"
 
@@ -1158,7 +804,7 @@ msgstr "Data Protection"
 msgid "Back"
 msgstr ""
 
-#: unical_template/templates/page.html:16
+#: unical_template/templates/page.html:18
 msgid "Home page"
 msgstr ""
 
@@ -1203,7 +849,7 @@ msgid ""
 "Utilizza lo username e la password della tua Identità Digitale di Ateneo."
 msgstr "Please use your Unical ID username and password"
 
-#: unical_template/templates/sezione_login.html:20
+#: unical_template/templates/sezione_login.html:21
 msgid "Login"
 msgstr ""
 

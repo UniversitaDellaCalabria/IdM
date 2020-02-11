@@ -223,6 +223,7 @@ class IdentityLdapChangeConfirmation(AbstractProvisioning):
         verbose_name = _('Identity Ldap Attributes Confirmation Change Token')
         verbose_name_plural = _('Identity Ldap Attributes Confirmation Change Tokens')
 
+
 class Notifications(models.Model):
     """Notification logs about notification to users"""
     ldap_dn = models.CharField(max_length=254)

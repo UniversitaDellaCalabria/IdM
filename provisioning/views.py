@@ -111,6 +111,7 @@ def home(request):
          'password_reset_form' : PasswordAskResetForm()}
     return render(request, 'home.html', d)
 
+
 def provisioning_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('provisioning:home'))
@@ -157,12 +158,14 @@ def get_ldapuser_aai_html_attrs(lu):
                          'pwdHistory']
     attributes = OrderedDict()
     for k in sorted(lu.__dict__.keys()):
-        if k[0] == '_' or k in hidden_attributes: continue
+        if k[0] == '_' or k in hidden_attributes:
+            continue
         attributes[k] = lu.__dict__[k]
     for k,v in attributes.items():
         if isinstance(v, list):
             attributes[k] = '<br>'.join(v)
     return attributes
+
 
 @login_required
 def dashboard(request):
@@ -184,6 +187,7 @@ def dashboard(request):
              'lu': lu,
              'attrs': get_ldapuser_aai_html_attrs(lu)}
     return render(request, 'dashboard.html', d)
+
 
 @login_required
 @valid_ldap_user
@@ -275,6 +279,7 @@ def change_deliveries(request, token_value=None):
                       'custom_message.html',
                       INVALID_DATA_DISPLAY, status=403)
 
+
 def send_email_password_changed(lu, request):
     smd = {'hostname': settings.HOSTNAME,
            'reset_url': reverse('provisioning:reset_password_ask'),
@@ -295,6 +300,7 @@ def send_email_password_changed(lu, request):
                           connection=None,
                           html_message=None)
     return mail_sent
+
 
 @login_required
 @require_http_methods(["POST"])
@@ -328,6 +334,7 @@ def change_password(request):
     return render(request,
                   'custom_message.html',
                   PASSWORD_CHANGED)
+
 
 @require_http_methods(["POST"])
 def reset_password_ask(request):
@@ -366,6 +373,7 @@ def reset_password_ask(request):
     return render(request,
                   'custom_message.html',
                   PASSWORD_ASK_RESET)
+
 
 def reset_password_token(request, token_value):
     # check if the token is valid

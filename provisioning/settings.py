@@ -1,5 +1,4 @@
-from django.utils.translation import (ugettext_lazy as _,
-                                      gettext)
+from django.utils.translation import ugettext_lazy as _
 
 # IDENTITY TOKEN SETTINGS
 IDENTITY_TOKEN_EXPIRATION_HOURS = 1
@@ -69,8 +68,14 @@ Regards
 IDENTITY_MSG_ACCESS = _("""Dear {user},
 You have accessed to https://{hostname} at: {time}.
 
-If it was not you and you think that someone could steal your credential,
-please renew your password though the website section "Forgot your Password".
+With this Web Browser (user-agent):
+{user_agent}
+
+And this IP Address:
+{ipaddress}
+
+If it was not you and think that someone could have steal your credentials,
+please renew your password through the website section called "Forgot your Password".
 """)
 
 IDENTITY_MSG_EXPIRATION_SUBJECT = _('Unical ID - Password expiration')
