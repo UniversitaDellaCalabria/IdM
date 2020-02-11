@@ -8,7 +8,7 @@ from .admin_inlines import *
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     readonly_fields = ('dn', 'date_joined', 'last_login',)
-    list_display = ('username', 'matricola', 'email', 'is_active', 'is_staff', 'is_superuser', )
+    list_display = ('username', 'email', 'is_active', 'is_staff', 'is_superuser', )
     list_editable = ('is_active', 'is_staff', 'is_superuser',)
     fieldsets = (
         (None, {'fields': (('dn'),
@@ -16,18 +16,18 @@ class CustomUserAdmin(UserAdmin):
                            ('password'),
                            )}),
         (_('Personal data'), {'fields': (( 'first_name', 'last_name'),
-                                         ( 'matricola', 'email'),
+                                         ( 'email'),
                                          ('codice_fiscale',),
                                          ('gender', 'location', 'birth_date',),
                                         )}),
-        
+
         (_('Permissions'), {'fields': ('groups', 'user_permissions'),
                             'classes':('collapse',)
                             ,}),
-                           
-        
+
+
         (_('System data accesses'), {'fields': (('access_notification',),
-                                                ('date_joined', 
+                                                ('date_joined',
                                                  'last_login', ),
                                                           )}),
     )

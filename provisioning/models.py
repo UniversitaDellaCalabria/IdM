@@ -13,6 +13,7 @@ from . utils import (get_default_translations,
                      translate_to,
                      get_default_valid_until)
 
+
 class AbstractProvisioning(models.Model):
     token = models.UUIDField(unique=True, default=uuid.uuid4,
                              blank=True,
