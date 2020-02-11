@@ -1,0 +1,23 @@
+# .coveragerc to control coverage.py
+[run]
+omit =
+    *site-packages/sqlparse*
+    *site-packages/soupsieve*
+    *site-packages/rangefilter*
+    *site-packages/pytz*
+    *site-packages/pyasn1*
+    *site-packages/pycountry*
+    *site-packages/pkg_resources*
+    *site-packages/passlib*
+    *site-packages/model_utils*
+    *site-packages/ldap*
+    *site-packages/django*
+    *site-packages/chardet*
+    *site-packages/bs4*
+    *site-packages/ldapdb*
+    */distutils/*
+    tests/*
+    */apps/*
+    */migrations/*
+    */src/*
+    manage.py
