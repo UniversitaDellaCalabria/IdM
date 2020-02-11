@@ -11,19 +11,12 @@ from django.utils import translation
 
 from .models import *
 
+
 def change_language(request, lang):
     request.session['lang'] = lang
-    
-    # language = get_object_or_404(Lingua, short_name=lang)
-    #translation.activate(language.short_name)
     language = translation.get_language_from_request(request)
     translation.activate(language)
-    #return HttpResponse( request.META.items())
-    #return HttpResponse( request.session.items())
-
     request.LANGUAGE_CODE = translation.get_language()
-    
-    # print('translation.get_language_from_request(request)', language)
     current_page = request.META.get('HTTP_REFERER')
     if current_page:
         return HttpResponseRedirect(current_page)

@@ -15,9 +15,11 @@ omit =
     *site-packages/chardet*
     *site-packages/bs4*
     *site-packages/ldapdb*
+    *django-ldapdb*
     */distutils/*
     tests/*
     */apps/*
     */migrations/*
     */src/*
     manage.py
+    */settingslocal.py

@@ -14,12 +14,14 @@ from ldap_peoples.idem_affiliation_mapping import (IDEM_AFFILIATION_MAP,
 
 from .decorators import is_apps_installed
 
+
 def _attachment_upload(instance, filename):
     """ this function has to return the location to upload the file """
     return os.path.join('identity_attachments/{}'.format(instance.fiscal_code,
                                                          filename))
 
-class TimeStampedModel(models.Model):
+
+class TimeStampedModel(models.Model): # pragma: no cover
     """
     self-updating created and modified fields
     """

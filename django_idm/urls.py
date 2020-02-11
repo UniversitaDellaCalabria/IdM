@@ -29,38 +29,13 @@ urlpatterns = [
 
 ]
 
-if 'material.frontend' in settings.INSTALLED_APPS:
-    from material.frontend import urls as frontend_urls
-    urlpatterns.append(
-                        url(r'', include(frontend_urls)),
-                      )
-
 # Secure media files serve
 from django.views.static import serve
 from django.contrib.auth.decorators import login_required
 
-if settings.DEBUG:
-    # STATICS FILE SERVE
-    # from django.views.static import serve
-    # urlpatterns.append(
-        # path('{}/<path>'.format(settings.STATIC_URL[1:-1]),
-            # serve,
-            # {'document_root': settings.STATIC_ROOT,
-             # 'show_indexes' : True})
-    # )
 
-    # MEDIA FILE SERVE
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-else:
-    @login_required
-    def protected_serve(request, path, document_root=None, show_indexes=False):
-        return serve(request, path, document_root, show_indexes)
-
-    urlpatterns.append(
-        path('%s<path>.*' % settings.MEDIA_URL[1:], protected_serve, {'document_root': settings.MEDIA_ROOT})
-    )
-    # end secure media files serve
 
 if 'ldap_peoples' in settings.INSTALLED_APPS:
     import ldap_peoples.urls
