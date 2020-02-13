@@ -130,7 +130,8 @@ def provisioning_login(request):
                           INVALID_ACCESS_DISPLAY, status=403)
         username = login_form.cleaned_data['username']
         password = login_form.cleaned_data['password']
-        user = authenticate(username=username,
+        user = authenticate(request,
+                            username=username,
                             password=password)
         if user:
             login(request, user)

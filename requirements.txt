@@ -9,6 +9,11 @@ bcrypt
 passlib
 git+https://github.com/peppelinux/pySSHA-slapd.git
 
+#Bootstrap Italia + Unical template
+django_compressor
+git+https://github.com/italia/design-django-theme.git
+git+https://github.com/UniversitaDellaCalabria/django-unical-agid-template.git
+
 # ldap storage
 # apt install libsasl2-dev python3-dev libldap2-dev libssl-dev
 #git+https://github.com/django-ldapdb/django-ldapdb.git

@@ -27,7 +27,7 @@
 {% if request.user.is_superadministrator or request.user.is_staff %}
 <li class="nav-item active">
     <a class="nav-link" href="{% url 'admin:index' %}">
-        <span>{% trans "Change Password" %}</span>
+        <span>{% trans "Admin" %}</span>
     </a>
 </li>
 {% endif %}
@@ -46,7 +46,7 @@
         <h4>{% trans "Welcome " %} {{ lu.uid }}</h4>
         <p class="mb-5">{% trans "Here you can modify your profile" %}</p>
         <div class="row">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-6 offset-md-3">
                 <form method="post" action="{% url 'provisioning:change_deliveries' %}" class="needs-validation" novalidate>
                     {% include "form_body.html" with form=form_delivery %}
                     <h5>{% trans "Options" %}</h5>
