@@ -32,7 +32,7 @@ class IdentityUsernameForm(forms.Form):
                                widget=_username_widget)
 
 class TelephoneForm(forms.Form):
-    telephoneNumber = forms.CharField(label="",
+    telephoneNumber = forms.CharField(label=_("Telefono"),
                                       min_length=8,
                                       max_length=64,
                                       help_text=_("Your telephone number"),
@@ -41,7 +41,7 @@ class TelephoneForm(forms.Form):
 
 
 class IdentityEmailForm(forms.Form):
-    mail = forms.EmailField(label="", max_length=64,
+    mail = forms.EmailField(label="E-mail", max_length=64,
                             help_text=_("name.surname@{} "
                                         "or other email used for registration"
                                         ". ").format(settings.LDAP_BASE_DOMAIN),
@@ -50,9 +50,9 @@ class IdentityEmailForm(forms.Form):
 
 
 class IdentityLoginForm(forms.Form):
-    username = forms.CharField(label="", max_length=64,
+    username = forms.CharField(label="Username", max_length=64,
                                widget=_username_widget)
-    password = forms.CharField(label="",
+    password = forms.CharField(label="Password",
                                min_length=settings.PPOLICY_PASSWD_MIN_LEN,
                                max_length=settings.PPOLICY_PASSWD_MAX_LEN,
                                validators=[RegexValidator(_regexp_pt,
@@ -61,7 +61,7 @@ class IdentityLoginForm(forms.Form):
 
 
 class IdentityTokenAskForm(IdentityEmailForm):
-    username = forms.CharField(label="", required=False,
+    username = forms.CharField(label="Username", required=False,
                            max_length=64,
                            help_text=_("Your username. "
                                        "Leave it blank to receive an "
@@ -170,9 +170,12 @@ class AccountCreationForm(PasswordForm, IdentityTokenAskForm):
 class PasswordAskResetForm(IdentityTokenAskForm):
     pass
 
-class PasswordResetForm(PasswordForm, IdentityTokenAskForm):
-    pass
+class PasswordResetForm(PasswordForm, IdentityEmailForm):#, IdentityTokenAskForm):
+    username = forms.CharField(label="Username", required=True,
+                               max_length=64,
+                               widget=_username_widget)
 
+    field_order = ['username', 'email', 'password', 'password2']
 
 class DeliveryForm(TelephoneForm, IdentityEmailForm):
     pass

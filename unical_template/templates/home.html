@@ -1,1 +1,24 @@
 {% extends "base.html" %}
+
+{% load static %}
+
+{% block container %}
+{{ block.super }}
+<section id="services" class="section section-muted text-center">
+    <div class="container">
+        <h1 class="no_toc">Unical IdM</h1>
+        <p class="d-none d-lg-block">Piattaforma per la gestione delle credenziali di accesso ai servizi Unical.</p>
+        <div class="it-btn-container">
+            <a class="btn btn-lg btn-secondary" href="#login" data-attribute="forward" class="forward" aria-hidden="true">Accedi</a>
+        </div>
+    </div>
+</section>
+
+{% include "sezione_protezione_dati.html" %}
+{% include "sezione_funzionalita.html" %}
+{% include "sezione_team.html" %}
+{% include "sezione_login.html" %}
+{% include "sezione_recupero_credenziali.html" %}
+
+<!-- contact section -->
+{% endblock container %}

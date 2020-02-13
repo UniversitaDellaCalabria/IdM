@@ -31,12 +31,15 @@ INSTALLED_APPS = [
     'django_admin_multiple_choice_list_filter',
 
     'unical_template',
+    'sass_processor',
+    'bootstrap_italia_template',
+    'unical_agid_template',
+
     'rangefilter',
     'ldapdb',
     'ldap_peoples',
     'identity',
     'provisioning',
-    'dashboard',
 
     'cineca_repl',
 ]
@@ -79,6 +82,12 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, "locale"),
 )
 #
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
 
 AUTHENTICATION_BACKENDS = [
                             'ldap_peoples.auth.LdapAcademiaAuthBackend',

@@ -3,79 +3,84 @@
 {% load i18n %}
 {% load static %}
 
-{% block extra_head %}
-    {{ block.super }}
-{% endblock extra_head%}
+{% block menu_links %}
+<li class="nav-item active">
+    <a class="nav-link" href="/" data-attribute="forward" class="forward" aria-hidden="true">
+        <span>{% trans "Main page" %}</span>
+    </a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="#modify" data-attribute="forward" class="forward" aria-hidden="true">
+        <span>{% trans "Modify" %}</span>
+    </a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="#data" data-attribute="forward" class="forward" aria-hidden="true">
+        <span>{% trans "Attributes" %}</span>
+    </a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="#password" data-attribute="forward" class="forward" aria-hidden="true">
+        <span>{% trans "Change Password" %}</span>
+    </a>
+</li>
+{% if request.user.is_superadministrator or request.user.is_staff %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'admin:index' %}">
+        <span>{% trans "Change Password" %}</span>
+    </a>
+</li>
+{% endif %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'provisioning:provisioning_logout' %}?next={{ request.path }}">
+        <span>{% trans "Logout / Esci" %}</span>
+    </a>
+</li>
+{% endblock menu_links %}
 
-{% block nav_menu %}
-  <li><a href="/">{% trans "Main page" %}</a></li>
-  <li><a href="#modify">{% trans "Modify" %}</a></li>
-  <li><a href="#data">{% trans "Attributes" %}</a></li>
-  <li><a href="#password">{% trans "Change Password" %}</a></li>
-  {% if request.user.is_superadministrator or request.user.is_staff %}
-        <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
-  {% endif %}
-  <li><a class="item" href="{% url 'provisioning:provisioning_logout' %}?next={{ request.path }}">
-        {% trans "Logout / Esci" %}
-      </a>
-  </li>
-{% endblock nav_menu %}
-
-{% block page_content %}
+{% block container %}
 <!-- contact section -->
-<section id="modify" class="section intro ">
+<section id="modify" class="section text-center">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 conForm ui form">
-        <h5>{% trans "Identity Management System" %}</h5>
-        <h2>{% trans "Welcome " %} {{ lu.uid }}</h2>
-        <p>{% trans "Here you can modify your profile" %}</p>
-        <div id="message">
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="ui {{ message.tags }} message"{% endif %}>
-                    {{ message }}
-            </li>
-            {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-        <form method="post" action="{% url 'provisioning:change_deliveries' %}" name="cform" class="idm_form">
-          {% csrf_token %}
-          <table style="width: 100%;">
-              <tbody>
-                {{ form_delivery }}
-              </tbody>
-          </table>
-
-            <div class="html ui top attached segment">
-                <div class="ui top attached label">{% trans "Options" %}</div>
-                <div class="ui toggle checkbox">
-                  {{ form_profile.access_notification.errors }}
-                  {{ form_profile.access_notification }}
-                  {{ form_profile.access_notification.label_tag }}
-                </div>
+        <h1>{% trans "Identity Management System" %}</h1>
+        <h4>{% trans "Welcome " %} {{ lu.uid }}</h4>
+        <p class="mb-5">{% trans "Here you can modify your profile" %}</p>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form method="post" action="{% url 'provisioning:change_deliveries' %}" class="needs-validation" novalidate>
+                    {% include "form_body.html" with form=form_delivery %}
+                    <h5>{% trans "Options" %}</h5>
+                    <div class="form-check form-check-group  text-left">
+                        <div class="toggles">
+                            {{ form_profile.access_notification.errors }}
+                            <label for={{ form_profile.access_notification.id_for_label }}>
+                                {{ form_profile.access_notification.label }}
+                                <input type="checkbox"
+                                    id="{{ form_profile.access_notification.id_for_label }}"
+                                    name="{{ form_profile.access_notification.name }}"
+                                    {% if form_profile.access_notification.value %}
+                                        checked
+                                    {% endif %}>
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-secondary" value="{% trans 'Save' %}">
+                </form>
             </div>
-
-          <input type="submit" id="submit_delivery" name="send" class="submitBnt btn btn-large" value="{% trans 'Save' %}">
-          <div id="simple-msg"></div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
 </section>
 <!-- contact section -->
 
 <!-- contact section -->
-<section id="data" class="section ">
+<section id="data" class="section section-muted text-center">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 conForm ui form table-responsive">
         <h2>{% trans "Attributes" %}</h2>
         <p>{% trans "These would be also used as permissions and roles in third party web services." %}</p>
-          <table class="ui very basic collapsing celled table"
-                 style="width: 100%; background: white; padding: 13px;">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+          <table class="table table-striped table-bordered table-hover table-sm" style="background: #fff">
               <thead>
                   <tr>
                     <th>{% trans "Attribute name" %}</th>
@@ -91,36 +96,30 @@
                 {% endfor %}
               </tbody>
           </table>
+          </div>
+          </div>
           <div id="simple-msg"></div>
       </div>
-    </div>
-  </div>
 </section>
 <!-- contact section -->
 
 <!-- contact section -->
-<section id="password" class="section intro">
+<section id="password" class="section text-center">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 conForm ui form">
+
         <h2>{% trans "Renew your Password" %}</h2>
-        <p>{% trans "A confirmation email will be also sent." %}</p>
-        <div id="message">
-        {% for msg in messages %}
-            <li>{{ msg }}</li>
-        {% endfor %}
-        </div>
-        <form method="post" action="{% url 'provisioning:change_password' %}" name="cform" class="idm_form">
+        <p class="mb-5">{% trans "A confirmation email will be also sent." %}</p>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+        <form method="post" action="{% url 'provisioning:change_password' %}" class="needs-validation" novalidate>
           {% csrf_token %}
-          <table >
-            {{ form_password }}
-          </table>
-          <input type="submit" id="submit_password" name="send" class="submitBnt btn btn-large" value="{% trans 'Save' %}">
+          {% include "form_body.html" with form=form_password %}
+          <input type="submit" id="submit_delivery" name="send" class="btn btn-secondary" value="{% trans 'Save' %}">
           <div id="simple-msg"></div>
         </form>
-      </div>
-    </div>
+        </div>
+        </div>
   </div>
 </section>
 <!-- contact section -->
-{% endblock page_content %}
+{% endblock container %}
