@@ -7,7 +7,7 @@
         <h2>{% trans "Accesso alla piattaforma" %}</h2>
         <p class="mb-5">{% trans "Utilizza lo username e la password della tua Identità Digitale di Ateneo." %}</p>
         <div class="row text-center">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-6 offset-md-3">
                 <form method="post" action="{% url 'provisioning:provisioning_login' %}" class="needs-validation" novalidate>
                     {% include "form_body.html" with form=login_form %}
                     <input type="submit" class="btn btn-secondary" value="{% trans 'Login' %}">

@@ -77,49 +77,45 @@
 <section id="data" class="section section-muted text-center">
   <div class="container">
         <h2>{% trans "Attributes" %}</h2>
-        <p>{% trans "These would be also used as permissions and roles in third party web services." %}</p>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-          <table class="table table-striped table-bordered table-hover table-sm" style="background: #fff">
-              <thead>
-                  <tr>
-                    <th>{% trans "Attribute name" %}</th>
-                    <th>{% trans "Value" %}</th>
-                  </tr>
-              </thead>
-              <tbody>
-                {% for attr,value in attrs.items %}
-                      <tr>
-                        <td>{{ attr }}</td>
-                        <td>{{ value|safe }}</td>
-                      </tr>
-                {% endfor %}
-              </tbody>
-          </table>
-          </div>
-          </div>
-          <div id="simple-msg"></div>
-      </div>
+                <p class="mb-5">{% trans "These would be also used as permissions and roles in third party web services." %}</p>
+                <table class="table table-striped table-bordered table-hover table-sm" style="background: #fff">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Attribute name" %}</th>
+                            <th>{% trans "Value" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for attr,value in attrs.items %}
+                        <tr>
+                            <td>{{ attr }}</td>
+                            <td>{{ value|safe }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- contact section -->
 
 <!-- contact section -->
 <section id="password" class="section text-center">
-  <div class="container">
-
+    <div class="container">
         <h2>{% trans "Renew your Password" %}</h2>
-        <p class="mb-5">{% trans "A confirmation email will be also sent." %}</p>
         <div class="row">
-            <div class="col-md-8 offset-md-2">
-        <form method="post" action="{% url 'provisioning:change_password' %}" class="needs-validation" novalidate>
-          {% csrf_token %}
-          {% include "form_body.html" with form=form_password %}
-          <input type="submit" id="submit_delivery" name="send" class="btn btn-secondary" value="{% trans 'Save' %}">
-          <div id="simple-msg"></div>
-        </form>
+            <div class="col-md-6 offset-md-3">
+                <p class="mb-5">{% trans "A confirmation email will be also sent." %}</p>
+                <form method="post" action="{% url 'provisioning:change_password' %}" class="needs-validation" novalidate>
+                    {% include "form_body.html" with form=form_password %}
+                    <input type="submit" id="submit_delivery" name="send" class="btn btn-secondary" value="{% trans 'Save' %}">
+                </form>
+            </div>
         </div>
-        </div>
-  </div>
+    </div>
 </section>
 <!-- contact section -->
 {% endblock container %}
