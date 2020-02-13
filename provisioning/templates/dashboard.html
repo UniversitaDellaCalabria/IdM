@@ -57,6 +57,7 @@
                                 {{ form_profile.access_notification.label }}
                                 <input type="checkbox"
                                     id="{{ form_profile.access_notification.id_for_label }}"
+                                    name="{{ form_profile.access_notification.name }}"
                                     {% if form_profile.access_notification.value %}
                                         checked
                                     {% endif %}>
@@ -80,7 +81,7 @@
         <p>{% trans "These would be also used as permissions and roles in third party web services." %}</p>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-          <table class="table table-striped table-bordered table-hover" style="background: #fff">
+          <table class="table table-striped table-bordered table-hover table-sm" style="background: #fff">
               <thead>
                   <tr>
                     <th>{% trans "Attribute name" %}</th>

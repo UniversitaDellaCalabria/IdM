@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'ldap_peoples',
     'identity',
     'provisioning',
-    'dashboard',
 
     'cineca_repl',
 ]
