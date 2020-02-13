@@ -8,7 +8,7 @@ CHANGE_CONFIRMATION_EXPIRATION_MINUTES = 30
 EXPIRATION_NOTIFICATION_DAYS_BEFORE = 30
 IDENTITY_TOKEN_MSG_SUBJECT = _('Unical ID - Token for your Account')
 
-IDENTITY_MSG_HEADER = _("""Dear {user},
+IDENTITY_MSG_HEADER = _("""Dear {user} (your username),
 This message was sent to you by https://{hostname}, your IDentity Manager.
 Please do not reply to this email.
 """)
@@ -65,7 +65,7 @@ using "Forgot your password" section in {hostname} main page.
 Regards
 """)
 
-IDENTITY_MSG_ACCESS = _("""Dear {user},
+IDENTITY_MSG_ACCESS = _("""Dear {user} (your username),
 You have accessed to https://{hostname} at: {time}.
 
 With this Web Browser (user-agent):
