@@ -32,7 +32,7 @@ class IdentityUsernameForm(forms.Form):
                                widget=_username_widget)
 
 class TelephoneForm(forms.Form):
-    telephoneNumber = forms.CharField(label="",
+    telephoneNumber = forms.CharField(label=_("Telefono"),
                                       min_length=8,
                                       max_length=64,
                                       help_text=_("Your telephone number"),
