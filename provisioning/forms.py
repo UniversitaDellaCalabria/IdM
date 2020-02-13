@@ -170,9 +170,12 @@ class AccountCreationForm(PasswordForm, IdentityTokenAskForm):
 class PasswordAskResetForm(IdentityTokenAskForm):
     pass
 
-class PasswordResetForm(PasswordForm, IdentityTokenAskForm):
-    pass
+class PasswordResetForm(PasswordForm, IdentityEmailForm):#, IdentityTokenAskForm):
+    username = forms.CharField(label="Username", required=True,
+                               max_length=64,
+                               widget=_username_widget)
 
+    field_order = ['username', 'email', 'password', 'password2']
 
 class DeliveryForm(TelephoneForm, IdentityEmailForm):
     pass

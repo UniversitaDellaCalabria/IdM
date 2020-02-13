@@ -6,12 +6,12 @@
         <div class="row text-center">
             <div class="col-md-8 offset-md-2">
                 <h2>{% trans "Recupera le tue credenziali" %}</h2>
-                <p class="mb-5">{% trans "Utilizza lo username e il tuo recapito email, precedentemente registrato in Unical ID, per ottenere un accesso temporaneo per la modifica della tua password." %}</p>
-                <div id="message"></div>
+                <p class="mb-5">
+                    {% trans "Utilizza lo username e il tuo recapito email, precedentemente registrato in Unical ID, per ottenere un accesso temporaneo per la modifica della tua password." %}
+                </p>
                 <form method="post" action="{% url 'provisioning:reset_password_ask' %}" class="needs-validation" novalidate>
                     {% include "form_body.html" with form=password_reset_form %}
                     <input type="submit" class="btn btn-secondary" value="{% trans 'Invia la richiesta' %}">
-                    <div id="simple-msg"></div>
                 </form>
             </div>
         </div>
