@@ -1,128 +1,152 @@
 {% load i18n %}
 {% load static %}
-<!-- modals -->
-<div class="ui basic modal" id="modal_cr">
-  <div class="header" style="text-align: center">{% trans "Centro Residenziale" %}</div>
-  <div class="image content">
-    <img width="100%" src="{% static 'images/centro_residenziale_unical.jpg' %}">
-  </div>
-  <div style="text-align: center" class="actions">
-    <div class="ui red basic cancel inverted button">
-      <i class="remove icon"></i>
-      Chiudi
-    </div>
-  </div>
-</div>
-
-<div class="ui basic modal" id="modal_ict">
-  <div class="header" style="text-align: center">{% trans "Centro ICT di Ateneo" %}</div>
-  <div class="image content">
-    <img width="100%" src="{% static 'images/centro_ict.jpg' %}">
-  </div>
-  <div style="text-align: center" class="actions">
-    <div class="ui red basic cancel inverted button">
-      <i class="remove icon"></i>
-      Chiudi
-    </div>
-  </div>
-</div>
-
-<div class="ui basic modal" id="modal_guest">
-  <div class="header" style="text-align: center">guest.unical.it</div>
-  <div class="image content">
-    <img width="100%" src="{% static 'images/centro_ict.jpg' %}">
-  </div>
-  <div style="text-align: center" class="actions">
-    <div class="ui red basic cancel inverted button">
-      <i class="remove icon"></i>
-      Chiudi
-    </div>
-  </div>
-</div>
 
 
-<div class="ui basic modal" id="modal_rpd">
-  <div class="header" style="text-align: center">{% trans "Responsabile protezione dei dati" %}</div>
-  <div class="image content">
-    <img width="100%" src="{% static 'images/rpd.jpg' %}">
-  </div>
-  <div style="text-align: center" class="actions">
-    <div class="ui red basic cancel inverted button">
-      <i class="remove icon"></i>
-      Chiudi
-    </div>
-  </div>
-</div>
-<!-- modals -->
-
-<!-- our team section -->
-<section id="teams" class="section intro teams">
+<section id="team" class="section">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 text-center">
-        <h1 class="page_head">{% trans "CONTATTI" %}</h1>
+      <div class="text-center">
+        <h2 class="text-center mb-5">{% trans "Contatti" %}</h2>
       </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="person"><img id="img_cr" src="{% static 'images/centro_residenziale_unical.jpg' %}" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>{% trans "Ufficio immatricolazioni" %}</h4>
-            <h5 class="role">{% trans "Studenti in ingresso" %}</h5>
-            <p>{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="http://www.unical.it/portale/strutture/centri/residenziale/" class=""><i class="linkify icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="map marker alternate icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="phone icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="envelope outline icon"></i></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="person"> <img id="img_ict" src="{% static 'images/centro_ict.jpg' %}" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>{% trans "Centro ICT" %}</h4>
-            <h5 class="role">{% trans "Help-desk" %}</h5>
-            <p>{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="http://www.unical.it/portale/strutture/centri/centroict/" class=""><i class="linkify icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="map marker alternate icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="phone icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="envelope outline icon"></i></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="person"> <img id="img_guest" src="{% static 'images/aula-magna-unical.jpg' %}" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>{% trans "Accesso per gli ospiti" %}</h4>
-            <h5 class="role">{% trans "Accessi temporanei al Campus" %}</h5>
-            <p>{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="https://guest.unical.it" class=""><i class="linkify icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="map marker alternate icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="phone icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="envelope outline icon"></i></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="person"> <img id="img_rpd" src="{% static 'images/rpd.jpg' %}" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>{% trans "RPD" %}</h4>
-            <h5 class="role">{% trans "Responsabile Protezione dei Dati" %}</h5>
-            <p>{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="http://www.unical.it/portale/ateneo/privacy/" class=""><i class="linkify icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="map marker alternate icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="phone icon"></i></a></li>
-            <li><a href="mailto:" class=""><i class="envelope outline icon"></i></a></li>
-          </ul>
+
+      <div class="row">
+  <div class="col-md-3">
+    <!--start card-->
+    <div class="card-wrapper">
+      <div class="card no-after">
+        <div class="card-body text-center">
+
+            <h6>{% trans "Ufficio immatricolazioni" %}</h6>
+          <h5 class="card-title">
+              {% trans "Studenti in ingresso" %}</h5>
+              <div class="text-center">
+  <img src="{% static 'images/centro_residenziale_unical.jpg' %}" class="rounded-circle my-3" style="max-width:70%" alt="...">
+</div>
+          <p class="card-text">
+
+{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
+<a href="https://guest.unical.it" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use></svg>
+            </a>
         </div>
       </div>
     </div>
+    <!--end card-->
+
+
+</div>
+
+<div class="col-md-3">
+    <!--start card-->
+    <div class="card-wrapper">
+      <div class="card no-after">
+        <div class="card-body text-center">
+
+            <h6>{% trans "Centro ICT" %}</h6>
+          <h5 class="card-title">
+              {% trans "Help-desk" %}</h5>
+              <div class="text-center">
+  <img src="{% static 'images/centro_ict.jpg' %}" class="rounded-circle my-3" style="max-width:70%" alt="...">
+</div>
+          <p class="card-text">
+
+{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
+<a href="https://guest.unical.it" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use></svg>
+            </a>
+        </div>
+        </div>
+      </div>
+    <!--end card-->
+        </div>
+
+<div class="col-md-3">
+    <!--start card-->
+    <div class="card-wrapper">
+      <div class="card no-after">
+        <div class="card-body text-center">
+         <h6>{% trans "Accesso per gli ospiti" %}</h6>
+          <h5 class="card-title">{% trans "Accessi temporanei al Campus" %}</h5>
+          <div class="text-center">
+  <img src="{% static 'images/aula-magna-unical.jpg' %}" class="rounded-circle my-3" style="max-width:70%" alt="...">
+</div>
+          <p class="card-text">
+
+{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
+            <a href="https://guest.unical.it" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use></svg>
+            </a>
+        </div>
+        </div>
+      </div>
+    <!--end card-->
+    </div>
+
+  <div class="col-md-3">
+    <!--start card-->
+    <div class="card-wrapper">
+      <div class="card no-after">
+        <div class="card-body text-center">
+
+            <h6>{% trans "RPD" %}</h6>
+
+          <h5 class="card-title">{% trans "Responsabile Protezione Dati" %}</h5>
+          <div class="text-center">
+  <img src="{% static 'images/rpd.jpg' %}" class="rounded-circle my-3" style="max-width:70%" alt="...">
+</div>
+          <p class="card-text">
+
+{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
+<a href="https://guest.unical.it" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use></svg>
+            </a>
+            <a href="mailto:" class="">
+                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use></svg>
+            </a>
+        </div>
+        </div>
+      </div>
+    <!--end card-->
+        </div>
+
+</div>
+
+
+
+
   </div>
 </section>
-<!-- our team section -->
+<!-- services section -->
+

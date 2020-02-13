@@ -1,22 +1,21 @@
 {% load i18n %}
+
 <!-- contact section -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 conForm">
-        <h5>{% trans "Recupera le tue credenziali" %}</h5>
-        <p>{% trans "Utilizza lo username e il tuo recapito email, precedentemente registrato in Unical ID, per ottenere un accesso temporaneo per la modifica della tua password." %}</p>
-        <div id="message"></div>
-        <form method="post" action="{% url 'provisioning:reset_password_ask' %}" name="rform" id="recupero_form">
-          {% csrf_token %}
-            <ul>
-                {{ password_reset_form.as_ul }}
-            </ul>
-          <input type="submit" id="submit_recupero" name="send" class="submitBnt" value="{% trans 'Invia la richiesta' %}">
-          <div id="simple-msg"></div>
-        </form>
-      </div>
+<section id="password-dimenticata" class="section">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-8 offset-md-2">
+                <h2>{% trans "Recupera le tue credenziali" %}</h2>
+                <p class="mb-5">{% trans "Utilizza lo username e il tuo recapito email, precedentemente registrato in Unical ID, per ottenere un accesso temporaneo per la modifica della tua password." %}</p>
+                <div id="message"></div>
+                <form method="post" action="{% url 'provisioning:reset_password_ask' %}" class="needs-validation" novalidate>
+                    {% include "form_body.html" with form=password_reset_form %}
+                    <input type="submit" class="btn btn-secondary" value="{% trans 'Invia la richiesta' %}">
+                    <div id="simple-msg"></div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
-<!-- contact section --> 
+<!-- contact section -->
+

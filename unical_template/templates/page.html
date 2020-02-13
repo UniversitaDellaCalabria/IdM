@@ -3,32 +3,24 @@
 {% load i18n %}
 {% load static %}
 
-{% block extra_head %}
-    <style>
-        .banner {
-                min-height: 157px;
-                }
-    </style>
-{% endblock extra_head%}
-
-{% block nav_menu %}
-<!--
-  <li><a href="{% url 'provisioning:home' %}#login">{% trans "Accedi" %}</a></li>
--->
-  <li><a href="{% url 'provisioning:home' %}">{% trans "Home page" %}</a></li>
+{% block menu_links %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'provisioning:home' %}">
+            <span>{% trans "Home page" %}</span>
+        </a>
+    </li>
     {% if request.user.is_superadministrator or request.user.is_staff %}
-        <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
-  {% endif %}
-      {% if request.user.is_authenticated %}
-  <li><a class="item" href="{% url 'provisioning:provisioning_logout' %}?next={{ request.path }}">
-        {% trans "Logout / Esci" %}
-      </a>
-  </li>
-      {% endif %}
-{% endblock nav_menu %}
-
-{% block banner %}
-{% endblock banner %}
-
-{% block page_content %}
-{% endblock page_content %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'admin:index' %}">
+            <span>{% trans "Admin" %}</span>
+        </a>
+    </li>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'provisioning:provisioning_logout' %}?next={{ request.path }}">
+            <span>{% trans "Logout / Esci" %}</span>
+        </a>
+    </li>
+    {% endif %}
+{% endblock menu_links %}

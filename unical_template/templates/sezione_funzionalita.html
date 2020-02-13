@@ -1,32 +1,69 @@
 {% load i18n %}
 {% load static %}
 <!-- services section -->
-<section id="services" class="section intro services service-section">
+<section id="funzionalita" class="section section-muted">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 text-center">
-        <h1 class="page_head">{% trans "FUNZIONALITÀ" %}</h1>
-        <br> 
-      </div>
-      <div class="col-md-4 col-sm-6 services text-center"> <span class="icon icon-key"></span>
-        <div class="services-content">
-          <h5>{% trans "Gestione Credenziali" %}</h5>
-          <p>{% trans "Sistema integrato per la gestione e il monitoraggio dello stato delle tue credenziali." %}</p>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 services text-center"> <span class="icon icon-pencil"></span>
-        <div class="services-content">
-          <h5>{% trans "Modifica i tuoi dati" %}</h5>
-          <p>{% trans "E-mail personale e numero telefonico possono essere modificati in piena autonomia." %}</p>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 services text-center"> <span class="icon icon-megaphone"></span>
-        <div class="services-content">
-          <h5>{% trans "Notifiche" %}</h5>
-          <p>{% trans "Ricezione email di conferma ad operazione avvenuta." %}</p>
+        <h2 class="text-center mb-5">{% trans "Funzionalità" %}</h2>
+
+      <div class="row">
+  <div class="col-md-4">
+    <!--start card-->
+    <div class="card-wrapper">
+      <div class="card no-after">
+        <div class="card-body">
+
+          <h5 class="card-title">
+              <svg class="icon">
+               <use xlink:href="{% static 'svg/sprite.svg' %}#it-key"></use>
+            </svg>
+            {% trans "Gestione Credenziali" %}</h5>
+          <p class="card-text">{% trans "Sistema integrato per la gestione e il monitoraggio dello stato delle tue credenziali." %}</p>
         </div>
       </div>
     </div>
+    <!--end card-->
+  </div>
+
+  <div class="col-md-4">
+    <!--start card-->
+    <div class="card-wrapper">
+      <div class="card no-after">
+        <div class="card-body">
+
+          <h5 class="card-title">
+              <svg class="icon">
+               <use xlink:href="{% static 'svg/sprite.svg' %}#it-pencil"></use>
+            </svg>
+            {% trans "Modifica i tuoi dati" %}</h5>
+          <p class="card-text">{% trans "E-mail personale e numero telefonico possono essere modificati in piena autonomia." %}</p>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+
+  <div class="col-md-4">
+    <!--start card-->
+    <div class="card-wrapper">
+      <div class="card no-after">
+        <div class="card-body">
+
+          <h5 class="card-title"><svg class="icon">
+               <use xlink:href="{% static 'svg/sprite.svg' %}#it-horn"></use>
+            </svg>{% trans "Notifiche" %}</h5>
+          <p class="card-text">{% trans "Ricezione email di conferma ad operazione avvenuta." %}</p>
+        </div>
+      </div>
+    </div>
+    <!--end card-->
+  </div>
+</div>
+
+
+
+
+
+
   </div>
 </section>
 <!-- services section -->

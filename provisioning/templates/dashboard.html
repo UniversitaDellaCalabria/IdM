@@ -3,52 +3,52 @@
 {% load i18n %}
 {% load static %}
 
-{% block extra_head %}
-    {{ block.super }}
-{% endblock extra_head%}
+{% block menu_links %}
+<li class="nav-item active">
+    <a class="nav-link" href="/" data-attribute="forward" class="forward" aria-hidden="true">
+        <span>{% trans "Main page" %}</span>
+    </a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="#modify" data-attribute="forward" class="forward" aria-hidden="true">
+        <span>{% trans "Modify" %}</span>
+    </a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="#data" data-attribute="forward" class="forward" aria-hidden="true">
+        <span>{% trans "Attributes" %}</span>
+    </a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="#password" data-attribute="forward" class="forward" aria-hidden="true">
+        <span>{% trans "Change Password" %}</span>
+    </a>
+</li>
+{% if request.user.is_superadministrator or request.user.is_staff %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'admin:index' %}">
+        <span>{% trans "Change Password" %}</span>
+    </a>
+</li>
+{% endif %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'provisioning:provisioning_logout' %}?next={{ request.path }}">
+        <span>{% trans "Logout / Esci" %}</span>
+    </a>
+</li>
+{% endblock menu_links %}
 
-{% block nav_menu %}
-  <li><a href="/">{% trans "Main page" %}</a></li>
-  <li><a href="#modify">{% trans "Modify" %}</a></li>
-  <li><a href="#data">{% trans "Attributes" %}</a></li>
-  <li><a href="#password">{% trans "Change Password" %}</a></li>
-  {% if request.user.is_superadministrator or request.user.is_staff %}
-        <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
-  {% endif %}
-  <li><a class="item" href="{% url 'provisioning:provisioning_logout' %}?next={{ request.path }}">
-        {% trans "Logout / Esci" %}
-      </a>
-  </li>
-{% endblock nav_menu %}
-
-{% block page_content %}
+{% block container %}
 <!-- contact section -->
-<section id="modify" class="section intro ">
+<section id="modify" class="section text-center">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 conForm ui form">
-        <h5>{% trans "Identity Management System" %}</h5>
-        <h2>{% trans "Welcome " %} {{ lu.uid }}</h2>
+        <h1>{% trans "Identity Management System" %}</h1>
+        <h3>{% trans "Welcome " %} {{ lu.uid }}</h3>
         <p>{% trans "Here you can modify your profile" %}</p>
-        <div id="message">
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="ui {{ message.tags }} message"{% endif %}>
-                    {{ message }}
-            </li>
-            {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-        <form method="post" action="{% url 'provisioning:change_deliveries' %}" name="cform" class="idm_form">
-          {% csrf_token %}
-          <table style="width: 100%;">
-              <tbody>
-                {{ form_delivery }}
-              </tbody>
-          </table>
-
+        <form method="post" action="{% url 'provisioning:change_deliveries' %}">
+          <table >
+          {% include "form_body.html" with form=form_profile %}
+            </table>
             <div class="html ui top attached segment">
                 <div class="ui top attached label">{% trans "Options" %}</div>
                 <div class="ui toggle checkbox">
@@ -58,17 +58,15 @@
                 </div>
             </div>
 
-          <input type="submit" id="submit_delivery" name="send" class="submitBnt btn btn-large" value="{% trans 'Save' %}">
+          <input type="submit" id="submit_delivery" name="send" class="btn btn-lg btn-secondary" value="{% trans 'Save' %}">
           <div id="simple-msg"></div>
         </form>
-      </div>
-    </div>
   </div>
 </section>
 <!-- contact section -->
 
 <!-- contact section -->
-<section id="data" class="section ">
+<section id="data" class="section section-muted">
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2 conForm ui form table-responsive">
@@ -123,4 +121,4 @@
   </div>
 </section>
 <!-- contact section -->
-{% endblock page_content %}
+{% endblock container %}

@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load static %}
+<!-- contact section -->
+<section id="login" class="section intro ">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 conForm">
+        <h5>{% trans "Accesso alla piattaforma" %}</h5>
+        <p>{% trans "Utilizza lo username e la password della tua Identità Digitale di Ateneo." %}</p>
+        <div id="message">
+            {% for msg in messages %}
+                <li>{{ msg }}</li>
+            {% endfor %}
+        </div>
+        <form method="post" action="{% url 'provisioning:provisioning_login' %}" name="cform" class="idm_form">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.GET.next }}" />
+          <ul >
+            {{ login_form.as_ul }}
+          </ul>
+          <input type="submit" id="submit_login" name="send" class="submitBnt btn btn-large" value="{% trans 'Login' %}">
+          <div id="simple-msg"></div>
+        </form>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- contact section -->
