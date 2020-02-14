@@ -46,6 +46,19 @@ urlpatterns = [
         name='change_deliveries_confirm',
     ),
 
+    path(
+        'change/username/',
+        change_username,
+        name='change_username',
+    ),
+
+    path(
+        'change/username/<uuid:token_value>',
+        change_username,
+        name='change_username_confirm',
+    ),
+
+
     # re_path(
         # r'^change/deliveries/(?P<token_value>[0-9a-fA-F]{32}\Z)?/?$',
         # change_deliveries,

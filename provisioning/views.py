@@ -290,6 +290,23 @@ def change_deliveries(request, token_value=None):
                       INVALID_DATA_DISPLAY, status=403)
 
 
+@login_required
+@valid_ldap_user
+def change_username(request, token_value=None):
+    lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
+    if request.method == 'GET' and token_value:
+        return render(request,
+                      'provisioning_change_username.html')
+    elif request.method == 'GET':
+        return render(request,
+                      'provisioning_change_username.html',
+                      dict(change_username_form=IdentityUsernameChangeForm()))
+    elif request.method == 'POST':
+        form = IdentityUsernameChangeForm(request.POST)
+        return render(request,
+                      'provisioning_change_username.html')
+
+
 def send_email_password_changed(lu, request):
     smd = {'hostname': settings.HOSTNAME,
            'reset_url': reverse('provisioning:reset_password_ask'),

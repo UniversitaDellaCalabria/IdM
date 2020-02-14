@@ -12,13 +12,11 @@ from . admin_actions import send_activation_email
 
 @admin.register(Identity)
 class IdentityAdmin(admin.ModelAdmin):
-    inlines = [
-                IdentityAttachmentInline,
-                IdentityDeliveryInline,
-                IdentityAddressInline,
-                AdditionalAffiliationInline,
-                IdentityProvisioningInline
-               ]
+    inlines = [IdentityAttachmentInline,
+               IdentityDeliveryInline,
+               IdentityAddressInline,
+               AdditionalAffiliationInline,
+               IdentityProvisioningInline]
     list_display  = ('name', 'surname','email', 'created')
     search_fields = ('name', 'surname','common_name',
                      'email', 'telephone')
@@ -167,3 +165,10 @@ class NotificationsAdmin(admin.ModelAdmin):
     list_display  = ('ldap_dn', 'sent',
                      'expiration_date', 'create_date')
     list_filter = ['expiration_date', 'create_date', 'sent']
+
+
+@admin.register(ChangedUsername)
+class ChangedUsername(admin.ModelAdmin):
+    list_display  = ('old_username', 'new_username', 'create_date')
+    list_filter = ('create_date',)
+    search_fields = ('old_username', 'new_username')

@@ -1,5 +1,6 @@
 {% extends "page.html" %}
 
+{% load provisioning_tags %}
 {% load i18n %}
 {% load static %}
 
@@ -44,12 +45,14 @@
   <div class="container">
         <h1>{% trans "Identity Management System" %}</h1>
         <h4>{% trans "Welcome " %} {{ request.user.username }}</h4>
-        <p class="mb-5">{% trans "Here you can modify your profile" %}</p>
+        <p class="mb-5">{% trans "Here you can modify your profile" %} {% trans "A confirmation email will be also sent." %}</p>
         <div class="row">
             <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
                 <form method="post" action="{% url 'provisioning:change_deliveries' %}" class="needs-validation" novalidate>
                     {% include "form_body.html" with form=form_delivery %}
+<!--
                     <h5>{% trans "Options" %}</h5>
+-->
                     <div class="form-check form-check-group  text-left">
                         <div class="toggles">
                             {{ form_profile.access_notification.errors }}
@@ -65,15 +68,31 @@
                             </label>
                         </div>
                     </div>
+
+                    {% username_changeable request as uc %}
+                    {% if uc %}
                     <div class="form-check form-check-group  text-left">
                         <div class="toggles">
                             <label>
                                 {% trans "Change your username" %}
-                                <a href="#" class="btn btn-primary btn-xs float-right">
+                                <a href="{% url 'provisioning:change_username' %}" class="btn btn-primary btn-xs float-right">
                                     <svg class="icon icon-xs icon-white">
                                         <use xlink:href="{% static 'svg/sprite.svg' %}#it-unlocked"></use>
                                     </svg>
                                     {% trans "One time only" %}
+                                </a>
+                            </label>
+
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="form-check form-check-group  text-left">
+                        <div class="toggles">
+                            <label>
+                                {% trans "Change your password" %}
+                                <a href="#password" class="btn btn-primary btn-xs float-right" data-attribute=forward>
+                                    {% trans "Change" %}
                                 </a>
                             </label>
 
