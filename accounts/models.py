@@ -1,9 +1,8 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext as _
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
-
 from django.conf import settings
 
 
@@ -25,12 +24,6 @@ class User(AbstractUser):
     gender    = models.CharField(_('Gender'), choices=GENDER, max_length=12, blank=True, null=True)
     location = models.CharField('Place of birth', max_length=30, blank=True, null=True)
     birth_date = models.DateField('Date of birth', null=True, blank=True)
-
-    # short_description = models.CharField(_('Descrizione breve'), max_length=33, blank=True, null=True)
-    # bio = models.TextField('Biografia, note', max_length=2048, blank=True, null=True)
-    # avatar  = models.ImageField('Avatar, foto', upload_to='avatars/', null=True, blank=True)
-    # webpage_url = models.CharField(_('Pagina web'), max_length=512, blank=True, null=True)
-
     access_notification = models.BooleanField(_('Send Email notification accesses'), default=True,
                                               help_text="enable email send")
 
@@ -40,3 +33,13 @@ class User(AbstractUser):
 
     def __str__(self): # pragma: no cover
         return '{} {}'.format(self.first_name, self.last_name)
+
+
+class LdapDump(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    dump = models.TextField(_('Json attributes'), blank=False, null=False)
+    modified = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self): # pragma: no cover
+        return '{} {}'.format(self.user.first_name,
+                              self.user.last_name)

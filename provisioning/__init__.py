@@ -1,15 +1,16 @@
+import json
+
+from collections import OrderedDict
 from django.conf import settings as django_settings
 from django.contrib.auth.signals import user_logged_in
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+
 def notification_access_email(sender, user, request, **kwargs):
     # if access notification email is on
     # works only if this field is active in account model
-
-    user = request.user
-
     if hasattr(user, 'access_notification'):
         if user.access_notification:
             user_agent = ''
@@ -40,3 +41,22 @@ def notification_access_email(sender, user, request, **kwargs):
                       html_message=None)
 
 user_logged_in.connect(notification_access_email)
+
+
+def dump_ldap_attributes(sender, user, request, **kwargs):
+    from ldap_peoples.models import LdapAcademiaUser
+    lu = LdapAcademiaUser.objects.filter(uid=user.username).first()
+    if lu:
+        dump = lu.json()
+        dump_dict = {"app": "ldap_peoples",
+                     "entries": [json.loads(dump,
+                                            object_pairs_hook=OrderedDict)],
+                     "model": "LdapAcademiaUser" }
+        dump_obj = user.ldapdump_set.filter(user=user).last()
+        dump = json.dumps(dump_dict, indent=2)
+        if not dump_obj:
+            user.ldapdump_set.create(user=user, dump=dump)
+        else:
+            dump_obj.dump = dump
+            dump_obj.save()
+user_logged_in.connect(dump_ldap_attributes)

@@ -10,6 +10,7 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = ('dn', 'date_joined', 'last_login',)
     list_display = ('username', 'email', 'is_active', 'is_staff', 'is_superuser', )
     list_editable = ('is_active', 'is_staff', 'is_superuser',)
+    inlines = [LdapDumpInline, ]
     fieldsets = (
         (None, {'fields': (('dn'),
                            ('username', 'is_active', 'is_staff', 'is_superuser', ),
