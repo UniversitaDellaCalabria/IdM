@@ -1,4 +1,5 @@
 import json
+import logging
 
 from collections import OrderedDict
 from django.conf import settings as django_settings
@@ -6,6 +7,9 @@ from django.contrib.auth.signals import user_logged_in
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
+
+logger = logging.getLogger(__name__)
 
 
 def notification_access_email(sender, user, request, **kwargs):

@@ -1,4 +1,5 @@
 import json
+import logging
 
 from collections import OrderedDict
 from django.contrib import messages
@@ -22,6 +23,9 @@ from . models import *
 from . utils import translate_to
 
 from ldap_peoples.models import LdapAcademiaUser
+
+
+logger = logging.getLogger(__name__)
 
 
 def account_create(request, token_value):
@@ -97,6 +101,7 @@ def account_create(request, token_value):
         id_prov.mark_as_used()
         id_prov.identity.activation_date = timezone.localtime()
         id_prov.identity.save()
+        logger.info('Account created {}'.format(ldap_user.dn))
         return render(request,
                       'custom_message.html',
                       ACCOUNT_SUCCESFULLY_CREATED)
@@ -135,6 +140,7 @@ def provisioning_login(request):
                             password=password)
         if user:
             login(request, user)
+            logger.info('Login of {} directly via LDAP'.format(user))
             if request.POST.get('next'):
                 return HttpResponseRedirect(request.POST.get('next'))
             return HttpResponseRedirect(reverse('provisioning:dashboard'))
@@ -300,6 +306,11 @@ def send_email_password_changed(lu, request):
                           auth_password=None,
                           connection=None,
                           html_message=None)
+    if mail_sent:
+        mail_status = 'OK'
+    else:
+        mail_status = 'FAILED'
+    logger.info('{} mail sent status: '.format(lu.uid, mail_status))
     return mail_sent
 
 
@@ -371,6 +382,7 @@ def reset_password_ask(request):
         # send email and update token status
         id_pwd_reset.send_email(ldap_user=lu,
                                 lang=request.LANGUAGE_CODE)
+    logger.info('{} asked for a Password reset'.format(lu.uid))
     return render(request,
                   'custom_message.html',
                   PASSWORD_ASK_RESET)
@@ -425,6 +437,8 @@ def reset_password_token(request, token_value):
         id_prov.mark_as_used()
         lu.enable()
         lu.reset_schacExpiryDate()
+        logger.info('{} changed his Password with a Token'.format(lu.uid))
+
         return render(request,
                       'custom_message.html',
                       PASSWORD_CHANGED)

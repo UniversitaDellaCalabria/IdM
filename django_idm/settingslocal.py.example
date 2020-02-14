@@ -20,9 +20,11 @@ ALLOWED_HOSTS = [HOSTNAME,
 if DEBUG:
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 else:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # The maximum number of parameters that may be received via GET or POST before a
 # SuspiciousOperation (TooManyFields) is raised. You can set this to None to disable the check.
@@ -134,3 +136,72 @@ ADMINS = [('That guy', 'thatguy@testunical.it'),]
 
 # DEPRECATED, use Cineca Esse3 and CSA API instead of Oracle DB
 CINECA_DB_URL = "oracle://thatuser:thatguy@192.168.1.3:1521/DBVISTE"
+
+
+LOGGING = {
+    'version': 1,
+    #'root': {'level': 'DEBUG' if DEBUG else 'INFO'},
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s [%(asctime)s] %(module)s %(message)s'
+         },
+         'detailed': {
+            'format': '[%(asctime)s] %(message)s [(%(levelname)s)] %(name)s.%(funcName)s:%(lineno)s]'
+        },
+    },
+    'handlers': {
+        'console': {
+        # 'level': 'DEBUG' if DEBUG else 'INFO',
+        'class': 'logging.StreamHandler',
+        'formatter': 'detailed'
+        },
+        # 'file': {
+            # 'class': 'logging.handlers.RotatingFileHandler',
+            # 'formatter': 'verbose',
+            # 'filename': '/tmp/django-unical_ict-error-handler.log',
+            # 'maxBytes': 1024000,
+            # 'backupCount': 3,
+        # },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        # disables Invalid HTTP_HOST header emails
+        'django.security.DisallowedHost': {
+                'handlers': ['mail_admins'],
+                'level': 'CRITICAL',
+                'propagate': False,
+        },
+        'django': {
+            'handlers': [#'file',
+                         'console','mail_admins'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'ldap_peoples': {
+            'handlers': [#'file',
+                         'console',],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'identity': {
+            'handlers': [#'file',
+                         'console',],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'provisioning': {
+            'handlers': [#'file',
+                         'console',],
+            'propagate': True,
+            'level': 'INFO',
+        },
+    }
+}
+
+# prints to stdout when test runs
+NOSE_ARGS = ['--nocapture',
+             '--nologcapture',]

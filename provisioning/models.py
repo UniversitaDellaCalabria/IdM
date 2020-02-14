@@ -1,4 +1,5 @@
 import json
+import logging
 import uuid
 
 from django.core.mail import send_mail, mail_admins
@@ -12,6 +13,9 @@ from identity.models import Identity
 from . utils import (get_default_translations,
                      translate_to,
                      get_default_valid_until)
+
+
+logger = logging.getLogger(__name__)
 
 
 class AbstractProvisioning(models.Model):
@@ -168,6 +172,9 @@ class AbstractProvisioning(models.Model):
             self.sent = True
             self.sent_date = timezone.localtime()
             self.save()
+            logger.info('Sent email to "{}" OK'.format('; '.join(mails)))
+        else:
+            logger.info('Send email to "{}" FAILED'.format('; '.join(mails)))
         return self.sent
 
 

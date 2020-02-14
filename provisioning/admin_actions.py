@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from . models import *
 
+
 def send_activation_email(modeladmin, request, queryset):
     """
     used to send activation token for newly created accounts
@@ -15,7 +16,7 @@ def send_activation_email(modeladmin, request, queryset):
     for i in queryset:
         # if user have already activated it
         id_prov = IdentityProvisioning.objects.filter(identity=i).last()
-        
+
         if id_prov:
             if not id_prov.token_valid():
                 messages.add_message(request, messages.ERROR,
