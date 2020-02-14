@@ -64,12 +64,7 @@ STATICFILES_FINDERS = [
     'sass_processor.finders.CssFinder',
 ]
 
-AUTHENTICATION_BACKENDS = [
-                            'ldap_peoples.auth.LdapAcademiaAuthBackend',
-                            'django.contrib.auth.backends.ModelBackend',
-                            # FIX TODO in Django 2.1
-                            # 'django_idm.auth.SessionUniqueBackend',
-                          ]
+
 AUTH_USER_MODEL = 'accounts.User'
 ROOT_URLCONF = 'django_idm.urls'
 
