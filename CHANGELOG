@@ -1,0 +1,16 @@
+CHANGELOG
+
+
+v0.8.0
+------
+
+- generalized login url (sso or ldap or local by settings)
+- saml2 configuration (on top of djangosaml2)
+- Unical agid template
+- logging enabled with detailed logs
+- ldap json dumps on each user login
+- better unit tests
+- localization improved
+- dashboard with a new messages regarding invalid identities
+- users can change their username only a time!
+- username blacklists (on db)
