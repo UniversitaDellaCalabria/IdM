@@ -11,6 +11,11 @@ bootstrap-italia-base.html BI Base
 {% block header_slim_right_zone %}{% endblock header_slim_right_zone %}
 {% block header_center_search %}{% endblock header_center_search %}
 
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/idm.css' %}" type="text/css" />
+{% endblock extra_head %}
+
 {% block menu_links %}
 <li class="nav-item active">
     <a class="nav-link" href="#login" data-attribute="forward" class="forward" aria-hidden="true">
