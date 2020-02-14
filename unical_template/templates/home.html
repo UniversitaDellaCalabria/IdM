@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 {% load static %}
 
-{% block container %}
-{{ block.super }}
+{% block container_content %}
 <section id="services" class="section section-muted text-center">
     <div class="container">
         <h1 class="no_toc">Unical <span class="text-secondary">Id</span>entity <span class="text-secondary">M</span>anager</h1>
-        <p class="d-none d-lg-block">Piattaforma per la gestione delle credenziali di accesso ai servizi Unical.</p>
+        <p class="d-none d-lg-block">{% trans "Platform for managing access credentials to Unical services" %}</p>
         <div class="it-btn-container">
-            <a class="btn btn-lg btn-secondary" href="#login" data-attribute="forward" class="forward" aria-hidden="true">Accedi</a>
+            <a class="btn btn-lg btn-secondary" href="#login" data-attribute="forward" class="forward" aria-hidden="true">{% trans "Login" %}</a>
         </div>
     </div>
 </section>
@@ -21,4 +21,4 @@
 {% include "sezione_recupero_credenziali.html" %}
 
 <!-- contact section -->
-{% endblock container %}
+{% endblock container_content %}

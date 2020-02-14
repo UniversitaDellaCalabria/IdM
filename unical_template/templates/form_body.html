@@ -24,6 +24,11 @@
         </span>
         {% endif %}
         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {% if field.help_text %}
+        <small class="form-text text-muted text-left">
+            {{ field.help_text }}
+        </small>
+        {% endif %}
         {% if field.errors %}
         <small class="text-danger text-left">
             {{ field.errors }}
