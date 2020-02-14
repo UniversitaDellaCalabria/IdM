@@ -9,7 +9,7 @@ urlpatterns = [
          home,
          name="home"
     ),
-    
+
     path(
         'create/<uuid:token_value>',
         account_create,
@@ -49,7 +49,7 @@ urlpatterns = [
     # re_path(
         # r'^change/deliveries/(?P<token_value>[0-9a-fA-F]{32}\Z)?/?$',
         # change_deliveries,
-        # name='change_deliveries'), 
+        # name='change_deliveries'),
 
     path(
         'renew/password',

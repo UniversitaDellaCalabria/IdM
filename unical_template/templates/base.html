@@ -5,6 +5,7 @@ bootstrap-italia-base.html BI Base
 -->
 {% extends 'base-setup.html' %}
 
+{% load provisioning_tags %}
 {% load i18n %}
 {% load static %}
 
@@ -18,7 +19,7 @@ bootstrap-italia-base.html BI Base
 
 {% block menu_links %}
 <li class="nav-item active">
-    <a class="nav-link" href="#login" data-attribute="forward" class="forward" aria-hidden="true">
+    <a class="nav-link" href="{% login_url %}" data-attribute="forward" class="forward" aria-hidden="true">
         <span>{% trans "Login" %}</span>
     </a>
 </li>

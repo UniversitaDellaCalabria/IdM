@@ -16,33 +16,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #ALLOWED_HOSTS = settingslocal.ALLOWED_HOSTS
 
-# Application definition
-INSTALLED_APPS = [
-    # customizzazione gestione degli utenti
-    'accounts',
-
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    'django_admin_multiple_choice_list_filter',
-
-    'unical_template',
-    'sass_processor',
-    'bootstrap_italia_template',
-    'unical_agid_template',
-
-    'rangefilter',
-    'ldapdb',
-    'ldap_peoples',
-    'identity',
-    'provisioning',
-
-    'cineca_repl',
-]
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/dashboard'
 
 if 'provisioning' in INSTALLED_APPS:
     from provisioning.settings import *
@@ -98,8 +73,6 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = 'accounts.User'
 ROOT_URLCONF = 'django_idm.urls'
 
-LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/dashboard'
 
 TEMPLATES = [
     {

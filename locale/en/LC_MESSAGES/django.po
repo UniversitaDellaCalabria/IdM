@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-14 10:48+0100\n"
+"POT-Creation-Date: 2020-02-14 12:39+0100\n"
 "PO-Revision-Date: 2020-02-11 16:48+0100\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:18
+#: accounts/admin.py:19
 msgid "Personal data"
 msgstr ""
 
-#: accounts/admin.py:24
+#: accounts/admin.py:25
 msgid "Permissions"
 msgstr ""
 
-#: accounts/admin.py:29
+#: accounts/admin.py:30
 msgid "System data accesses"
 msgstr ""
 
@@ -33,44 +33,48 @@ msgstr ""
 msgid "Authentication and Authorization about Users"
 msgstr ""
 
-#: accounts/models.py:12
+#: accounts/models.py:11
 msgid "Male"
 msgstr ""
 
-#: accounts/models.py:13
+#: accounts/models.py:12
 msgid "Female"
 msgstr ""
 
-#: accounts/models.py:14
+#: accounts/models.py:13
 msgid "Other"
 msgstr ""
 
-#: accounts/models.py:19
+#: accounts/models.py:18
 msgid "active"
 msgstr ""
 
-#: accounts/models.py:21 identity/models.py:94
+#: accounts/models.py:20 identity/models.py:94
 msgid "Name"
 msgstr ""
 
-#: accounts/models.py:22
+#: accounts/models.py:21
 msgid "Surname"
 msgstr ""
 
-#: accounts/models.py:23
+#: accounts/models.py:22
 msgid "Fiscal code"
 msgstr ""
 
-#: accounts/models.py:25
+#: accounts/models.py:24
 msgid "Gender"
 msgstr ""
 
-#: accounts/models.py:34
+#: accounts/models.py:27
 msgid "Send Email notification accesses"
 msgstr ""
 
-#: accounts/models.py:39
+#: accounts/models.py:32
 msgid "Users"
+msgstr ""
+
+#: accounts/models.py:40
+msgid "Json attributes"
 msgstr ""
 
 #: identity/models.py:28 unical_template/models.py:31
@@ -167,7 +171,7 @@ msgstr ""
 msgid "Addresses"
 msgstr ""
 
-#: provisioning/__init__.py:32
+#: provisioning/__init__.py:37
 msgid "Access notification"
 msgstr ""
 
@@ -175,23 +179,23 @@ msgstr ""
 msgid "Data"
 msgstr ""
 
-#: provisioning/admin_actions.py:22
+#: provisioning/admin_actions.py:23
 msgid "{} {}. Already activated: {}.)"
 msgstr ""
 
-#: provisioning/admin_actions.py:36
+#: provisioning/admin_actions.py:37
 msgid "{} {}. Email sent."
 msgstr ""
 
-#: provisioning/admin_actions.py:41
+#: provisioning/admin_actions.py:42
 msgid "{} {}. Email send failed."
 msgstr ""
 
-#: provisioning/admin_actions.py:43
+#: provisioning/admin_actions.py:44
 msgid "{} sendend Email over {} send requests."
 msgstr ""
 
-#: provisioning/admin_actions.py:45
+#: provisioning/admin_actions.py:46
 msgid "Send Token - Activation Email"
 msgstr ""
 
@@ -414,55 +418,55 @@ msgstr ""
 msgid "Notify accesses via email"
 msgstr ""
 
-#: provisioning/models.py:28
+#: provisioning/models.py:32
 msgid "disable it if needed"
 msgstr ""
 
-#: provisioning/models.py:72
+#: provisioning/models.py:76
 msgid "New Account creation"
 msgstr ""
 
-#: provisioning/models.py:182
+#: provisioning/models.py:189
 msgid "Identity Account Creation token"
 msgstr ""
 
-#: provisioning/models.py:183
+#: provisioning/models.py:190
 msgid "Identity Account Creation tokens"
 msgstr ""
 
-#: provisioning/models.py:193
+#: provisioning/models.py:200
 msgid "username choosen by user"
 msgstr ""
 
-#: provisioning/models.py:199
+#: provisioning/models.py:206
 msgid "Identity Creation"
 msgstr ""
 
-#: provisioning/models.py:200
+#: provisioning/models.py:207
 msgid "Identity Creations"
 msgstr ""
 
-#: provisioning/models.py:210
+#: provisioning/models.py:217
 msgid "Identity Password Reset Token"
 msgstr ""
 
-#: provisioning/models.py:211
+#: provisioning/models.py:218
 msgid "Identity Password Reset Tokens"
 msgstr ""
 
-#: provisioning/models.py:223
+#: provisioning/models.py:230
 msgid "Identity Ldap Attributes Confirmation Change Token"
 msgstr ""
 
-#: provisioning/models.py:224
+#: provisioning/models.py:231
 msgid "Identity Ldap Attributes Confirmation Change Tokens"
 msgstr ""
 
-#: provisioning/models.py:236
+#: provisioning/models.py:243
 msgid "Identity Ldap account expiration Notification"
 msgstr ""
 
-#: provisioning/models.py:237
+#: provisioning/models.py:244
 msgid "Identity Ldap account expiration Notifications"
 msgstr ""
 
@@ -672,7 +676,7 @@ msgid ""
 "email for check."
 msgstr ""
 
-#: provisioning/views.py:291
+#: provisioning/views.py:297
 msgid "Password changed"
 msgstr ""
 
@@ -774,29 +778,32 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: unical_template/templates/base.html:17
+#: unical_template/templates/base.html:22
+#: unical_template/templates/home.html:12
 #: unical_template/templates/sezione_login.html:13
 #: unical_template_old/templates/base.html:44
 #: unical_template_old/templates/sezione_login.html:21
 msgid "Login"
 msgstr ""
 
-#: unical_template/templates/base.html:22
+#: unical_template/templates/base.html:27
 #: unical_template_old/templates/base.html:45
 msgid "Data protection"
 msgstr ""
 
-#: unical_template/templates/base.html:27
+#: unical_template/templates/base.html:32
 #: unical_template_old/templates/base.html:46
+#: unical_template_old/templates/sezione_funzionalita.html:8
 msgid "Features"
 msgstr ""
 
-#: unical_template/templates/base.html:32
+#: unical_template/templates/base.html:37
 #: unical_template_old/templates/base.html:47
+#: unical_template_old/templates/sezione_team.html:63
 msgid "Contacts"
 msgstr "Contact us"
 
-#: unical_template/templates/base.html:37
+#: unical_template/templates/base.html:42
 #: unical_template_old/templates/base.html:48
 msgid "Forgotten password?"
 msgstr ""
@@ -804,6 +811,14 @@ msgstr ""
 #: unical_template/templates/custom_message.html:22
 #: unical_template_old/templates/custom_message.html:21
 msgid "Back"
+msgstr ""
+
+#: unical_template/templates/home.html:10
+msgid "Platform for managing access credentials to Unical services"
+msgstr ""
+
+#: unical_template/templates/home.html:13
+msgid "Request a new identity"
 msgstr ""
 
 #: unical_template/templates/page.html:9
@@ -861,6 +876,7 @@ msgid ""
 msgstr "Please use your Unical ID username and password"
 
 #: unical_template/templates/sezione_protezione_dati.html:7
+#: unical_template_old/templates/base.html:97
 msgid "Personal data protection"
 msgstr ""
 
@@ -933,7 +949,7 @@ msgstr ""
 
 #: unical_template/templates/sezione_team.html:54
 #: unical_template_old/templates/sezione_team.html:83
-msgid "Centro ICT"
+msgid "ICT Center"
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:55
@@ -943,12 +959,11 @@ msgstr ""
 
 #: unical_template/templates/sezione_team.html:93
 #: unical_template_old/templates/sezione_team.html:98
-msgid "Accesso per gli ospiti"
+msgid "Access for guests"
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:94
-#: unical_template_old/templates/sezione_team.html:99
-msgid "Accessi temporanei al Campus"
+msgid "Temporary Wifi accesses"
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:132
@@ -981,41 +996,48 @@ msgid "Accedi"
 msgstr "Enter"
 
 #: unical_template_old/templates/base.html:86
-msgid "Titolare del trattamento"
+msgid "Holder of the treatment"
 msgstr ""
 
 #: unical_template_old/templates/base.html:93
-msgid "Altre risorse"
-msgstr "Other resources"
+msgid "Other resources"
+msgstr ""
 
 #: unical_template_old/templates/base.html:96
 #: unical_template_old/templates/sezione_team.html:18
-msgid "Centro ICT di Ateneo"
+msgid "University ICT Center"
 msgstr ""
-
-#: unical_template_old/templates/base.html:97
-msgid "Protezione dei dati personali"
-msgstr "Data Protection"
-
-#: unical_template_old/templates/sezione_funzionalita.html:8
-msgid "FUNZIONALITÀ"
-msgstr "FEATURES"
 
 #: unical_template_old/templates/sezione_protezione_dati.html:8
-msgid "PROTEZIONE DEI DATI PERSONALI"
-msgstr "GENERAL DATA PROTECTION"
+msgid "Personal Data Protection"
+msgstr ""
 
 #: unical_template_old/templates/sezione_team.html:5
-msgid "Centro Residenziale"
+msgid "Residential Center"
 msgstr ""
 
-#: unical_template_old/templates/sezione_team.html:63
-msgid "CONTATTI"
-msgstr "CONTACT US"
+#: unical_template_old/templates/sezione_team.html:99
+msgid "Temporary access to the campus"
+msgstr ""
 
 #: unical_template_old/templates/sezione_team.html:114
-msgid "Responsabile Protezione dei Dati"
+msgid "Data Protection Officer"
 msgstr ""
+
+#~ msgid "Altre risorse"
+#~ msgstr "Other resources"
+
+#~ msgid "Protezione dei dati personali"
+#~ msgstr "Data Protection"
+
+#~ msgid "FUNZIONALITÀ"
+#~ msgstr "FEATURES"
+
+#~ msgid "PROTEZIONE DEI DATI PERSONALI"
+#~ msgstr "GENERAL DATA PROTECTION"
+
+#~ msgid "CONTATTI"
+#~ msgstr "CONTACT US"
 
 #~ msgid "Protezione dati"
 #~ msgstr "Data Protection"
