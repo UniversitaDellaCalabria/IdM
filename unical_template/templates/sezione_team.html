@@ -1,44 +1,40 @@
 {% load i18n %}
 {% load static %}
 
-<section id="team" class="section">
+<section id="team" class="section text-center">
     <div class="container">
-        <div class="text-center">
-            <h2 class="text-center mb-5">{% trans "Contatti" %}</h2>
-        </div>
+        <h2 class="text-center mb-5">{% trans "Contatti" %}</h2>
 
         <div class="row">
             <div class="col-md-3">
                 <!--start card-->
                 <div class="card-wrapper">
                     <div class="card no-after">
-                        <div class="card-body text-center">
+                        <div class="card-body">
                             <h6>{% trans "Ufficio immatricolazioni" %}</h6>
-                            <h5 class="card-title">
-                                {% trans "Studenti in ingresso" %}
-                            </h5>
+                            <p>{% trans "Studenti in ingresso" %}</p>
                             <div class="text-center">
-                                <img src="{% static 'images/centro_residenziale_unical.jpg' %}" class="rounded-circle my-3" style="max-width:70%" alt="...">
+                                <img src="{% static 'images/centro_residenziale_unical.jpg' %}" class="rounded-circle mb-3" style="max-width:70%" alt="...">
                             </div>
                             <p class="card-text">
                                 {% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}
                             </p>
-                            <a href="https://guest.unical.it">
+                            <a href="https://guest.unical.it" class="text-decoration-none">
                                 <svg class="icon">
                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use>
                                 </svg>
                             </a>
-                            <a href="mailto:">
+                            <a href="mailto:" class="text-decoration-none">
                                 <svg class="icon">
                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use>
                                 </svg>
                             </a>
-                            <a href="mailto:">
+                            <a href="mailto:" class="text-decoration-none">
                                 <svg class="icon">
                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
                                 </svg>
                             </a>
-                            <a href="mailto:">
+                            <a href="mailto:" class="text-decoration-none">
                                 <svg class="icon">
                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
                                 </svg>
@@ -53,34 +49,32 @@
                 <!--start card-->
                 <div class="card-wrapper">
                     <div class="card no-after">
-                        <div class="card-body text-center">
+                        <div class="card-body">
 
                             <h6>{% trans "Centro ICT" %}</h6>
-                            <h5 class="card-title">
-                                {% trans "Help-desk" %}
-                            </h5>
+                            <p>{% trans "Help-desk" %}/p>
                             <div class="text-center">
-                                <img src="{% static 'images/centro_ict.jpg' %}" class="rounded-circle my-3" style="max-width:70%" alt="...">
+                                <img src="{% static 'images/centro_ict.jpg' %}" class="rounded-circle mb-3" style="max-width:70%" alt="...">
                             </div>
                             <p class="card-text">
 
                             {% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
-                            <a href="https://guest.unical.it" class="">
+                            <a href="https://guest.unical.it" class="text-decoration-none">
                                 <svg class="icon">
                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use>
                                 </svg>
                             </a>
-                            <a href="mailto:" class="">
+                            <a href="mailto:" class="text-decoration-none">
                                 <svg class="icon">
                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use>
                                 </svg>
                             </a>
-                            <a href="mailto:" class="">
+                            <a href="mailto:" class="text-decoration-none">
                                 <svg class="icon">
                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
                                 </svg>
                             </a>
-                            <a href="mailto:" class="">
+                            <a href="mailto:" class="text-decoration-none">
                                 <svg class="icon">
                                     <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
                                 </svg>
@@ -91,76 +85,84 @@
                 <!--end card-->
             </div>
 
-<div class="col-md-3">
-    <!--start card-->
-    <div class="card-wrapper">
-      <div class="card no-after">
-        <div class="card-body text-center">
-         <h6>{% trans "Accesso per gli ospiti" %}</h6>
-          <h5 class="card-title">{% trans "Accessi temporanei al Campus" %}</h5>
-          <div class="text-center">
-  <img src="{% static 'images/aula-magna-unical.jpg' %}" class="rounded-circle my-3" style="max-width:70%" alt="...">
-</div>
-          <p class="card-text">
+            <div class="col-md-3">
+                <!--start card-->
+                <div class="card-wrapper">
+                    <div class="card no-after">
+                        <div class="card-body">
+                            <h6>{% trans "Accesso per gli ospiti" %}</h6>
+                            <p>{% trans "Accessi temporanei al Campus" %}</p>
+                            <div class="text-center">
+                                <img src="{% static 'images/aula-magna-unical.jpg' %}" class="rounded-circle mb-3" style="max-width:70%" alt="...">
+                            </div>
+                            <p class="card-text">
+                                {% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}
+                            </p>
+                            <a href="https://guest.unical.it" class="text-decoration-none">
+                                <svg class="icon">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use>
+                                </svg>
+                            </a>
+                            <a href="mailto:" class="text-decoration-none">
+                                <svg class="icon">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use>
+                                </svg>
+                            </a>
+                            <a href="mailto:" class="text-decoration-none">
+                                <svg class="icon">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
+                                </svg>
+                            </a>
+                            <a href="mailto:" class="text-decoration-none">
+                                <svg class="icon">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--end card-->
+            </div>
 
-{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
-            <a href="https://guest.unical.it" class="">
-                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use></svg>
-            </a>
-            <a href="mailto:" class="">
-                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use></svg>
-            </a>
-            <a href="mailto:" class="">
-                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use></svg>
-            </a>
-            <a href="mailto:" class="">
-                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use></svg>
-            </a>
+            <div class="col-md-3">
+                <!--start card-->
+                <div class="card-wrapper">
+                    <div class="card no-after">
+                        <div class="card-body">
+                            <h6>{% trans "RPD" %}</h6>
+                            <p>{% trans "Responsabile Protezione Dati" %}</p>
+                            <div class="text-center">
+                                <img src="{% static 'images/rpd.jpg' %}" class="rounded-circle mb-3" style="max-width:70%" alt="...">
+                            </div>
+                            <p class="card-text">
+                                {% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}
+                            </p>
+                            <a href="https://guest.unical.it" class="text-decoration-none">
+                                <svg class="icon">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use>
+                                    </svg>
+                            </a>
+                            <a href="mailto:" class="text-decoration-none">
+                                <svg class="icon">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use>
+                                    </svg>
+                            </a>
+                            <a href="mailto:" class="text-decoration-none">
+                                <svg class="icon">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use>
+                                </svg>
+                            </a>
+                            <a href="mailto:" class="text-decoration-none">
+                                <svg class="icon">
+                                    <use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--end card-->
+            </div>
         </div>
-        </div>
-      </div>
-    <!--end card-->
     </div>
-
-  <div class="col-md-3">
-    <!--start card-->
-    <div class="card-wrapper">
-      <div class="card no-after">
-        <div class="card-body text-center">
-
-            <h6>{% trans "RPD" %}</h6>
-
-          <h5 class="card-title">{% trans "Responsabile Protezione Dati" %}</h5>
-          <div class="text-center">
-  <img src="{% static 'images/rpd.jpg' %}" class="rounded-circle my-3" style="max-width:70%" alt="...">
-</div>
-          <p class="card-text">
-
-{% trans "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione dell'IDM." %}</p>
-<a href="https://guest.unical.it" class="">
-                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-link"></use></svg>
-            </a>
-            <a href="mailto:" class="">
-                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-pin"></use></svg>
-            </a>
-            <a href="mailto:" class="">
-                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-telephone"></use></svg>
-            </a>
-            <a href="mailto:" class="">
-                <svg class="icon"><use xlink:href="{% static 'svg/sprite.svg' %}#it-mail"></use></svg>
-            </a>
-        </div>
-        </div>
-      </div>
-    <!--end card-->
-        </div>
-
-</div>
-
-
-
-
-  </div>
 </section>
 <!-- services section -->
-

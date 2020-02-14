@@ -40,11 +40,23 @@ bootstrap-italia-base.html BI Base
 
 {% block container %}
 
-<div id="message">
-    {% for msg in messages %}
-        <li>{{ msg }}</li>
+{% if messages %}
+    {% for message in messages %}
+    <div{% if message.tags %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                class="alert alert-danger alert-dismissible fade show"
+            {% else %}
+                class="alert alert-{{ message.tags }} alert-dismissible fade show"
+            {% endif %}
+                role="alert"
+        {% endif %}>
+        {{ message|safe }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     {% endfor %}
-</div>
+{% endif %}
 
 <a href="#" aria-hidden="true"
    data-attribute="back-to-top"
