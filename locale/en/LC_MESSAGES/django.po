@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-13 16:14+0100\n"
+"POT-Creation-Date: 2020-02-14 10:48+0100\n"
 "PO-Revision-Date: 2020-02-11 16:48+0100\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,6 +165,10 @@ msgstr ""
 
 #: identity/models.py:191
 msgid "Addresses"
+msgstr ""
+
+#: provisioning/__init__.py:32
+msgid "Access notification"
 msgstr ""
 
 #: provisioning/admin.py:153
@@ -580,14 +583,13 @@ msgstr ""
 
 #: provisioning/templates/account_create.html:22
 #: provisioning/templates/dashboard.html:68
-#: provisioning/templates/dashboard.html:117
+#: provisioning/templates/dashboard.html:114
 #: provisioning/templates/password_reset_token.html:21
 msgid "Save"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:9
 #: provisioning/templates/password_reset_token.html:7
-#: unical_template/templates/back/custom_message.html:28
 #: unical_template/templates/custom_message.html:26
 #: unical_template_old/templates/custom_message.html:28
 msgid "Main page"
@@ -603,23 +605,29 @@ msgid "Attributes"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:24
-#: provisioning/templates/dashboard.html:30
 msgid "Change Password"
 msgstr ""
 
+#: provisioning/templates/dashboard.html:30
+#: unical_template/templates/page.html:15
+#: unical_template_old/templates/page.html:20
+msgid "Admin"
+msgstr ""
+
 #: provisioning/templates/dashboard.html:36
-#: unical_template/templates/back/page.html:24
 #: unical_template/templates/page.html:22
 #: unical_template_old/templates/page.html:24
 msgid "Logout / Esci"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:45
+#: provisioning/templates/empty_dashboard.html:10
 #: provisioning/templates/password_reset_token.html:14
 msgid "Identity Management System"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:46
+#: provisioning/templates/empty_dashboard.html:11
 #: provisioning/templates/password_reset_token.html:15
 msgid "Welcome "
 msgstr ""
@@ -632,7 +640,7 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:80
+#: provisioning/templates/dashboard.html:82
 msgid ""
 "These would be also used as permissions and roles in third party web "
 "services."
@@ -646,7 +654,7 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:110
+#: provisioning/templates/dashboard.html:108
 msgid "Renew your Password"
 msgstr ""
 
@@ -654,13 +662,17 @@ msgstr ""
 msgid "A confirmation email will be also sent."
 msgstr ""
 
-#: provisioning/templates/password_reset_token.html:16
+#: provisioning/templates/empty_dashboard.html:15
+msgid "No valid Digital Identity"
+msgstr ""
+
+#: provisioning/templates/password_reset_token.html:18
 msgid ""
 "Here you can renew your password. Remeber also to fill your username and "
 "email for check."
 msgstr ""
 
-#: provisioning/views.py:290
+#: provisioning/views.py:291
 msgid "Password changed"
 msgstr ""
 
@@ -762,107 +774,52 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: unical_template/templates/back/base.html:15
-#: unical_template/templates/back/base.html:60
-#: unical_template_old/templates/base.html:15
-#: unical_template_old/templates/base.html:60
-msgid "APP_NAME"
-msgstr "Unical IDM"
-
-#: unical_template/templates/back/base.html:44
-#: unical_template/templates/back/base.html:62
-#: unical_template/templates/back/page.html:16
+#: unical_template/templates/base.html:17
+#: unical_template/templates/sezione_login.html:13
 #: unical_template_old/templates/base.html:44
-#: unical_template_old/templates/base.html:62
-#: unical_template_old/templates/page.html:16
-msgid "Accedi"
-msgstr "Enter"
+#: unical_template_old/templates/sezione_login.html:21
+msgid "Login"
+msgstr ""
 
-#: unical_template/templates/back/base.html:45
+#: unical_template/templates/base.html:22
 #: unical_template_old/templates/base.html:45
-msgid "Protezione dati"
-msgstr "Data Protection"
+msgid "Data protection"
+msgstr ""
 
-#: unical_template/templates/back/base.html:46
-#: unical_template/templates/sezione_funzionalita.html:6
+#: unical_template/templates/base.html:27
 #: unical_template_old/templates/base.html:46
-msgid "Funzionalità"
-msgstr "Features"
+msgid "Features"
+msgstr ""
 
-#: unical_template/templates/back/base.html:47
-#: unical_template/templates/sezione_team.html:7
+#: unical_template/templates/base.html:32
 #: unical_template_old/templates/base.html:47
-msgid "Contatti"
+msgid "Contacts"
 msgstr "Contact us"
 
-#: unical_template/templates/back/base.html:48
+#: unical_template/templates/base.html:37
 #: unical_template_old/templates/base.html:48
-msgid "Password dimenticata?"
-msgstr "Forgot your Password?"
-
-#: unical_template/templates/back/base.html:52
-#: unical_template_old/templates/base.html:52
-msgid "Menu"
+msgid "Forgotten password?"
 msgstr ""
 
-#: unical_template/templates/back/base.html:61
-#: unical_template_old/templates/base.html:61
-msgid ""
-"Piattaforma per la gestione delle credenziali di accesso ai servizi Unical."
-msgstr "Identity Management System"
-
-#: unical_template/templates/back/base.html:86
-#: unical_template_old/templates/base.html:86
-msgid "Titolare del trattamento"
-msgstr ""
-
-#: unical_template/templates/back/base.html:93
-#: unical_template_old/templates/base.html:93
-msgid "Altre risorse"
-msgstr "Other resources"
-
-#: unical_template/templates/back/base.html:96
-#: unical_template/templates/back/sezione_team.html:18
-#: unical_template_old/templates/base.html:96
-#: unical_template_old/templates/sezione_team.html:18
-msgid "Centro ICT di Ateneo"
-msgstr ""
-
-#: unical_template/templates/back/base.html:97
-#: unical_template_old/templates/base.html:97
-msgid "Protezione dei dati personali"
-msgstr "Data Protection"
-
-#: unical_template/templates/back/custom_message.html:21
 #: unical_template/templates/custom_message.html:22
 #: unical_template_old/templates/custom_message.html:21
 msgid "Back"
 msgstr ""
 
-#: unical_template/templates/back/page.html:18
 #: unical_template/templates/page.html:9
 #: unical_template_old/templates/page.html:18
 msgid "Home page"
 msgstr ""
 
-#: unical_template/templates/back/page.html:20
-#: unical_template/templates/page.html:15
-#: unical_template_old/templates/page.html:20
-msgid "Admin"
-msgstr ""
+#: unical_template/templates/sezione_funzionalita.html:6
+msgid "Funzionalità"
+msgstr "Features"
 
-#: unical_template/templates/back/sezione_funzionalita.html:8
-#: unical_template_old/templates/sezione_funzionalita.html:8
-msgid "FUNZIONALITÀ"
-msgstr "FEATURES"
-
-#: unical_template/templates/back/sezione_funzionalita.html:13
 #: unical_template/templates/sezione_funzionalita.html:17
 #: unical_template_old/templates/sezione_funzionalita.html:13
 msgid "Gestione Credenziali"
 msgstr "Credentials Management"
 
-#: unical_template/templates/back/sezione_funzionalita.html:14
 #: unical_template/templates/sezione_funzionalita.html:20
 #: unical_template_old/templates/sezione_funzionalita.html:14
 msgid ""
@@ -870,13 +827,11 @@ msgid ""
 "credenziali."
 msgstr ""
 
-#: unical_template/templates/back/sezione_funzionalita.html:19
 #: unical_template/templates/sezione_funzionalita.html:37
 #: unical_template_old/templates/sezione_funzionalita.html:19
 msgid "Modifica i tuoi dati"
 msgstr "Change your data"
 
-#: unical_template/templates/back/sezione_funzionalita.html:20
 #: unical_template/templates/sezione_funzionalita.html:40
 #: unical_template_old/templates/sezione_funzionalita.html:20
 msgid ""
@@ -884,43 +839,31 @@ msgid ""
 "autonomia."
 msgstr ""
 
-#: unical_template/templates/back/sezione_funzionalita.html:25
 #: unical_template/templates/sezione_funzionalita.html:57
 #: unical_template_old/templates/sezione_funzionalita.html:25
 msgid "Notifiche"
 msgstr ""
 
-#: unical_template/templates/back/sezione_funzionalita.html:26
 #: unical_template/templates/sezione_funzionalita.html:60
 #: unical_template_old/templates/sezione_funzionalita.html:26
 msgid "Ricezione email di conferma ad operazione avvenuta."
 msgstr ""
 
-#: unical_template/templates/back/sezione_login.html:8
 #: unical_template/templates/sezione_login.html:7
 #: unical_template_old/templates/sezione_login.html:8
 msgid "Accesso alla piattaforma"
 msgstr "LOGIN"
 
-#: unical_template/templates/back/sezione_login.html:9
 #: unical_template/templates/sezione_login.html:8
 #: unical_template_old/templates/sezione_login.html:9
 msgid ""
 "Utilizza lo username e la password della tua Identità Digitale di Ateneo."
 msgstr "Please use your Unical ID username and password"
 
-#: unical_template/templates/back/sezione_login.html:21
-#: unical_template/templates/sezione_login.html:13
-#: unical_template_old/templates/sezione_login.html:21
-msgid "Login"
+#: unical_template/templates/sezione_protezione_dati.html:7
+msgid "Personal data protection"
 msgstr ""
 
-#: unical_template/templates/back/sezione_protezione_dati.html:8
-#: unical_template_old/templates/sezione_protezione_dati.html:8
-msgid "PROTEZIONE DEI DATI PERSONALI"
-msgstr "GENERAL DATA PROTECTION"
-
-#: unical_template/templates/back/sezione_protezione_dati.html:19
 #: unical_template/templates/sezione_protezione_dati.html:18
 #: unical_template_old/templates/sezione_protezione_dati.html:19
 msgid ""
@@ -929,7 +872,6 @@ msgid ""
 "sulla Protezione dei Dati (RGPD). Titolare del trattamento è: "
 msgstr ""
 
-#: unical_template/templates/back/sezione_protezione_dati.html:21
 #: unical_template/templates/sezione_protezione_dati.html:24
 #: unical_template_old/templates/sezione_protezione_dati.html:21
 msgid ""
@@ -937,19 +879,16 @@ msgid ""
 "Privacy all'interno di Unical consulta la "
 msgstr ""
 
-#: unical_template/templates/back/sezione_protezione_dati.html:21
 #: unical_template/templates/sezione_protezione_dati.html:25
 #: unical_template_old/templates/sezione_protezione_dati.html:21
 msgid "sezione dedicata nel portale di Ateneo"
 msgstr ""
 
-#: unical_template/templates/back/sezione_recupero_credenziali.html:7
-#: unical_template/templates/sezione_recupero_credenziali.html:8
+#: unical_template/templates/sezione_recupero_credenziali.html:6
 #: unical_template_old/templates/sezione_recupero_credenziali.html:7
-msgid "Recupera le tue credenziali"
+msgid "Retrieve your credentials"
 msgstr "Renew your Password"
 
-#: unical_template/templates/back/sezione_recupero_credenziali.html:8
 #: unical_template/templates/sezione_recupero_credenziali.html:10
 #: unical_template_old/templates/sezione_recupero_credenziali.html:8
 msgid ""
@@ -960,47 +899,29 @@ msgstr ""
 "Please use your username and your password, preiously recorded into Unical "
 "ID, to gain a temporary access to change your password "
 
-#: unical_template/templates/back/sezione_recupero_credenziali.html:15
 #: unical_template/templates/sezione_recupero_credenziali.html:14
 #: unical_template_old/templates/sezione_recupero_credenziali.html:15
-msgid "Invia la richiesta"
-msgstr "Send your request"
-
-#: unical_template/templates/back/sezione_team.html:5
-#: unical_template_old/templates/sezione_team.html:5
-msgid "Centro Residenziale"
+msgid "Send request"
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:45
-#: unical_template_old/templates/sezione_team.html:45
-msgid "Responsabile protezione dei dati"
-msgstr ""
+#: unical_template/templates/sezione_team.html:6
+msgid "Contatti"
+msgstr "Contact us"
 
-#: unical_template/templates/back/sezione_team.html:63
-#: unical_template_old/templates/sezione_team.html:63
-msgid "CONTATTI"
-msgstr "CONTACT US"
-
-#: unical_template/templates/back/sezione_team.html:68
-#: unical_template/templates/sezione_team.html:16
+#: unical_template/templates/sezione_team.html:14
 #: unical_template_old/templates/sezione_team.html:68
 msgid "Ufficio immatricolazioni"
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:69
-#: unical_template/templates/sezione_team.html:18
+#: unical_template/templates/sezione_team.html:15
 #: unical_template_old/templates/sezione_team.html:69
 msgid "Studenti in ingresso"
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:70
-#: unical_template/templates/back/sezione_team.html:85
-#: unical_template/templates/back/sezione_team.html:100
-#: unical_template/templates/back/sezione_team.html:115
-#: unical_template/templates/sezione_team.html:24
-#: unical_template/templates/sezione_team.html:67
-#: unical_template/templates/sezione_team.html:106
-#: unical_template/templates/sezione_team.html:139
+#: unical_template/templates/sezione_team.html:20
+#: unical_template/templates/sezione_team.html:61
+#: unical_template/templates/sezione_team.html:99
+#: unical_template/templates/sezione_team.html:138
 #: unical_template_old/templates/sezione_team.html:70
 #: unical_template_old/templates/sezione_team.html:85
 #: unical_template_old/templates/sezione_team.html:100
@@ -1010,49 +931,104 @@ msgid ""
 "dell'IDM."
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:83
-#: unical_template/templates/sezione_team.html:58
+#: unical_template/templates/sezione_team.html:54
 #: unical_template_old/templates/sezione_team.html:83
 msgid "Centro ICT"
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:84
-#: unical_template/templates/sezione_team.html:60
+#: unical_template/templates/sezione_team.html:55
 #: unical_template_old/templates/sezione_team.html:84
 msgid "Help-desk"
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:98
-#: unical_template/templates/sezione_team.html:99
+#: unical_template/templates/sezione_team.html:93
 #: unical_template_old/templates/sezione_team.html:98
 msgid "Accesso per gli ospiti"
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:99
-#: unical_template/templates/sezione_team.html:100
+#: unical_template/templates/sezione_team.html:94
 #: unical_template_old/templates/sezione_team.html:99
 msgid "Accessi temporanei al Campus"
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:113
-#: unical_template/templates/sezione_team.html:131
+#: unical_template/templates/sezione_team.html:132
 #: unical_template_old/templates/sezione_team.html:113
 msgid "RPD"
 msgstr ""
 
-#: unical_template/templates/back/sezione_team.html:114
+#: unical_template/templates/sezione_team.html:133
+#: unical_template_old/templates/sezione_team.html:45
+msgid "Data protection officer"
+msgstr ""
+
+#: unical_template_old/templates/base.html:15
+#: unical_template_old/templates/base.html:60
+msgid "APP_NAME"
+msgstr "Unical IDM"
+
+#: unical_template_old/templates/base.html:52
+msgid "Menu"
+msgstr ""
+
+#: unical_template_old/templates/base.html:61
+msgid ""
+"Piattaforma per la gestione delle credenziali di accesso ai servizi Unical."
+msgstr "Identity Management System"
+
+#: unical_template_old/templates/base.html:62
+#: unical_template_old/templates/page.html:16
+msgid "Accedi"
+msgstr "Enter"
+
+#: unical_template_old/templates/base.html:86
+msgid "Titolare del trattamento"
+msgstr ""
+
+#: unical_template_old/templates/base.html:93
+msgid "Altre risorse"
+msgstr "Other resources"
+
+#: unical_template_old/templates/base.html:96
+#: unical_template_old/templates/sezione_team.html:18
+msgid "Centro ICT di Ateneo"
+msgstr ""
+
+#: unical_template_old/templates/base.html:97
+msgid "Protezione dei dati personali"
+msgstr "Data Protection"
+
+#: unical_template_old/templates/sezione_funzionalita.html:8
+msgid "FUNZIONALITÀ"
+msgstr "FEATURES"
+
+#: unical_template_old/templates/sezione_protezione_dati.html:8
+msgid "PROTEZIONE DEI DATI PERSONALI"
+msgstr "GENERAL DATA PROTECTION"
+
+#: unical_template_old/templates/sezione_team.html:5
+msgid "Centro Residenziale"
+msgstr ""
+
+#: unical_template_old/templates/sezione_team.html:63
+msgid "CONTATTI"
+msgstr "CONTACT US"
+
 #: unical_template_old/templates/sezione_team.html:114
 msgid "Responsabile Protezione dei Dati"
 msgstr ""
 
-#: unical_template/templates/sezione_protezione_dati.html:7
-#, fuzzy
-#| msgid "Protezione dei dati personali"
-msgid "Protezione dei Dati Personali"
-msgstr "Data Protection"
+#~ msgid "Protezione dati"
+#~ msgstr "Data Protection"
 
-#: unical_template/templates/sezione_team.html:133
-#, fuzzy
-#| msgid "Protezione dati"
-msgid "Responsabile Protezione Dati"
-msgstr "Data Protection"
+#~ msgid "Password dimenticata?"
+#~ msgstr "Forgot your Password?"
+
+#~ msgid "Invia la richiesta"
+#~ msgstr "Send your request"
+
+#~ msgid "Responsabile Protezione Dati"
+#~ msgstr "Data Protection"
+
+#~| msgid "Protezione dei dati personali"
+#~ msgid "Protezione dei Dati Personali"
+#~ msgstr "Data Protection"

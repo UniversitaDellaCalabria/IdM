@@ -38,12 +38,12 @@
 </li>
 {% endblock menu_links %}
 
-{% block container %}
+{% block container_content %}
 <!-- contact section -->
 <section id="modify" class="section text-center">
   <div class="container">
         <h1>{% trans "Identity Management System" %}</h1>
-        <h4>{% trans "Welcome " %} {{ lu.uid }}</h4>
+        <h4>{% trans "Welcome " %} {{ request.user.username }}</h4>
         <p class="mb-5">{% trans "Here you can modify your profile" %}</p>
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -118,4 +118,4 @@
     </div>
 </section>
 <!-- contact section -->
-{% endblock container %}
+{% endblock container_content %}

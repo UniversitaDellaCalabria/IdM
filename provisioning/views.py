@@ -177,7 +177,7 @@ def dashboard(request):
             return render(request,
                           'custom_message.html',
                           USER_DEFINITION_ERROR,
-                           status=403)
+                          status=403)
         delivery_dict = {'mail': lu.mail[0]}
         if lu.telephoneNumber:
             delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
@@ -187,7 +187,8 @@ def dashboard(request):
                                                   request.user.access_notification}),
              'lu': lu,
              'attrs': get_ldapuser_aai_html_attrs(lu)}
-    return render(request, 'dashboard.html', d)
+        return render(request, 'dashboard.html', d)
+    return render(request, 'empty_dashboard.html')
 
 
 @login_required

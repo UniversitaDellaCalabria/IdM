@@ -5,6 +5,7 @@ bootstrap-italia-base.html BI Base
 -->
 {% extends 'base-setup.html' %}
 
+{% load i18n %}
 {% load static %}
 
 {% block header_slim_right_zone %}{% endblock header_slim_right_zone %}
@@ -13,27 +14,27 @@ bootstrap-italia-base.html BI Base
 {% block menu_links %}
 <li class="nav-item active">
     <a class="nav-link" href="#login" data-attribute="forward" class="forward" aria-hidden="true">
-        <span>Accedi</span>
+        <span>{% trans "Login" %}</span>
     </a>
 </li>
 <li class="nav-item active">
     <a class="nav-link" href="#protezione-dati" data-attribute="forward" class="forward" aria-hidden="true">
-        <span>Protezione dati</span>
+        <span>{% trans "Data protection" %}</span>
     </a>
 </li>
 <li class="nav-item active">
     <a class="nav-link" href="#funzionalita" data-attribute="forward" class="forward" aria-hidden="true">
-        <span>Funzionalità</span>
+        <span>{% trans "Features" %}</span>
     </a>
 </li>
 <li class="nav-item active">
     <a class="nav-link" href="#team" data-attribute="forward" class="forward" aria-hidden="true">
-        <span>Contatti</span>
+        <span>{% trans "Contacts" %}</span>
     </a>
 </li>
 <li class="nav-item active">
     <a class="nav-link" href="#password-dimenticata" data-attribute="forward" class="forward" aria-hidden="true">
-        <span>Password dimenticata?</span>
+        <span>{% trans "Forgotten password?" %}</span>
     </a>
 </li>
 {% endblock menu_links %}
@@ -57,6 +58,8 @@ bootstrap-italia-base.html BI Base
     </div>
     {% endfor %}
 {% endif %}
+
+{% block container_content %}{% endblock container_content %}
 
 <a href="#" aria-hidden="true"
    data-attribute="back-to-top"

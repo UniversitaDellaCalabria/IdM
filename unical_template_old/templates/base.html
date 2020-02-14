@@ -34,18 +34,18 @@
 <!-- header section -->
 <section class="banner" role="banner">
   <header id="header">
-    <div class="header-content clearfix"> 
+    <div class="header-content clearfix">
       <a class="logo" href="/">
           <img src="{% static 'images/logo_unical.png' %}" style="width: 253px; margin-top: -13px;" />
       </a>
       <nav class="navigation" role="navigation">
         <ul class="primary-nav">
           {% block nav_menu %}
-              <li><a href="#login">{% trans "Accedi" %}</a></li>
-              <li><a href="#intro">{% trans "Protezione dati" %}</a></li>
-              <li><a href="#services">{% trans "Funzionalità" %}</a></li>
-              <li><a href="#teams">{% trans "Contatti" %}</a></li>
-              <li><a href="#contact">{% trans "Password dimenticata?" %}</a></li>
+              <li><a href="#login">{% trans "Login" %}</a></li>
+              <li><a href="#intro">{% trans "Data protection" %}</a></li>
+              <li><a href="#services">{% trans "Features" %}</a></li>
+              <li><a href="#teams">{% trans "Contacts" %}</a></li>
+              <li><a href="#contact">{% trans "Forgotten password?" %}</a></li>
           {% endblock nav_menu %}
         </ul>
       </nav>
@@ -61,7 +61,7 @@
         <p>{% trans "Piattaforma per la gestione delle credenziali di accesso ai servizi Unical." %}</p>
         <a href="#login" class="btn btn-large">{% trans "Accedi" %}</a>
       </div>
-      <!-- banner text --> 
+      <!-- banner text -->
     </div>
     {% endblock container %}
   </div>
@@ -83,22 +83,22 @@
     <div class="container">
       <div class="row">
         <div class="footer-col col-md-6">
-          <h5>{% trans "Titolare del trattamento" %}</h5>
+          <h5>{% trans "Holder of the treatment" %}</h5>
           <p>Università della Calabria, via Pietro Bucci, 87036 Arcavacata di Rende (CS)<br>
             tel. (+39) 0984 491<br>
             EMAIL@UNICAL.IT</p>
         </div>
-        
+
         <div class="footer-col col-md-3">
-          <h5>{% trans "Altre risorse" %}</h5>
+          <h5>{% trans "Other resources" %}</h5>
           <p>
           <ul>
-            <li><a href="http://www.unical.it/portale/strutture/centri/centroict/">{% trans "Centro ICT di Ateneo" %}</a></li>
-            <li><a href="http://www.unical.it/portale/ateneo/privacy/">{% trans "Protezione dei dati personali" %}</a></li>
+            <li><a href="http://www.unical.it/portale/strutture/centri/centroict/">{% trans "University ICT Center" %}</a></li>
+            <li><a href="http://www.unical.it/portale/ateneo/privacy/">{% trans "Personal data protection" %}</a></li>
           </ul>
           </p>
         </div>
-        
+
         <div class="footer-col col-md-3">
           {% comment %}
           <h5>Share with Love</h5>
@@ -110,22 +110,22 @@
           </ul>
           {% endcomment %}
         </div>
-        
+
       </div>
     </div>
   </div>
-  <!-- footer top --> 
+  <!-- footer top -->
 
 </footer>
-<!-- Footer section --> 
-<!-- JS FILES --> 
+<!-- Footer section -->
+<!-- JS FILES -->
 <script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script> 
-<script src="{% static 'js/jquery.flexslider-min.js' %}"></script> 
-<script src="{% static 'js/jquery.fancybox.pack.js' %}"></script> 
-<script src="{% static 'js/retina.min.js' %}"></script> 
-<script src="{% static 'js/modernizr.js' %}"></script> 
-<script src="{% static 'js/main.js' %}"></script> 
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.pack.js' %}"></script>
+<script src="{% static 'js/retina.min.js' %}"></script>
+<script src="{% static 'js/modernizr.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 <!--
 <script type="text/javascript" src="{% static 'js/jquery.contact.js' %}"></script>
 -->

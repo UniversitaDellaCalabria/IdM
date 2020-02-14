@@ -3,7 +3,7 @@
 <!-- contact section -->
 <section id="password-dimenticata" class="section text-center">
     <div class="container">
-        <h2>{% trans "Recupera le tue credenziali" %}</h2>
+        <h2>{% trans "Retrieve your credentials" %}</h2>
         <div class="row text-center">
             <div class="col-md-6 offset-md-3">
                 <p class="mb-5">
@@ -11,7 +11,7 @@
                 </p>
                 <form method="post" action="{% url 'provisioning:reset_password_ask' %}" class="needs-validation" novalidate>
                     {% include "form_body.html" with form=password_reset_form %}
-                    <input type="submit" class="btn btn-secondary" value="{% trans 'Invia la richiesta' %}">
+                    <input type="submit" class="btn btn-secondary" value="{% trans 'Send request' %}">
                 </form>
             </div>
         </div>

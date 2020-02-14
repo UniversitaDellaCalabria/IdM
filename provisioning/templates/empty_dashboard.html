@@ -1,0 +1,22 @@
+{% extends "page.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block container_content %}
+<!-- contact section -->
+<section id="modify" class="section text-center">
+  <div class="container">
+        <h1>{% trans "Identity Management System" %}</h1>
+        <h4>{% trans "Welcome " %} {{ request.user.username }}</h4>
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="alert alert-info" role="alert">
+                    {% trans "No valid Digital Identity" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- contact section -->
+{% endblock container_content %}
