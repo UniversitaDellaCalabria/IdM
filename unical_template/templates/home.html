@@ -4,10 +4,10 @@
 {% load static %}
 
 {% block container_content %}
-<section id="services" class="section section-muted text-center">
+<section id="services" class="section section-muted text-center" style="background-image: url({% static 'images/banner.jpg' %}); background-size: cover;">
     <div class="container">
-        <h1 class="no_toc">Unical <span class="text-secondary">Id</span>entity <span class="text-secondary">M</span>anager</h1>
-        <p class="d-none d-lg-block">{% trans "Platform for managing access credentials to Unical services" %}</p>
+        <h1 class="no_toc text-white">Unical <span class="text-secondary">Id</span>entity <span class="text-secondary">M</span>anager</h1>
+        <p class="d-none d-lg-block text-white">{% trans "Platform for managing access credentials to Unical services" %}</p>
         <div class="it-btn-container">
             <a class="btn btn-lg btn-secondary" href="#login" data-attribute="forward" class="forward" aria-hidden="true">{% trans "Login" %}</a>
         </div>
