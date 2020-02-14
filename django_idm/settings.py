@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #ALLOWED_HOSTS = settingslocal.ALLOWED_HOSTS
 
-LOGIN_URL = '/login'
+LOGIN_URL = '/local/login'
 LOGIN_REDIRECT_URL = '/dashboard'
 
 if 'provisioning' in INSTALLED_APPS:
