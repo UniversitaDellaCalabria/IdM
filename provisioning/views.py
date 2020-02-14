@@ -158,11 +158,13 @@ def provisioning_login(request):
 
 
 def get_ldapuser_aai_html_attrs(lu):
-    hidden_attributes = ['userPassword',
+    hidden_attributes = ['memberOf',
+                         'userPassword',
                          'sambaNTPassword',
                          'creatorsName',
                          'modifiersName',
-                         'pwdHistory']
+                         'pwdHistory',
+                         'pwdAccountLockedTime']
     attributes = OrderedDict()
     for k in sorted(lu.__dict__.keys()):
         if k[0] == '_' or k in hidden_attributes:
