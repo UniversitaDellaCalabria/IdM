@@ -2,3 +2,9 @@
     background: none;
     margin-right: 30px;
 }
+
+.card .card-body p,
+.card .card-body p.card-text,
+.callout p {
+    font-family: "Titillium Web",Geneva,Tahoma,sans-serif;
+}
