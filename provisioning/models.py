@@ -242,3 +242,21 @@ class Notifications(models.Model):
     class Meta:
         verbose_name = _('Identity Ldap account expiration Notification')
         verbose_name_plural = _('Identity Ldap account expiration Notifications')
+
+
+class ChangedUsername(models.Model):
+    """Log of the changed username
+       You can even define only old_username without a new one
+       to blacklist
+    """
+    new_username = models.CharField(max_length=254,
+                                    blank=True, null=True)
+    old_username = models.CharField(max_length=254)
+    create_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('Changed Username')
+        verbose_name_plural = _('Changed Usernames')
+
+    def __str__(self):
+        return '{} {}'.format(self.old_username, self.create_date)

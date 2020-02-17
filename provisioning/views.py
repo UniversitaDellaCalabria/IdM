@@ -158,11 +158,13 @@ def provisioning_login(request):
 
 
 def get_ldapuser_aai_html_attrs(lu):
-    hidden_attributes = ['userPassword',
+    hidden_attributes = ['memberOf',
+                         'userPassword',
                          'sambaNTPassword',
                          'creatorsName',
                          'modifiersName',
-                         'pwdHistory']
+                         'pwdHistory',
+                         'pwdAccountLockedTime']
     attributes = OrderedDict()
     for k in sorted(lu.__dict__.keys()):
         if k[0] == '_' or k in hidden_attributes:
@@ -286,6 +288,23 @@ def change_deliveries(request, token_value=None):
         return render(request,
                       'custom_message.html',
                       INVALID_DATA_DISPLAY, status=403)
+
+
+@login_required
+@valid_ldap_user
+def change_username(request, token_value=None):
+    lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
+    if request.method == 'GET' and token_value:
+        return render(request,
+                      'provisioning_change_username.html')
+    elif request.method == 'GET':
+        return render(request,
+                      'provisioning_change_username.html',
+                      dict(change_username_form=IdentityUsernameChangeForm()))
+    elif request.method == 'POST':
+        form = IdentityUsernameChangeForm(request.POST)
+        return render(request,
+                      'provisioning_change_username.html')
 
 
 def send_email_password_changed(lu, request):

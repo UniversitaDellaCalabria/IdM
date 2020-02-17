@@ -1,0 +1,31 @@
+{% extends "page.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block container_content %}
+    <!-- contact section -->
+    <section id="change_username" class="section section-muted text-center">
+        <div class="container">
+            <h2>{% trans "Change Username" %}</h2>
+            <p class="mb-5">{% trans "You can modify your username only for one time" %}</p>
+            <div class="row text-center">
+                <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
+                    <form method="post" action="{% url 'provisioning:change_username' %}" class="needs-validation" novalidate>
+                        {% include "form_body.html" with form=change_username_form %}
+
+                        <a href="{% url 'provisioning:dashboard' %}" class="btn btn-primary">
+                            <svg class="icon icon-xs icon-white">
+                                <use xlink:href="{% static 'svg/sprite.svg' %}#it-arrow-left-circle"></use>
+                            </svg>
+                            {% trans "Cancel and comeback" %}
+                        </a>
+
+                        <input type="submit" class="btn btn-secondary" value="{% trans 'Save' %}">
+                        <div id="simple-msg"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock container_content %}

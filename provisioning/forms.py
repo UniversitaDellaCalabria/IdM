@@ -170,6 +170,7 @@ class AccountCreationForm(PasswordForm, IdentityTokenAskForm):
 class PasswordAskResetForm(IdentityTokenAskForm):
     pass
 
+
 class PasswordResetForm(PasswordForm, IdentityEmailForm):#, IdentityTokenAskForm):
     username = forms.CharField(label="Username", required=True,
                                max_length=64,
@@ -177,11 +178,25 @@ class PasswordResetForm(PasswordForm, IdentityEmailForm):#, IdentityTokenAskForm
 
     field_order = ['username', 'email', 'password', 'password2']
 
+
 class DeliveryForm(TelephoneForm, IdentityEmailForm):
     pass
+
 
 class ProfileForm(forms.Form):
     access_notification = forms.BooleanField(required=False,
                                              label=_("Notify accesses via email"),
                                              label_suffix="",
                                              widget=forms.CheckboxInput())
+
+
+class IdentityUsernameChangeForm(forms.Form):
+    old_username = forms.CharField(label="", max_length=64, required=True,
+                                   help_text=_("Current Username"),
+                                   widget=_username_widget)
+    new_username = forms.CharField(label="", max_length=64, required=True,
+                                   help_text=_("New Username"),
+                                   widget=_username_widget)
+    confirm_new_username = forms.CharField(label="", max_length=64, required=True,
+                                           help_text=_("Confirm your new Username"),
+                                           widget=_username_widget)
