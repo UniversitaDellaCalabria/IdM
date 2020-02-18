@@ -191,7 +191,7 @@ def dashboard(request):
         if lu.telephoneNumber:
             delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
         dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
-                                                  constructor_dict=settings.DJANGO_FORM_BUILDER_FIELD,
+                                                  constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                                   ignore_format_field_name=True)
         d = {'dyn_form': dyn_form,
              # 'form_delivery': DeliveryForm(initial=delivery_dict),
@@ -240,8 +240,10 @@ def change_deliveries(request, token_value=None):
                       DATA_CHANGED)
 
     elif request.method == 'POST':
-        form = DeliveryForm(request.POST)
-        d = {'form_delivery': form,
+        dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(request.POST),
+                                                  constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
+                                                  ignore_format_field_name=True)
+        d = {'form_delivery': dyn_form,
              'form_password': PasswordForm(),
              'form_profile': ProfileForm(initial={'access_notification': \
                                                   request.user.access_notification}),
