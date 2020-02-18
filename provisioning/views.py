@@ -7,14 +7,16 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django_form_builder.models import SavedFormContent
+from django_form_builder.utils import get_labeled_errors
 from django.http import (HttpResponse,
                          Http404,
                          HttpResponseForbidden,
                          HttpResponseRedirect,
                          HttpResponseNotFound)
 from django.views.decorators.http import require_http_methods
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
+from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
 from . custom_messages import *
@@ -193,8 +195,7 @@ def dashboard(request):
         dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
                                                   constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                                   ignore_format_field_name=True)
-        d = {'dyn_form': dyn_form,
-             # 'form_delivery': DeliveryForm(initial=delivery_dict),
+        d = {'form_delivery': dyn_form,
              'form_password': PasswordChangeForm(),
              'form_profile': ProfileForm(initial={'access_notification': \
                                                   request.user.access_notification}),
@@ -240,10 +241,10 @@ def change_deliveries(request, token_value=None):
                       DATA_CHANGED)
 
     elif request.method == 'POST':
-        dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(request.POST),
-                                                  constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
-                                                  ignore_format_field_name=True)
-        d = {'form_delivery': dyn_form,
+        form = SavedFormContent.compiled_form(data_source=json.dumps(request.POST),
+                                              constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
+                                              ignore_format_field_name=True)
+        d = {'form_delivery': form,
              'form_password': PasswordForm(),
              'form_profile': ProfileForm(initial={'access_notification': \
                                                   request.user.access_notification}),
@@ -259,7 +260,9 @@ def change_deliveries(request, token_value=None):
         for k in form.cleaned_data:
             attr = getattr(lu, k)
             if isinstance(attr, list):
-                current_data[k] = attr[-1] if attr else []
+                # Bug here?
+                # current_data[k] = attr[-1] if attr else []
+                current_data[k] = attr[0] if attr else []
             else:
                 current_data[k] = attr
 
@@ -278,7 +281,8 @@ def change_deliveries(request, token_value=None):
 
         # data was not changed
         if current_data == new_data or not new_data:
-            return HttpResponseRedirect(reverse('provisioning:dashboard'))
+            messages.add_message(request, messages.SUCCESS, _("No data edited"))
+            return redirect('provisioning:dashboard')
 
         data = dict(ldap_dn = lu.dn,
                     is_active = True,
@@ -291,9 +295,9 @@ def change_deliveries(request, token_value=None):
             # send_email here. Only on creation
             id_change_conf.send_email(ldap_user=lu,
                                       lang=request.LANGUAGE_CODE)
-        return render(request,
-                      'custom_message.html',
-                      CONFIRMATION_EMAIL)
+        messages.add_message(request, messages.SUCCESS,
+                             settings.MESSAGES_TEMPLATE_3.format(**CONFIRMATION_EMAIL))
+        return redirect('provisioning:dashboard')
     else:
         return render(request,
                       'custom_message.html',
@@ -350,20 +354,28 @@ def send_email_password_changed(lu, request):
 def change_password(request):
     lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
     form = PasswordChangeForm(request.POST)
-    d = {'form_delivery': DeliveryForm(initial={'mail': lu.mail[0]}),
+
+    delivery_dict = {'mail': lu.mail[0]}
+    if lu.telephoneNumber:
+        delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
+    dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
+                                                  constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
+                                                  ignore_format_field_name=True)
+
+    d = {'form_delivery': dyn_form,
          'form_password': form,
          'lu': lu,
          'attrs': get_ldapuser_aai_html_attrs(lu)}
 
-    if lu.telephoneNumber:
-        d['telephoneNumber'] = lu.telephoneNumber[0]
-
     if not form.is_valid():
-        return render(request, 'dashboard.html', d)
+        for k,v in get_labeled_errors(form).items():
+            messages.add_message(request, messages.ERROR,
+                                 "<b>{}</b>: {}".format(k, strip_tags(v)))
+        return redirect('provisioning:dashboard')
     if lu.check_pwdHistory(form.cleaned_data['password']):
-        return render(request,
-                      'custom_message.html',
-                      PASSWORD_ALREADYUSED)
+        messages.add_message(request, messages.ERROR,
+                             settings.MESSAGES_TEMPLATE_3.format(**PASSWORD_ALREADYUSED))
+        return redirect('provisioning:dashboard')
     try:
         lu.set_password(password = form.cleaned_data['password'],
                         old_password = form.cleaned_data['old_password'])
@@ -373,9 +385,9 @@ def change_password(request):
                       INVALID_DATA_DISPLAY, status=403)
     lu.reset_schacExpiryDate()
     send_email_password_changed(lu, request)
-    return render(request,
-                  'custom_message.html',
-                  PASSWORD_CHANGED)
+    messages.add_message(request, messages.SUCCESS,
+                         settings.MESSAGES_TEMPLATE_2.format(**PASSWORD_CHANGED))
+    return redirect('provisioning:dashboard')
 
 
 @require_http_methods(["POST"])
@@ -383,7 +395,6 @@ def reset_password_ask(request):
     # we do not check if data are valid to avoid any vulnerability reconnaissance
     form = IdentityTokenAskForm(request.POST)
     if not form.is_valid():
-        print(form.errors)
         return render(request,
                       'custom_message.html',
                       INVALID_DATA_DISPLAY, status=403)
@@ -412,10 +423,10 @@ def reset_password_ask(request):
         # send email and update token status
         id_pwd_reset.send_email(ldap_user=lu,
                                 lang=request.LANGUAGE_CODE)
-    logger.info('{} asked for a Password reset'.format(lu.uid))
-    return render(request,
-                  'custom_message.html',
-                  PASSWORD_ASK_RESET)
+        logger.info('{} asked for a Password reset'.format(lu.uid))
+    messages.add_message(request, messages.SUCCESS,
+                         settings.MESSAGES_TEMPLATE_3.format(**PASSWORD_ASK_RESET))
+    return redirect('provisioning:home')
 
 
 def reset_password_token(request, token_value):

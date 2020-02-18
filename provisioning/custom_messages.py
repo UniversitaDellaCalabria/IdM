@@ -74,8 +74,8 @@ PASSWORD_CHANGED_TITLE = _("Password succesfully changed")
 PASSWORD_CHANGED_MSG = _("You're still logged in in "
                          "your previous sessions.")
 PASSWORD_CHANGED = {'title': PASSWORD_CHANGED_TITLE,
-                    'avviso': PASSWORD_CHANGED_MSG,
-                    'description': DATA_CHANGED_MSG}
+                    'avviso': PASSWORD_CHANGED_MSG}
+                    # 'description': DATA_CHANGED_MSG}
 
 PASSWORD_ASK_RESET_TITLE = _("You asked for a password reset")
 PASSWORD_ASK_RESET_MSG = _("If the data you have inserted are valid, "

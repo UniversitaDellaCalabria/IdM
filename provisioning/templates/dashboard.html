@@ -40,6 +40,7 @@
 {% endblock menu_links %}
 
 {% block container_content %}
+
 <!-- contact section -->
 <section id="modify" class="section text-center">
   <div class="container">
@@ -51,7 +52,7 @@
             <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
 
                 <form method="post" action="{% url 'provisioning:change_deliveries' %}" class="needs-validation" novalidate>
-                    {% include "form_body.html" with form=dyn_form %}
+                    {% include "form_body.html" with form=form_delivery %}
 <!--
                     <h5>{% trans "Options" %}</h5>
 -->

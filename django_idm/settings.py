@@ -150,12 +150,30 @@ STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# Bootstrap Italia messages template
+MESSAGES_TEMPLATE_2 = """
+                    <h4 class="alert-heading">{title}</h4>
+                    <p>{avviso}</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    """
+
+MESSAGES_TEMPLATE_3 = """
+                    <h4 class="alert-heading">{title}</h4>
+                    <p>{avviso}</p>
+                    <hr>
+                    <p class='mb-0'>{description}</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    """
 # form builder fields to build dashboard deliveries form
 DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
-                                 ('mail', ('CustomCharField', {'label': 'Email',
-                                                               'required': True,
-                                                               'help_text': 'name.surname@testunical.it, comunque l\'email utilizzata in fase di registrazione. '}, '')),
-                                 ('telephoneNumber', ('CustomCharField', {'label': 'Telefono',
-                                                                          'required': True,
-                                                                          'help_text': ''}, '')),
-                             ])
+     ('mail', ('CustomCharField', {'label': 'Email',
+                                   'required': True,
+                                   'help_text': 'name.surname@testunical.it, comunque l\'email utilizzata in fase di registrazione. '}, '')),
+     ('telephoneNumber', ('CustomCharField', {'label': 'Telefono',
+                                              'required': True,
+                                              'help_text': ''}, '')),
+ ])

@@ -45,26 +45,21 @@ bootstrap-italia-base.html BI Base
 </li>
 {% endblock menu_links %}
 
+{% block messages %}
+<div class="container">
+    {% block centered_messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}
+                   {% if 'error' in message.tags%} alert-danger{% endif %}
+                   mt-5 mb-5
+                   alert-dismissible fade show"
+                   role="alert">{{ message|safe }}</div>
+        {% endfor %}
+    {% endblock centered_messages %}
+</div>
+{% endblock messages %}
+
 {% block container %}
-
-{% if messages %}
-    {% for message in messages %}
-    <div{% if message.tags %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                class="alert alert-danger alert-dismissible fade show"
-            {% else %}
-                class="alert alert-{{ message.tags }} alert-dismissible fade show"
-            {% endif %}
-                role="alert"
-        {% endif %}>
-        {{ message|safe }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
-{% endif %}
-
 {% block container_content %}{% endblock container_content %}
 
 <a href="#" aria-hidden="true"
