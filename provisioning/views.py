@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django_form_builder.models import SavedFormContent
 from django.http import (HttpResponse,
                          Http404,
                          HttpResponseForbidden,
@@ -189,7 +190,11 @@ def dashboard(request):
         delivery_dict = {'mail': lu.mail[0]}
         if lu.telephoneNumber:
             delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
-        d = {'form_delivery': DeliveryForm(initial=delivery_dict),
+        dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
+                                                  constructor_dict=settings.DJANGO_FORM_BUILDER_FIELD,
+                                                  ignore_format_field_name=True)
+        d = {'dyn_form': dyn_form,
+             # 'form_delivery': DeliveryForm(initial=delivery_dict),
              'form_password': PasswordChangeForm(),
              'form_profile': ProfileForm(initial={'access_notification': \
                                                   request.user.access_notification}),
@@ -262,9 +267,12 @@ def change_deliveries(request, token_value=None):
             return render(request, 'dashboard.html', d)
 
         access_notification = form_profile.cleaned_data.get('access_notification')
-        if request.user.access_notification != access_notification:
-            new_data['access_notification'] = access_notification
-            current_data['email_access_notifications'] = request.user.access_notification
+        # if request.user.access_notification != access_notification:
+            # new_data['access_notification'] = access_notification
+            # current_data['email_access_notifications'] = request.user.access_notification
+
+        new_data['access_notification'] = access_notification
+        current_data['access_notification'] = request.user.access_notification
 
         # data was not changed
         if current_data == new_data or not new_data:

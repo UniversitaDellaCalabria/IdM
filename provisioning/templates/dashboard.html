@@ -45,11 +45,13 @@
   <div class="container">
         <h1>{% trans "Identity Management System" %}</h1>
         <h4>{% trans "Welcome " %} {{ request.user.username }}</h4>
+
         <p class="mb-5">{% trans "Here you can modify your profile" %} {% trans "A confirmation email will be also sent." %}</p>
         <div class="row">
             <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
+
                 <form method="post" action="{% url 'provisioning:change_deliveries' %}" class="needs-validation" novalidate>
-                    {% include "form_body.html" with form=form_delivery %}
+                    {% include "form_body.html" with form=dyn_form %}
 <!--
                     <h5>{% trans "Options" %}</h5>
 -->

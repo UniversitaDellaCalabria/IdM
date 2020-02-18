@@ -5,6 +5,7 @@ import uuid
 from django.core.mail import send_mail, mail_admins
 from django.conf import settings
 from django.db import models
+from django_form_builder.models import DynamicFieldMap
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -185,6 +186,7 @@ class AbstractProvisioning(models.Model):
 class IdentityProvisioning(AbstractProvisioning):
     identity = models.ForeignKey(Identity, on_delete=models.CASCADE)
     ldap_dn = models.CharField(max_length=254, blank=True, null=True)
+
     class Meta:
         verbose_name = _('Identity Account Creation token')
         verbose_name_plural = _('Identity Account Creation tokens')

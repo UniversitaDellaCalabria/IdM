@@ -1,4 +1,5 @@
 import os
+from collections import OrderedDict
 from . settingslocal import *
 
 #APP_NAME=settingslocal.APP_NAME
@@ -148,3 +149,13 @@ STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# form builder fields to build dashboard deliveries form
+DJANGO_FORM_BUILDER_FIELD = OrderedDict([
+                                ('mail', ('CustomCharField', {'label': 'Email',
+                                                              'required': True,
+                                                              'help_text': 'name.surname@testunical.it, comunque l\'email utilizzata in fase di registrazione. '}, '')),
+                                ('telephoneNumber', ('CustomCharField', {'label': 'Telefono',
+                                                                         'required': True,
+                                                                         'help_text': ''}, '')),
+                            ])

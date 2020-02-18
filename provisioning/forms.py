@@ -176,7 +176,7 @@ class PasswordResetForm(PasswordForm, IdentityEmailForm):#, IdentityTokenAskForm
                                max_length=64,
                                widget=_username_widget)
 
-    field_order = ['username', 'email', 'password', 'password2']
+    field_order = ['username', 'mail', 'password', 'password_verifica']
 
 
 class DeliveryForm(TelephoneForm, IdentityEmailForm):
