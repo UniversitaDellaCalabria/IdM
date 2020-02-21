@@ -63,12 +63,15 @@ DATA_CHANGED = {'title': DATA_CHANGED_TITLE,
                 'avviso': DATA_CHANGED_MSG,
                 'description': ""}
 
+USERNAME_SUCCESSIFULLY_CHANGED = {'title': DATA_CHANGED_TITLE,
+                                  'avviso': _('Your username has been successfully changed'),
+                                  'description': _('Please login with your new username')}
 CANNOT_CHANGE_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                          'avviso': _('You are not able to change your username'),
-                         'description': ''}
+                         'description': _('Contact the administrator')}
 NOT_YOUR_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                      'avviso': _('You have inserted a wrong actual username'),
-                     'description': ''}
+                     'description': _('Please, be carefoul')}
 ALREADY_CHANGED_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                             'avviso': _('You have already changed your username'),
                             'description': 'This is a one time operation'}

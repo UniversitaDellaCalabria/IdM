@@ -2,8 +2,9 @@ import json
 import logging
 
 from collections import OrderedDict
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django_form_builder.models import SavedFormContent
@@ -24,7 +25,7 @@ from . custom_messages import *
 from . decorators import *
 from . forms import *
 from . models import *
-from . utils import translate_to
+from . utils import change_user_username, translate_to
 
 from ldap_peoples.models import LdapAcademiaUser
 
@@ -323,27 +324,16 @@ def change_username(request, token_value=None):
                           INVALID_TOKEN_DISPLAY, status=403)
         data = json.loads(id_prov.new_data)
 
-        # Update Changed Username list
-        changed_username = ChangedUsername.objects.create()
-        changed_username.old_username = lu.uid
-        changed_username.new_username = data['uid']
-        changed_username.save()
-
-        # Update LDAP user uid
-        lu.uid = data['uid']
-        lu.save()
+        # Change username, uid and create a ChangedUsername record
+        change_user_username(user=request.user,
+                             lu=lu,
+                             new_username=data['uid'])
         id_prov.mark_as_used()
-
-        # Update Django user username
-        user = request.user
-        user.username = data['uid']
-        user.dn = lu.dn
-        user.save()
 
         # Logout and redirect to login page
         logout(request)
         messages.add_message(request, messages.SUCCESS,
-                             _("Please login with your new username"))
+                             settings.MESSAGES_TEMPLATE_3.format(**USERNAME_SUCCESSIFULLY_CHANGED))
         return redirect('provisioning:provisioning_login')
     elif request.method == 'GET':
         return render(request,
@@ -375,6 +365,13 @@ def change_username(request, token_value=None):
             if username_exists:
                 messages.add_message(request, messages.ERROR,
                                  settings.MESSAGES_TEMPLATE_3.format(**USERNAME_IN_BLACKLIST))
+                return redirect('provisioning:change_username')
+
+            # If username exists in Django users
+            username_exists = get_user_model().objects.filter(username=new_username)
+            if username_exists:
+                messages.add_message(request, messages.ERROR,
+                                     settings.MESSAGES_TEMPLATE_3.format(**USERNAME_IN_BLACKLIST))
                 return redirect('provisioning:change_username')
 
             # create token
