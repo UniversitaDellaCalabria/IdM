@@ -262,8 +262,6 @@ def change_deliveries(request, token_value=None):
         for k in form.cleaned_data:
             attr = getattr(lu, k)
             if isinstance(attr, list):
-                # Bug here?
-                # current_data[k] = attr[-1] if attr else []
                 current_data[k] = attr[0] if attr else []
             else:
                 current_data[k] = attr
@@ -274,12 +272,10 @@ def change_deliveries(request, token_value=None):
             return render(request, 'dashboard.html', d)
 
         access_notification = form_profile.cleaned_data.get('access_notification')
-        # if request.user.access_notification != access_notification:
-            # new_data['access_notification'] = access_notification
-            # current_data['email_access_notifications'] = request.user.access_notification
-
-        new_data['access_notification'] = access_notification
-        current_data['access_notification'] = request.user.access_notification
+        # Exclude processing if data aren't changed
+        if request.user.access_notification != access_notification:
+            new_data['access_notification'] = access_notification
+            current_data['access_notification'] = request.user.access_notification
 
         # data was not changed
         if current_data == new_data or not new_data:
@@ -298,7 +294,7 @@ def change_deliveries(request, token_value=None):
             id_change_conf.send_email(ldap_user=lu,
                                       lang=request.LANGUAGE_CODE)
         messages.add_message(request, messages.SUCCESS,
-                             settings.MESSAGES_TEMPLATE_3.format(**CONFIRMATION_EMAIL))
+                             settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**CONFIRMATION_EMAIL))
         return redirect('provisioning:dashboard')
     else:
         return render(request,
@@ -313,6 +309,10 @@ def change_username(request, token_value=None):
         return render(request,
                       'custom_message.html',
                       CANNOT_CHANGE_USERNAME, status=403)
+    if ChangedUsername.objects.filter(new_username=request.user.username):
+        return render(request,
+                      'custom_message.html',
+                      ALREADY_CHANGED_USERNAME, status=403)
     lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
     if request.method == 'GET' and token_value:
         # check token validity and commit changes
@@ -333,7 +333,7 @@ def change_username(request, token_value=None):
         # Logout and redirect to login page
         logout(request)
         messages.add_message(request, messages.SUCCESS,
-                             settings.MESSAGES_TEMPLATE_3.format(**USERNAME_SUCCESSIFULLY_CHANGED))
+                             settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**USERNAME_SUCCESSIFULLY_CHANGED))
         return redirect('provisioning:provisioning_login')
     elif request.method == 'GET':
         return render(request,
@@ -345,34 +345,26 @@ def change_username(request, token_value=None):
             old_username = request.POST['old_username']
             new_username = request.POST['new_username']
 
-            # If lu.uid and user.username don't match
             user_username_match = old_username == request.user.username
             lu_uid_match = old_username == lu.uid
+
+            _err_msg = None
+            # If lu.uid and user.username don't match
             if not user_username_match or not lu_uid_match:
-                messages.add_message(request, messages.ERROR,
-                                 settings.MESSAGES_TEMPLATE_3.format(**NOT_YOUR_USERNAME))
-                return redirect('provisioning:change_username')
-
+                _err_msg = settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**NOT_YOUR_USERNAME)
             # If user has already changed
-            already_changed = ChangedUsername.objects.filter(new_username=lu.uid)
-            if already_changed:
-                messages.add_message(request, messages.ERROR,
-                                 settings.MESSAGES_TEMPLATE_3.format(**ALREADY_CHANGED_USERNAME))
-                return redirect('provisioning:change_username')
-
+            elif ChangedUsername.objects.filter(new_username=lu.uid):
+                _err_msg = settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**ALREADY_CHANGED_USERNAME)
             # If new username is in blacklist
-            username_exists = ChangedUsername.objects.filter(old_username=new_username)
-            if username_exists:
-                messages.add_message(request, messages.ERROR,
-                                 settings.MESSAGES_TEMPLATE_3.format(**USERNAME_IN_BLACKLIST))
+            elif ChangedUsername.objects.filter(old_username=new_username):
+                _err_msg = settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**USERNAME_IN_BLACKLIST)
+            # If username exists in Django users
+            elif get_user_model().objects.filter(username=new_username):
+                _err_msg = settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**USERNAME_IN_BLACKLIST)
+            if _err_msg:
+                messages.add_message(request, messages.ERROR, _err_msg)
                 return redirect('provisioning:change_username')
 
-            # If username exists in Django users
-            username_exists = get_user_model().objects.filter(username=new_username)
-            if username_exists:
-                messages.add_message(request, messages.ERROR,
-                                     settings.MESSAGES_TEMPLATE_3.format(**USERNAME_IN_BLACKLIST))
-                return redirect('provisioning:change_username')
 
             # create token
             current_data = {'uid': lu.uid}
@@ -389,7 +381,7 @@ def change_username(request, token_value=None):
                 id_change_conf.send_email(ldap_user=lu,
                                           lang=request.LANGUAGE_CODE)
             messages.add_message(request, messages.SUCCESS,
-                                 settings.MESSAGES_TEMPLATE_3.format(**CONFIRMATION_EMAIL))
+                                 settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**CONFIRMATION_EMAIL))
             return redirect('provisioning:dashboard')
         for k,v in get_labeled_errors(form).items():
             messages.add_message(request, messages.ERROR,
@@ -450,7 +442,7 @@ def change_password(request):
         return redirect('provisioning:dashboard')
     if lu.check_pwdHistory(form.cleaned_data['password']):
         messages.add_message(request, messages.ERROR,
-                             settings.MESSAGES_TEMPLATE_3.format(**PASSWORD_ALREADYUSED))
+                             settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**PASSWORD_ALREADYUSED))
         return redirect('provisioning:dashboard')
     try:
         lu.set_password(password = form.cleaned_data['password'],
@@ -462,7 +454,7 @@ def change_password(request):
     lu.reset_schacExpiryDate()
     send_email_password_changed(lu, request)
     messages.add_message(request, messages.SUCCESS,
-                         settings.MESSAGES_TEMPLATE_2.format(**PASSWORD_CHANGED))
+                         settings.MESSAGES_ALERT_TEMPLATE.format(**PASSWORD_CHANGED))
     return redirect('provisioning:dashboard')
 
 
@@ -501,7 +493,7 @@ def reset_password_ask(request):
                                 lang=request.LANGUAGE_CODE)
         logger.info('{} asked for a Password reset'.format(lu.uid))
     messages.add_message(request, messages.SUCCESS,
-                         settings.MESSAGES_TEMPLATE_3.format(**PASSWORD_ASK_RESET))
+                         settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**PASSWORD_ASK_RESET))
     return redirect('provisioning:home')
 
 

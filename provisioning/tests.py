@@ -9,6 +9,7 @@ from django.urls import reverse
 from identity.models import Identity, AdditionalAffiliation
 from ldap_peoples.models import LdapAcademiaUser
 
+from .custom_messages import *
 from .models import *
 from .utils import get_date_from_string
 
@@ -84,7 +85,8 @@ class ProvisioningTestCase(TestCase):
         lurl = reverse('provisioning:provisioning_login')
         request = c.post(lurl, {'username': _uid,
                                 'password': _passwd})
-        self.assertEqual(int(request.status_code), 302)
+        # self.assertEqual(int(request.status_code), 302)
+        self.assertEqual(request.status_code, 302)
 
     # def test_c_password_change(self):
         """test a password change with confirmation"""
@@ -98,7 +100,8 @@ class ProvisioningTestCase(TestCase):
         request = c.post(lurl, {'old_password': _passwd,
                                 'password': _passwd+_passwd,
                                 'password_verifica': _passwd+_passwd})
-        self.assertIs(request.status_code, 200)
+        # self.assertEqual(request.status_code, 200)
+        self.assertEqual(request.status_code, 302)
 
     # def test_d_changedata(self):
         """test account change deliveries data"""
@@ -111,7 +114,8 @@ class ProvisioningTestCase(TestCase):
         lurl = reverse('provisioning:change_deliveries')
         request = c.post(lurl, {'mail': 'ingo_'+_test_guy['email'],
                                 'telephoneNumber': '0984567683'})
-        self.assertEqual(request.status_code, 200)
+        # self.assertEqual(request.status_code, 200)
+        self.assertEqual(request.status_code, 302)
         check = (b'errorlist' in request.content)
         # if check:
             # print(bs(request.content, features="html.parser").prettify()[:_MAX_HTML_PAGE_LEN])
@@ -129,7 +133,8 @@ class ProvisioningTestCase(TestCase):
         lurl = reverse('provisioning:reset_password_ask')
         request = c.post(lurl, {'username': _uid,
                                 'mail': 'ingo_'+_test_guy['email']})
-        self.assertEqual(request.status_code, 200)
+        # self.assertEqual(request.status_code, 200)
+        self.assertEqual(request.status_code, 302)
         p = IdentityLdapPasswordReset.objects.filter(ldap_dn=d.dn).last()
         token_url = p.get_activation_url()
         request = c.post(token_url, {'username': _uid,
@@ -149,3 +154,6 @@ class ProvisioningTestCase(TestCase):
             print('{}: {}'.format(k, v))
         if _PURGE_LDAP_TEST_USER:
             d.delete()
+
+    # def test_change_username_permission(self):
+
