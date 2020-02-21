@@ -50,6 +50,9 @@ class AbstractProvisioning(models.Model):
                            kwargs={'token_value': self.token })
 
         elif hasattr(self, 'ldap_dn') and hasattr(self, 'current_data'):
+            if 'uid' in self.current_data:
+                return reverse('provisioning:change_username_confirm',
+                               kwargs={'token_value': self.token})
             return reverse('provisioning:change_deliveries_confirm',
                            kwargs={'token_value': self.token})
 

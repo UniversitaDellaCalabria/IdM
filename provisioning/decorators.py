@@ -10,6 +10,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from ldap_peoples.models import LdapAcademiaUser
 
+from . custom_messages import CANNOT_CHANGE_USERNAME
+
 
 def valid_ldap_user(func_to_decorate):
     def new_func(*original_args, **original_kwargs):

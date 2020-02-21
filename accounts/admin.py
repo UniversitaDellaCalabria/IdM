@@ -15,7 +15,9 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': (('dn'),
                            ('username', 'is_active', 'is_staff', 'is_superuser', ),
                            ('password'),
+
                            )}),
+        (_('Change username'), {'fields': (('change_username'),)}),
         (_('Personal data'), {'fields': (( 'first_name', 'last_name'),
                                          ( 'email'),
                                          ('codice_fiscale',),

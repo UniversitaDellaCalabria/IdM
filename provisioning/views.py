@@ -13,6 +13,7 @@ from django.http import (HttpResponse,
                          HttpResponseForbidden,
                          HttpResponseRedirect,
                          HttpResponseNotFound)
+from django.db.models import Q
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
@@ -307,18 +308,96 @@ def change_deliveries(request, token_value=None):
 @login_required
 @valid_ldap_user
 def change_username(request, token_value=None):
+    if not request.user.change_username:
+        return render(request,
+                      'custom_message.html',
+                      CANNOT_CHANGE_USERNAME, status=403)
     lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
     if request.method == 'GET' and token_value:
-        return render(request,
-                      'provisioning_change_username.html')
+        # check token validity and commit changes
+        id_prov = get_object_or_404(IdentityLdapChangeConfirmation,
+                                    token=token_value)
+        if not id_prov.token_valid():
+            return render(request,
+                          'custom_message.html',
+                          INVALID_TOKEN_DISPLAY, status=403)
+        data = json.loads(id_prov.new_data)
+
+        # Update Changed Username list
+        changed_username = ChangedUsername.objects.create()
+        changed_username.old_username = lu.uid
+        changed_username.new_username = data['uid']
+        changed_username.save()
+
+        # Update LDAP user uid
+        lu.uid = data['uid']
+        lu.save()
+        id_prov.mark_as_used()
+
+        # Update Django user username
+        user = request.user
+        user.username = data['uid']
+        user.dn = lu.dn
+        user.save()
+
+        # Logout and redirect to login page
+        logout(request)
+        messages.add_message(request, messages.SUCCESS,
+                             _("Please login with your new username"))
+        return redirect('provisioning:provisioning_login')
     elif request.method == 'GET':
         return render(request,
                       'provisioning_change_username.html',
                       dict(change_username_form=IdentityUsernameChangeForm()))
     elif request.method == 'POST':
         form = IdentityUsernameChangeForm(request.POST)
-        return render(request,
-                      'provisioning_change_username.html')
+        if form.is_valid():
+            old_username = request.POST['old_username']
+            new_username = request.POST['new_username']
+
+            # If lu.uid and user.username don't match
+            user_username_match = old_username == request.user.username
+            lu_uid_match = old_username == lu.uid
+            if not user_username_match or not lu_uid_match:
+                messages.add_message(request, messages.ERROR,
+                                 settings.MESSAGES_TEMPLATE_3.format(**NOT_YOUR_USERNAME))
+                return redirect('provisioning:change_username')
+
+            # If user has already changed
+            already_changed = ChangedUsername.objects.filter(new_username=lu.uid)
+            if already_changed:
+                messages.add_message(request, messages.ERROR,
+                                 settings.MESSAGES_TEMPLATE_3.format(**ALREADY_CHANGED_USERNAME))
+                return redirect('provisioning:change_username')
+
+            # If new username is in blacklist
+            username_exists = ChangedUsername.objects.filter(old_username=new_username)
+            if username_exists:
+                messages.add_message(request, messages.ERROR,
+                                 settings.MESSAGES_TEMPLATE_3.format(**USERNAME_IN_BLACKLIST))
+                return redirect('provisioning:change_username')
+
+            # create token
+            current_data = {'uid': lu.uid}
+            new_data = {'uid': request.POST['new_username']}
+            data = dict(ldap_dn = lu.dn,
+                        is_active = True,
+                        current_data = json.dumps(current_data),
+                        new_data = json.dumps(new_data))
+            data_check = {k:v for k,v in data.items()}
+            id_change_conf = IdentityLdapChangeConfirmation.objects.filter(**data_check).first()
+            if not id_change_conf or not id_change_conf.token_valid():
+                id_change_conf = IdentityLdapChangeConfirmation.objects.create(**data)
+                # send_email here. Only on creation
+                id_change_conf.send_email(ldap_user=lu,
+                                          lang=request.LANGUAGE_CODE)
+            messages.add_message(request, messages.SUCCESS,
+                                 settings.MESSAGES_TEMPLATE_3.format(**CONFIRMATION_EMAIL))
+            return redirect('provisioning:dashboard')
+        for k,v in get_labeled_errors(form).items():
+            messages.add_message(request, messages.ERROR,
+                                 "<b>{}</b>: {}".format(k, strip_tags(v)))
+        return redirect('provisioning:change_username')
 
 
 def send_email_password_changed(lu, request):

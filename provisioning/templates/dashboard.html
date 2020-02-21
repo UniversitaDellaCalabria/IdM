@@ -73,7 +73,7 @@
                     </div>
 
                     {% username_changeable request as uc %}
-                    {% if uc %}
+                    {% if request.user.change_username and uc %}
                     <div class="form-check form-check-group  text-left">
                         <div class="toggles">
                             <label>

@@ -26,6 +26,8 @@ class User(AbstractUser):
     birth_date = models.DateField('Date of birth', null=True, blank=True)
     access_notification = models.BooleanField(_('Send Email notification accesses'), default=True,
                                               help_text="enable email send")
+    change_username = models.BooleanField(_('Allow user to change his username'),
+                                          default=False)
 
     class Meta:
         ordering = ['username']

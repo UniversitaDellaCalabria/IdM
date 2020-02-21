@@ -1,6 +1,9 @@
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+
+INVALID_OPERATION_DISPLAY_TITLE = _("Invalid Action")
+
 INVALID_ACCESS_DISPLAY_TITLE = _("Invalid Access")
 INVALID_ACCESS_DISPLAY_MSG = _("You tried to access this resource "
                                "directly. Try to do login first.")
@@ -59,6 +62,19 @@ DATA_CHANGED_MSG = _("Now you can come back to your Dashboard.")
 DATA_CHANGED = {'title': DATA_CHANGED_TITLE,
                 'avviso': DATA_CHANGED_MSG,
                 'description': ""}
+
+CANNOT_CHANGE_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
+                         'avviso': _('You are not able to change your username'),
+                         'description': ''}
+NOT_YOUR_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
+                     'avviso': _('You have inserted a wrong actual username'),
+                     'description': ''}
+ALREADY_CHANGED_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
+                            'avviso': _('You have already changed your username'),
+                            'description': 'This is a one time operation'}
+USERNAME_IN_BLACKLIST = {'title': INVALID_OPERATION_DISPLAY_TITLE,
+                         'avviso': _('You have choose a blacklisted or already used username'),
+                         'description': 'Please, choose another'}
 
 CONFIRMATION_EMAIL_TITLE = _("A confirmation email was sent")
 CONFIRMATION_EMAIL_MSG = _("You have {} minutes to confirm your request")
