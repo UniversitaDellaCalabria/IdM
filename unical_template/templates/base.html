@@ -17,6 +17,10 @@ bootstrap-italia-base.html BI Base
 <link rel="stylesheet" href="{% static 'css/idm.css' %}" type="text/css" />
 {% endblock extra_head %}
 
+{% block page_title %}
+Unical - Identity Manager
+{% endblock page_title %}
+
 {% block menu_links %}
 <li class="nav-item active">
     <a class="nav-link" href="{% login_url %}" data-attribute="forward" class="forward" aria-hidden="true">
