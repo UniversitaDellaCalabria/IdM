@@ -176,18 +176,3 @@ CUSTOM_WIDGETS = {
     # 'CustomSelectBoxField': 'django.forms.widgets.Select',
     # 'CustomRadioBoxField': 'django.forms.widgets.RadioSelect',
 }
-
-DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
-     ('mail', ('CustomEmailField', {'label': 'Email',
-                                    'required': True,
-                                    'help_text': 'name.surname@testunical.it, comunque l\'email utilizzata in fase di registrazione. '}, '')),
-     ('telephoneNumber', ('CustomCharField', {'label': 'Telefono',
-                                              'required': True,
-                                              'help_text': ''}, '')),
-     ('campo_data', ('DateStartEndComplexField', {'label': 'Campo data',
-                                                'required': True,
-                                                'help_text': ''}, '')),
-     ('campo_protocollo', ('ProtocolloField', {'label': 'Campo data',
-                                                'required': True,
-                                                'help_text': ''}, '')),
- ])
