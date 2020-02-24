@@ -197,6 +197,9 @@ def dashboard(request):
         dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
                                                   constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                                   ignore_format_field_name=True)
+        for f in dyn_form.fields:
+            print(dyn_form.fields[f].__dict__)
+            print(dyn_form.fields[f].widget)
         d = {'form_delivery': dyn_form,
              'form_password': PasswordChangeForm(),
              'form_profile': ProfileForm(initial={'access_notification': \
@@ -254,6 +257,9 @@ def change_deliveries(request, token_value=None):
              'attrs': get_ldapuser_aai_html_attrs(lu)}
 
         if not form.is_valid():
+            for k,v in get_labeled_errors(form).items():
+                messages.add_message(request, messages.ERROR,
+                                     "<b>{}</b>: {}".format(k, strip_tags(v)))
             return render(request, 'dashboard.html', d)
 
         # create token

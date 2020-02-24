@@ -1,39 +1,56 @@
+{% load provisioning_tags %}
 {% load static %}
 
 {% csrf_token %}
 <div>
-{% for field in form %}
-    <div class="form-group">
-        <input type="{{ field.field.widget.input_type }}"
-               class="form-control {% if field.field.widget.input_type == 'password' %}input-password{% endif %}"
-               name="{{ field.html_name }}"
-               {% if field.value %}
-                    value="{{ field.value }}"
+    {% for field in form %}
+        {% if field|field_type == "BootstrapItaliaDateWidget" %}
+            <div class="it-datepicker-wrapper">
+        {% endif %}
+        {% if field|field_type == "Select" %}
+            <div class="bootstrap-select-wrapper form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% else %}
+        <div class="form-group">
+            <input type="{{ field.field.widget.input_type }}"
+                   class="form-control
+                         {% if field.field.widget.input_type == 'password' %}input-password {% endif %}
+                         {% if field|field_type == 'BootstrapItaliaDateWidget' %}it-date-datepicker{% endif %}"
+                   name="{{ field.html_name }}"
+                   id="id_{{ field.html_name }}"
+                   {% if field.value %}
+                        value="{{ field.value }}"
+                   {% endif %}
+                   {% if field.field.required %} required {% endif %}>
+            {% if field.field.widget.input_type == 'password' %}
+                <span class="password-icon" aria-hidden="true">
+                    <svg class="password-icon-visible icon icon-sm">
+                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-password-visible"></use>
+                    </svg>
+                    <svg class="password-icon-invisible icon icon-sm d-none">
+                        <use xlink:href="{% static 'svg/sprite.svg' %}#it-password-invisible"></use>
+                    </svg>
+                </span>
                 {% endif %}
-                {% if field.field.required %}
-                    required
-                {% endif %}>
-        {% if field.field.widget.input_type == 'password' %}
-        <span class="password-icon" aria-hidden="true">
-            <svg class="password-icon-visible icon icon-sm">
-                <use xlink:href="{% static 'svg/sprite.svg' %}#it-password-visible"></use>
-            </svg>
-            <svg class="password-icon-invisible icon icon-sm d-none">
-                <use xlink:href="{% static 'svg/sprite.svg' %}#it-password-invisible"></use>
-            </svg>
-        </span>
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% if field.help_text %}
+                    <small class="form-text text-muted text-left">
+                        {{ field.help_text }}
+                    </small>
+                {% endif %}
+                {% if field.help_text %}<div class="mt-4">{% endif %}
+                    {% if field.errors %}
+                        <small class="text-danger text-left">
+                            {{ field.errors }}
+                        </small>
+                    {% endif %}
+                {% if field.help_text %}</div>{% endif %}
+            </div>
         {% endif %}
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {% if field.help_text %}
-        <small class="form-text text-muted text-left">
-            {{ field.help_text }}
-        </small>
-        {% endif %}
-        {% if field.errors %}
-        <small class="text-danger text-left">
-            {{ field.errors }}
-        </small>
-    {% endif %}
-    </div>
-{% endfor %}
+        {% if field|field_type == "BootstrapItaliaDateWidget" %}
+            </div>
+            {% endif %}
+    {% endfor %}
 </div>

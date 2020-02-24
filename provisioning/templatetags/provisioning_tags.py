@@ -19,3 +19,7 @@ def username_changeable(request):
         return False
     else:
         return True
+
+@register.filter(name='field_type')
+def field_type(field):
+    return field.field.widget.__class__.__name__

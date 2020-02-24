@@ -155,3 +155,8 @@
 </section>
 <!-- contact section -->
 {% endblock container_content %}
+
+{% block extra_scripts %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
+{% endblock extra_scripts %}

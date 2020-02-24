@@ -166,6 +166,17 @@ MESSAGES_ALERT_TEMPLATE_DESC = MESSAGES_ALERT_TEMPLATE.replace("<!-- slot -->",
                     <p class='mb-0'>{description}</p>
                     """)
 # form builder fields to build dashboard deliveries form
+CUSTOM_WIDGETS = {
+    'BaseDateField': 'bootstrap_italia_template.widgets.BootstrapItaliaDateWidget',
+    # 'BaseDateTimeField': 'bootstrap_italia_template.widgets.BootstrapItaliaTimeWidget',
+    #'CustomSelectBoxField': 'bootstrap_italia_template.widgets.BootstrapItaliaSelectWidget',
+    'CustomRadioBoxField': 'bootstrap_italia_template.widgets.BootstrapItaliaRadioWidget',
+    # 'BaseDateField': 'django.forms.widgets.DateInput',
+    # 'DateField': 'django.forms.widgets.DateInput',
+    # 'CustomSelectBoxField': 'django.forms.widgets.Select',
+    # 'CustomRadioBoxField': 'django.forms.widgets.RadioSelect',
+}
+
 DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
      ('mail', ('CustomEmailField', {'label': 'Email',
                                     'required': True,
@@ -173,4 +184,10 @@ DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
      ('telephoneNumber', ('CustomCharField', {'label': 'Telefono',
                                               'required': True,
                                               'help_text': ''}, '')),
+     ('campo_data', ('DateStartEndComplexField', {'label': 'Campo data',
+                                                'required': True,
+                                                'help_text': ''}, '')),
+     ('campo_protocollo', ('ProtocolloField', {'label': 'Campo data',
+                                                'required': True,
+                                                'help_text': ''}, '')),
  ])
