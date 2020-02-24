@@ -305,14 +305,14 @@ def change_deliveries(request, token_value=None):
 @login_required
 @valid_ldap_user
 def change_username(request, token_value=None):
+    _err_msg = None
     if not request.user.change_username:
-        return render(request,
-                      'custom_message.html',
-                      CANNOT_CHANGE_USERNAME, status=403)
-    if ChangedUsername.objects.filter(new_username=request.user.username):
-        return render(request,
-                      'custom_message.html',
-                      ALREADY_CHANGED_USERNAME, status=403)
+        _err_msg = CANNOT_CHANGE_USERNAME
+    elif ChangedUsername.objects.filter(new_username=request.user.username):
+        _err_msg = ALREADY_CHANGED_USERNAME
+    if _err_msg:
+        return render(request, 'custom_message.html', _err_msg, status=403)
+
     lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
     if request.method == 'GET' and token_value:
         # check token validity and commit changes
@@ -364,7 +364,6 @@ def change_username(request, token_value=None):
             if _err_msg:
                 messages.add_message(request, messages.ERROR, _err_msg)
                 return redirect('provisioning:change_username')
-
 
             # create token
             current_data = {'uid': lu.uid}
@@ -427,8 +426,8 @@ def change_password(request):
     if lu.telephoneNumber:
         delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
     dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
-                                                  constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
-                                                  ignore_format_field_name=True)
+                                              constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
+                                              ignore_format_field_name=True)
 
     d = {'form_delivery': dyn_form,
          'form_password': form,

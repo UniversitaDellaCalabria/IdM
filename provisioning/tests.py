@@ -2,6 +2,7 @@ import time
 
 from bs4 import BeautifulSoup as bs
 
+from django.apps import apps
 from django.conf import settings
 from django.test import TestCase, Client
 from django.urls import reverse
@@ -67,7 +68,8 @@ class ProvisioningTestCase(TestCase):
                                      'password': _passwd,
                                      'password_verifica': _passwd,
                                      'mail': _test_guy['email']})
-        check = (b'errorlist' in request.content)
+        # check = (b'errorlist' in request.content)
+        check = (b'alert-error' in request.content)
         if check:
             print(bs(request.content, features="html.parser").prettify()[:_MAX_HTML_PAGE_LEN])
         self.assertIs(check, False)
@@ -99,9 +101,11 @@ class ProvisioningTestCase(TestCase):
         lurl = reverse('provisioning:change_password')
         request = c.post(lurl, {'old_password': _passwd,
                                 'password': _passwd+_passwd,
-                                'password_verifica': _passwd+_passwd})
-        # self.assertEqual(request.status_code, 200)
-        self.assertEqual(request.status_code, 302)
+                                'password_verifica': _passwd+_passwd},
+                         follow=True)
+        self.assertEqual(request.status_code, 200)
+        check = (b'alert-error' in request.content)
+        self.assertFalse(check)
 
     # def test_d_changedata(self):
         """test account change deliveries data"""
@@ -147,13 +151,83 @@ class ProvisioningTestCase(TestCase):
         if _WAIT_FOR_A_CHECK:
             time.sleep(6000)
 
-    # def test_d_clean(self):
-        """cleanup"""
+    # def test_change_username(self):
+        user_model = apps.get_model(settings.AUTH_USER_MODEL)
+        django_user = user_model.objects.get(username=_uid)
+        self.assertFalse(django_user.change_username)
+        c = Client()
+
+        # login
+        lurl = reverse('provisioning:provisioning_login')
+        request = c.post(lurl, {'username': _uid,
+                                'password': _passwd+_passwd})
+        self.assertEqual(request.status_code, 302)
+
+        # try to access to change username page (fails!)
+        change_username_url = reverse('provisioning:change_username')
+        request = c.get(change_username_url, follow=True)
+        self.assertEqual(request.status_code, 403)
+
+        # update change_username to True
+        django_user.change_username = True
+        django_user.save()
+        assert django_user.change_username
+
+        # try to access to change username page (success!)
+        change_username_url = reverse('provisioning:change_username')
+        request = c.get(change_username_url)
+        self.assertEqual(request.status_code, 200)
+
+        # create a blacklisted username
+        _blacklisted = 'blacklisted'
+        ChangedUsername.objects.create(old_username=_blacklisted,
+                                       new_username='')
+
+        # choose a blacklisted new username
+        lurl = reverse('provisioning:change_username')
+        _new_uid = _uid + '_new'
+        request = c.post(lurl, {'old_username': _uid,
+                                'new_username': _blacklisted,
+                                'confirm_new_username': _blacklisted},
+                         follow=True)
+        check = (b'alert-error' in request.content)
+        self.assertEqual(request.status_code, 200)
+        assert check
+
+        # choose a valid new username
+        lurl = reverse('provisioning:change_username')
+        _new_uid = _uid + '_new'
+        request = c.post(lurl, {'old_username': _uid,
+                                'new_username': _new_uid,
+                                'confirm_new_username': _new_uid},
+                         follow=True)
+        self.assertEqual(request.status_code, 200)
+        # check = (b'errorlist' in request.content)
+        check = (b'alert-error' in request.content)
+
+        # check change token
         d = LdapAcademiaUser.objects.filter(uid=_uid).first()
+        p = IdentityLdapChangeConfirmation.objects.filter(ldap_dn=d.dn).last()
+        token_url = p.get_activation_url()
+        request = c.get(token_url, follow=True)
+        self.assertIs(request.status_code, 200)
+
+        # login
+        lurl = reverse('provisioning:provisioning_login')
+        request = c.post(lurl, {'username': _new_uid,
+                                'password': _passwd+_passwd})
+        self.assertEqual(request.status_code, 302)
+
+        # try to access to change username page
+        # fails: username can be changed only one time
+        change_username_url = reverse('provisioning:change_username')
+        request = c.get(change_username_url, follow=True)
+        self.assertEqual(request.status_code, 403)
+
+    # def test_d_clean(self):
+        # """cleanup"""
+        d = LdapAcademiaUser.objects.filter(uid=_new_uid).first()
         for k,v in d.__dict__.items():
             print('{}: {}'.format(k, v))
         if _PURGE_LDAP_TEST_USER:
             d.delete()
-
-    # def test_change_username_permission(self):
-
