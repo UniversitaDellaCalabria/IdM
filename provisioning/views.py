@@ -197,9 +197,6 @@ def dashboard(request):
         dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
                                                   constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                                   ignore_format_field_name=True)
-        for f in dyn_form.fields:
-            print(dyn_form.fields[f].__dict__)
-            print(dyn_form.fields[f].widget)
         d = {'form_delivery': dyn_form,
              'form_password': PasswordChangeForm(),
              'form_profile': ProfileForm(initial={'access_notification': \
@@ -266,7 +263,8 @@ def change_deliveries(request, token_value=None):
         current_data = {}
         new_data = {k:v for k,v in form.cleaned_data.items()}
         for k in form.cleaned_data:
-            attr = getattr(lu, k)
+            if hasattr(lu, k): attr = getattr(lu, k)
+            else: del new_data[k]
             if isinstance(attr, list):
                 current_data[k] = attr[0] if attr else []
             else:
