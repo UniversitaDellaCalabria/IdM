@@ -1,6 +1,8 @@
 import ldap
 import os
 
+from collections import OrderedDict
+
 APP_NAME = 'Unical ID'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
