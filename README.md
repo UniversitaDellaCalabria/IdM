@@ -96,3 +96,8 @@ coverage report -m
 
 - Giuseppe De Marco - giuseppe.demarco@unical.it
 - Francesco Filicetti - francesco.filicetti@unical.it
+
+# Gallery
+
+![Home](unical_template/static/images/img1.png)
+_**Landing page_
