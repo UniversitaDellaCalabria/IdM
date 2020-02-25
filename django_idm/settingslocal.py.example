@@ -21,6 +21,8 @@ ALLOWED_HOSTS = [HOSTNAME,
 
 LOGIN_REDIRECT_URL = '/dashboard'
 
+PROVISONING_REQUEST_ID_APPNAME = 'request_identity'
+
 # Application definition
 INSTALLED_APPS = [
     # customizzazione gestione degli utenti
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'provisioning',
 
     'cineca_repl',
+    #PROVISONING_REQUEST_ID_APPNAME,
 ]
 
 if 'saml2_sp' in INSTALLED_APPS or \
@@ -261,6 +264,7 @@ LOGGING = {
 NOSE_ARGS = ['--nocapture',
              '--nologcapture',]
 
+
 DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
      ('mail', ('CustomEmailField', {'label': 'Email',
                                     'required': True,
@@ -268,10 +272,10 @@ DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
      ('telephoneNumber', ('CustomCharField', {'label': 'Telefono',
                                               'required': True,
                                               'help_text': ''}, '')),
-     # ('campo_data', ('DateStartEndComplexField', {'label': 'Campo data',
-                                                # 'required': True,
-                                                # 'help_text': ''}, '')),
-     # ('campo_protocollo', ('ProtocolloField', {'label': 'Campo data',
-                                                # 'required': True,
-                                                # 'help_text': ''}, '')),
+     ('cn', ('CustomCharField', {'label': 'Common name',
+                                          'required': True,
+                                          'help_text': ''}, '')),
+     ('displayName', ('CustomCharField', {'label': 'Display name',
+                                          'required': True,
+                                          'help_text': ''}, '')),
  ])

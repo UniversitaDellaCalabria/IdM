@@ -35,15 +35,15 @@ urlpatterns = [
     ),
 
     path(
-        'change/deliveries/',
-        change_deliveries,
-        name='change_deliveries',
+        'change/data/',
+        change_data,
+        name='change_data',
     ),
 
     path(
-        'change/deliveries/<uuid:token_value>',
-        change_deliveries,
-        name='change_deliveries_confirm',
+        'change/data/<uuid:token_value>',
+        change_data,
+        name='change_data_confirm',
     ),
 
     path(
@@ -60,9 +60,9 @@ urlpatterns = [
 
 
     # re_path(
-        # r'^change/deliveries/(?P<token_value>[0-9a-fA-F]{32}\Z)?/?$',
-        # change_deliveries,
-        # name='change_deliveries'),
+        # r'^change/data/(?P<token_value>[0-9a-fA-F]{32}\Z)?/?$',
+        # change_data,
+        # name='change_data'),
 
     path(
         'renew/password',

@@ -211,7 +211,7 @@ def dashboard(request):
 
 @login_required
 @valid_ldap_user
-def change_deliveries(request, token_value=None):
+def change_data(request, token_value=None):
     lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
     if request.method == 'GET' and token_value:
         # check token validity and commit changes
@@ -299,9 +299,12 @@ def change_deliveries(request, token_value=None):
             # send_email here. Only on creation
             id_change_conf.send_email(ldap_user=lu,
                                       lang=request.LANGUAGE_CODE)
-        messages.add_message(request, messages.SUCCESS,
-                             settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**CONFIRMATION_EMAIL))
-        return redirect('provisioning:dashboard')
+        # messages.add_message(request, messages.SUCCESS,
+                             # settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**CONFIRMATION_EMAIL))
+        # return redirect('provisioning:dashboard')
+        return render(request,
+                      'custom_message.html',
+                      CONFIRMATION_EMAIL)
     else:
         return render(request,
                       'custom_message.html',

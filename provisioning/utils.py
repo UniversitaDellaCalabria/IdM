@@ -54,8 +54,9 @@ def get_ldapuser_attrs_from_formbuilder_conf(lu):
     if not lu: return {}
     if not hasattr(settings, 'DJANGO_FORM_BUILDER_FIELDS'): return {}
     delivery_dict = {}
-    for k in settings.DJANGO_FORM_BUILDER_FIELDS:
-        if hasattr(lu, k):
-            attr = getattr(lu, k)
-            delivery_dict[k] = attr[0] if isinstance(attr, list) else attr
+    for field_name in settings.DJANGO_FORM_BUILDER_FIELDS:
+        if hasattr(lu, field_name):
+            attr = getattr(lu, field_name, None)
+            if not attr: continue
+            delivery_dict[field_name] = attr[0] if isinstance(attr, list) else attr
     return delivery_dict

@@ -108,18 +108,18 @@ class ProvisioningTestCase(TestCase):
         self.assertFalse(check)
 
     # def test_d_changedata(self):
-        """test account change deliveries data"""
+        """test account change identity data"""
         c = Client()
         lurl = reverse('provisioning:provisioning_login')
         request = c.post(lurl, {'username': _uid,
                                 'password': _passwd+_passwd})
         self.assertEqual(request.status_code, 302)
 
-        lurl = reverse('provisioning:change_deliveries')
+        lurl = reverse('provisioning:change_data')
         request = c.post(lurl, {'mail': 'ingo_'+_test_guy['email'],
                                 'telephoneNumber': '0984567683'})
-        # self.assertEqual(request.status_code, 200)
-        self.assertEqual(request.status_code, 302)
+        self.assertEqual(request.status_code, 200)
+        #self.assertEqual(request.status_code, 302)
         check = (b'errorlist' in request.content)
         # if check:
             # print(bs(request.content, features="html.parser").prettify()[:_MAX_HTML_PAGE_LEN])

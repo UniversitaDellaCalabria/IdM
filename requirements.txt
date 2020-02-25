@@ -15,7 +15,8 @@ git+https://github.com/italia/design-django-theme.git
 git+https://github.com/UniversitaDellaCalabria/django-unical-agid-template.git
 
 #Django form builder
-git+https://github.com/UniversitaDellaCalabria/django-form-builder.git
+#git+https://github.com/UniversitaDellaCalabria/django-form-builder.git
+django-form-builder>=0.8.0
 
 # ldap storage
 # apt install libsasl2-dev python3-dev libldap2-dev libssl-dev
