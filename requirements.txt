@@ -10,6 +10,8 @@ passlib
 git+https://github.com/peppelinux/pySSHA-slapd.git
 
 #Bootstrap Italia + Unical template
+sass
+django-sass-processor
 django_compressor
 git+https://github.com/italia/design-django-theme.git
 git+https://github.com/UniversitaDellaCalabria/django-unical-agid-template.git
@@ -41,4 +43,3 @@ sqlalchemy
 
 # tests
 BeautifulSoup4
-

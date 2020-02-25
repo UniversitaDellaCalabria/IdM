@@ -1,6 +1,12 @@
 CHANGELOG
 ---------
 
+v1.0.0-rc
+---------
+
+- Create a "request a new identity" example procedure, overloadable in `settingslocal.py`
+- Create a Saml2 federation with a django login signal to link to existing account based on the TIN identifier (Taxpayer Identifucation Number)
+
 v0.8.0
 ------
 
