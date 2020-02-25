@@ -25,7 +25,9 @@ from . custom_messages import *
 from . decorators import *
 from . forms import *
 from . models import *
-from . utils import change_user_username, translate_to
+from . utils import (change_user_username,
+                     get_ldapuser_attrs_from_formbuilder_conf,
+                     translate_to)
 
 from ldap_peoples.models import LdapAcademiaUser
 
@@ -191,9 +193,9 @@ def dashboard(request):
                           'custom_message.html',
                           USER_DEFINITION_ERROR,
                           status=403)
-        delivery_dict = {'mail': lu.mail[0]}
-        if lu.telephoneNumber:
-            delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
+
+        delivery_dict = get_ldapuser_attrs_from_formbuilder_conf(lu)
+
         dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
                                                   constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                                   ignore_format_field_name=True)
@@ -426,9 +428,8 @@ def change_password(request):
     lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
     form = PasswordChangeForm(request.POST)
 
-    delivery_dict = {'mail': lu.mail[0]}
-    if lu.telephoneNumber:
-        delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
+    delivery_dict = get_ldapuser_attrs_from_formbuilder_conf(lu)
+
     dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
                                               constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                               ignore_format_field_name=True)
