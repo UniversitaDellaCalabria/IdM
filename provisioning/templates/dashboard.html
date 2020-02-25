@@ -32,11 +32,13 @@
     </a>
 </li>
 {% endif %}
+{% comment %}
 <li class="nav-item active">
     <a class="nav-link" href="{% url 'provisioning:provisioning_logout' %}?next={{ request.path }}">
         <span>{% trans "Logout / Esci" %}</span>
     </a>
 </li>
+{% endcomment %}
 {% endblock menu_links %}
 
 {% block container_content %}

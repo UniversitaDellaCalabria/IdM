@@ -16,6 +16,7 @@
         </a>
     </li>
     {% endif %}
+    {% comment %}
     {% if request.user.is_authenticated %}
     <li class="nav-item active">
         <a class="nav-link" href="{% url 'provisioning:provisioning_logout' %}?next={{ request.path }}">
@@ -23,4 +24,5 @@
         </a>
     </li>
     {% endif %}
+    {% endcomment %}
 {% endblock menu_links %}
