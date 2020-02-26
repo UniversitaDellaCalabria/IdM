@@ -9,9 +9,12 @@
 {% block container_content %}
 <section id="services" class="section section-muted text-center" style="background-image: url({% static 'images/banner.jpg' %}); background-size: cover;">
     <div class="container">
-    <h2 class="ui error bg-white">{% trans "Page or Resourse not found 404" %}</h2>
+    <h2 class="ui error bg-white">{% trans "Maintenance" %}</h2>
 
-    <a href="/" class="btn btn-secondary">{% trans "Go back" %}</a>
+    <h4 class="bg-white">{% trans "This service is under maintenance" %}</h4>
+
+    <p class="bg-white">{% trans "We apologize for the temporary inconvenience, we will soon start working again." %}</p>
+
     </div>
 </section>
 {% endblock %}

@@ -16,35 +16,40 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from . import views, settings
+
 
 admin.site.site_header = 'Amministrazione'
 admin.site.site_title  = 'Pannello di amministrazione'
 
+
 urlpatterns = [
     path('gestione/', admin.site.urls),
+    path('500/', views.test_500, name='500'),
+    path('maintenance/', views.maintenance, name='maintenance_test'),
     # path('logout', logout, name="logout"),
-
 ]
 
-# Secure media files serve
-from django.views.static import serve
-from django.contrib.auth.decorators import login_required
+urlpatterns += static(settings.STATIC_URL,
+                      document_root=settings.STATIC_ROOT)
 
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+if settings.MANTEINANCE:
+    urlpatterns.append(re_path(r'^[0-9a-zA-Z\ \.\-\/]*',
+                       views.maintenance, name='maintenance'))
 
 if 'ldap_peoples' in settings.INSTALLED_APPS:
     import ldap_peoples.urls
-    urlpatterns += path('', include(ldap_peoples.urls, namespace='ldap_peoples')),
+    urlpatterns += path('', include(ldap_peoples.urls,
+                                    namespace='ldap_peoples')),
 
 if 'identity' in settings.INSTALLED_APPS:
     import identity.urls
-    urlpatterns += path('', include(identity.urls, namespace='identity')),
+    urlpatterns += path('', include(identity.urls,
+                                    namespace='identity')),
 
 if 'provisioning' in settings.INSTALLED_APPS:
     import provisioning.urls
-    urlpatterns += path('', include(provisioning.urls, namespace='provisioning')),
+    urlpatterns += path('', include(provisioning.urls,
+                                    namespace='provisioning')),

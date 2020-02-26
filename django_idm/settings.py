@@ -140,10 +140,10 @@ STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 # By default, staticfiles will look for files within the static/ directory
 # of each installed app, as well as in directories defined in STATICFILES_DIRS.
 # This behaviour depends on backends listed in STATICFILES_FINDERS.
-#STATICFILES_FINDERS = [
-    #'django.contrib.staticfiles.finders.FileSystemFinder',
-    #'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#]
+# STATICFILES_FINDERS = [
+    # 'django.contrib.staticfiles.finders.FileSystemFinder',
+    # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# ]
 
 #STATICFILES_DIRS = [
     #os.path.join(STATIC_ROOT, ''),

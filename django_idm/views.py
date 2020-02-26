@@ -13,3 +13,13 @@ def home(request):
         # return HttpResponseRedirect(reverse(settings.LOGIN_REDIRECT_URL))
         return HttpResponseRedirect(reverse('provisioning:dashboard'))
     return render(request, 'home.html') # pragma: no cover
+
+
+def maintenance(request):
+    """render the home page"""
+    return render(request, 'maintenance.html') # pragma: no cover
+
+
+def test_500(request):
+    """render the home page"""
+    return render(request, '500.html') # pragma: no cover

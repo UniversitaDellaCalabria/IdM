@@ -13,6 +13,7 @@ SECRET_KEY = '9nv@u)887fsd89fuasdF_W_$%"!£$31249adsf0suw_he9hw20rfya)l!j!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 1
+MANTEINANCE = 0
 
 HOSTNAME = 'idm.testunical.it'
 ALLOWED_HOSTS = [HOSTNAME,
