@@ -20,6 +20,13 @@ def username_changeable(request):
     else:
         return True
 
+
 @register.filter(name='field_type')
 def field_type(field):
     return field.field.widget.__class__.__name__
+
+
+@register.simple_tag
+def new_identity_requestable(request):
+    if settings.PROVISONING_REQUEST_ID_APPNAME in settings.INSTALLED_APPS:
+        return True

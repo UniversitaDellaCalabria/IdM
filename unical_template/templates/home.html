@@ -9,14 +9,15 @@
     <div class="container">
         <h1 class="no_toc text-white">Unical <span class="text-secondary">Id</span>entity <span class="text-secondary">M</span>anager</h1>
         <p class="d-none d-lg-block text-white">{% trans "Platform for managing access credentials to Unical services" %}</p>
+
         <div class="it-btn-container d-none d-md-block">
             <a class="btn btn-lg btn-secondary" href="{% login_url %}">{% trans "Login" %}</a>
-            <a class="btn btn-lg btn-primary" href="#">{% trans "Request a new identity" %}</a>
+
+            {% if new_identity_requestable %}
+                <a class="btn btn-lg btn-primary" href="#">{% trans "Request a new identity" %}</a>
+            {% endif %}
         </div>
-        <div class="it-btn-container d-md-none">
-            <a class="btn btn-sm btn-secondary" href="{% login_url %}">{% trans "Login" %}</a>
-            <a class="btn btn-sm btn-primary" href="#">{% trans "Request a new identity" %}</a>
-        </div>
+
     </div>
 </section>
 

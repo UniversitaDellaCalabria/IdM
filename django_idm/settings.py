@@ -19,6 +19,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if 'provisioning' in INSTALLED_APPS:
     from provisioning.settings import *
 
+if PROVISONING_REQUEST_ID_APPNAME in INSTALLED_APPS:
+    from request_identity.settings import *
+
 if 'ldap_peoples' in INSTALLED_APPS:
     from ldap_peoples.settings import *
     # otherwise overload whatever needed...
@@ -137,10 +140,10 @@ STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 # By default, staticfiles will look for files within the static/ directory
 # of each installed app, as well as in directories defined in STATICFILES_DIRS.
 # This behaviour depends on backends listed in STATICFILES_FINDERS.
-#STATICFILES_FINDERS = [
-    #'django.contrib.staticfiles.finders.FileSystemFinder',
-    #'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#]
+# STATICFILES_FINDERS = [
+    # 'django.contrib.staticfiles.finders.FileSystemFinder',
+    # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# ]
 
 #STATICFILES_DIRS = [
     #os.path.join(STATIC_ROOT, ''),

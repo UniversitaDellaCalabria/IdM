@@ -53,7 +53,7 @@
         <div class="row">
             <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
 
-                <form method="post" action="{% url 'provisioning:change_deliveries' %}" class="needs-validation" novalidate>
+                <form method="post" action="{% url 'provisioning:change_data' %}" class="needs-validation" novalidate>
                     {% include "form_body.html" with form=form_delivery %}
 <!--
                     <h5>{% trans "Options" %}</h5>
@@ -129,7 +129,7 @@
                         {% for attr,value in attrs.items %}
                         <tr>
                             <td>{{ attr }}</td>
-                            <td>{{ value|safe }}</td>
+                            <td>{{ value|default_if_none:""|safe }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
