@@ -10,7 +10,7 @@ passlib
 git+https://github.com/peppelinux/pySSHA-slapd.git
 
 #Bootstrap Italia + Unical template
-sass
+libsass
 django-sass-processor
 django_compressor
 git+https://github.com/italia/design-django-theme.git
