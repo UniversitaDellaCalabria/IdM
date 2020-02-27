@@ -1,9 +1,12 @@
+import random
+import string
 import time
 
 from bs4 import BeautifulSoup as bs
 
 from django.apps import apps
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
@@ -14,22 +17,28 @@ from .custom_messages import *
 from .models import *
 from .utils import get_date_from_string
 
+
+def randomString(stringLength=10):
+    """Generate a random string of fixed length """
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(stringLength))
+
+
 _MAX_HTML_PAGE_LEN = 6038
 
-_test_guy = {'fiscal_code': 'psopql86e56d086s',
-             'surname': 'posto',
-             'name': 'pasqualino',
-             'email': 'peppelinux@yahoo.it',
-             'date_of_birth': get_date_from_string('16/05/1986'),
-             'place_of_birth': 'Cosenza',
-             'affiliation': 'student'}
-
-_uid = 'unittest_john1298731289371283123-kgkgk'
+_uid = 'unittest_john1298731289371283123-kgkgk-{}'.format(randomString())
 _passwd = 'Ssmith_67!'
-matricola_studente =  '111190'
-matricola_dipendente = '982388'
+matricola_studente =  '111190{}'.format(randomString())
+matricola_dipendente = '982388{}'.format(randomString())
 additional_affiliations = [('otherinst.net', 'student', matricola_studente),
                            ('othst.gov', 'employee', matricola_dipendente),]
+_test_guy = {'fiscal_code': 'psopql86e56d086s{}'.format(randomString()),
+             'surname': 'posto',
+             'name': 'pasqualino',
+             'email': '{}@yahoo.it'.format(_uid),
+             'date_of_birth': get_date_from_string('16/05/1986'),
+             'place_of_birth': 'Cosenza',
+             'affiliation': ['member', 'student']}
 
 _PURGE_LDAP_TEST_USER = True
 _WAIT_FOR_A_CHECK = False
@@ -44,11 +53,7 @@ class ProvisioningTestCase(TestCase):
 
     def test_entire_provisioning(self):
         """test identity account provisioning"""
-        d = Identity.objects.filter(**_test_guy)
-        for i in d:
-            i.delete()
-
-        d = LdapAcademiaUser.objects.filter(uid=_uid).first()
+        d = LdapAcademiaUser.objects.filter(uid__contains='unittest_john1298731289371283123-kgkgk')
         if d and _PURGE_LDAP_TEST_USER:
             d.delete()
 
@@ -185,7 +190,6 @@ class ProvisioningTestCase(TestCase):
 
         # choose a blacklisted new username
         lurl = reverse('provisioning:change_username')
-        _new_uid = _uid + '_new'
         request = c.post(lurl, {'old_username': _uid,
                                 'new_username': _blacklisted,
                                 'confirm_new_username': _blacklisted},
@@ -196,21 +200,29 @@ class ProvisioningTestCase(TestCase):
 
         # choose a valid new username
         lurl = reverse('provisioning:change_username')
-        _new_uid = _uid + '_new'
+        _new_uid = '_new__'+ _uid
         request = c.post(lurl, {'old_username': _uid,
                                 'new_username': _new_uid,
                                 'confirm_new_username': _new_uid},
                          follow=True)
         self.assertEqual(request.status_code, 200)
         # check = (b'errorlist' in request.content)
-        check = (b'alert-error' in request.content)
+        check = (b'alert-error' not in request.content)
+        assert check
 
-        # check change token
+        # check change username token
         d = LdapAcademiaUser.objects.filter(uid=_uid).first()
         p = IdentityLdapChangeConfirmation.objects.filter(ldap_dn=d.dn).last()
         token_url = p.get_activation_url()
         request = c.get(token_url, follow=True)
         self.assertIs(request.status_code, 200)
+
+        # check username and dn consistence
+        user = get_user_model().objects.get(username=_new_uid)
+        lu = LdapAcademiaUser.objects.get(uid=_new_uid)
+        assert _new_uid == user.username
+        assert user.dn == lu.dn
+        assert _new_uid in lu.eduPersonPrincipalName
 
         # login
         lurl = reverse('provisioning:provisioning_login')

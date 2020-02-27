@@ -191,11 +191,14 @@ class ProfileForm(forms.Form):
 
 
 class IdentityUsernameChangeForm(forms.Form):
-    old_username = forms.CharField(label=_("Current Username"), max_length=64, required=True,
+    old_username = forms.CharField(label=_("Current Username"),
+                                    max_length=64, required=True,
                                    widget=_username_widget)
-    new_username = forms.CharField(label=_("New Username"), max_length=64, required=True,
+    new_username = forms.CharField(label=_("New Username"),
+                                   max_length=64, required=True,
                                    widget=_username_widget)
-    confirm_new_username = forms.CharField(label=_("Confirm your new Username"), max_length=64, required=True,
+    confirm_new_username = forms.CharField(label=_("Confirm your new Username"),
+                                           max_length=64, required=True,
                                            widget=_username_widget)
 
     def clean_new_username(self):
@@ -208,6 +211,7 @@ class IdentityUsernameChangeForm(forms.Form):
         if username1 != username2:
             self._errors['new_username'] = ErrorList([_("Your usernames do not match")])
             return self._errors
+        return username2
 
     def clean_confirm_new_username(self):
         return self.clean_new_username()

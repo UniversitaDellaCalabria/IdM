@@ -46,6 +46,7 @@ def change_user_username(user, lu, new_username):
     user.username = new_username
     user.dn = lu.dn
     user.save()
+    return user
 
 def get_ldapuser_attrs_from_formbuilder_conf(lu):
     # delivery_dict = {'mail': lu.mail[0]}

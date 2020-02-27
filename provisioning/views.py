@@ -314,6 +314,9 @@ def change_data(request, token_value=None):
 @login_required
 @valid_ldap_user
 def change_username(request, token_value=None):
+    """
+    Ask a token to change his username
+    """
     _err_msg = None
     if not request.user.change_username:
         _err_msg = CANNOT_CHANGE_USERNAME
@@ -333,14 +336,18 @@ def change_username(request, token_value=None):
                           INVALID_TOKEN_DISPLAY, status=403)
         data = json.loads(id_prov.new_data)
 
+        # logout first
+        user = get_user_model().objects.get(username=request.user.username)
+        logout(request)
+
         # Change username, uid and create a ChangedUsername record
-        change_user_username(user=request.user,
-                             lu=lu,
-                             new_username=data['uid'])
+        user = change_user_username(user=user,
+                                    lu=lu,
+                                    new_username=data['uid'])
         id_prov.mark_as_used()
 
         # Logout and redirect to login page
-        logout(request)
+        #
         messages.add_message(request, messages.SUCCESS,
                              settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**USERNAME_SUCCESSIFULLY_CHANGED))
         return redirect('provisioning:provisioning_login')
@@ -351,8 +358,8 @@ def change_username(request, token_value=None):
     elif request.method == 'POST':
         form = IdentityUsernameChangeForm(request.POST)
         if form.is_valid():
-            old_username = request.POST['old_username']
-            new_username = request.POST['new_username']
+            old_username = form.cleaned_data['old_username']
+            new_username = form.cleaned_data['new_username']
 
             user_username_match = old_username == request.user.username
             lu_uid_match = old_username == lu.uid
@@ -376,7 +383,7 @@ def change_username(request, token_value=None):
 
             # create token
             current_data = {'uid': lu.uid}
-            new_data = {'uid': request.POST['new_username']}
+            new_data = {'uid': form.cleaned_data['new_username']}
             data = dict(ldap_dn = lu.dn,
                         is_active = True,
                         current_data = json.dumps(current_data),
