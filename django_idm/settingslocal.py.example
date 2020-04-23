@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'unical_template',
     'sass_processor',
     'bootstrap_italia_template',
-    'unical_agid_template',
+    'django_unical_bootstrap_italia',
 
     'rangefilter',
     'ldapdb',
