@@ -171,7 +171,9 @@ def get_ldapuser_aai_html_attrs(lu):
                          'creatorsName',
                          'modifiersName',
                          'pwdHistory',
-                         'pwdAccountLockedTime']
+                         'pwdAccountLockedTime',
+                         'base_dn',
+                         'dn']
     attributes = OrderedDict()
     for k in sorted(lu.__dict__.keys()):
         if k[0] == '_' or k in hidden_attributes:
