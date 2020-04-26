@@ -1,3 +1,4 @@
+import copy
 import json
 import logging
 
@@ -136,10 +137,9 @@ def provisioning_login(request):
     if request.method == 'POST':
         login_form = IdentityLoginForm(request.POST)
         if not login_form.is_valid():
-            # aggiungi form errors qui + messages
             return render(request,
-                          'custom_message.html',
-                          INVALID_ACCESS_DISPLAY, status=403)
+                          'provisioning_login.html',
+                          {'login_form': login_form})
         username = login_form.cleaned_data['username']
         password = login_form.cleaned_data['password']
         user = authenticate(request,

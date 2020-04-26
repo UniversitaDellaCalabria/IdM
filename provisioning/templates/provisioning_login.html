@@ -3,6 +3,10 @@
 {% load i18n %}
 {% load static %}
 
+{% block extra_head %}
+    {{ block.super }}
+{% endblock %}
+
 {% block container_content %}
     {% include "sezione_login.html" %}
 {% endblock container_content %}

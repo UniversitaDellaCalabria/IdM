@@ -10,8 +10,8 @@ INVALID_ACCESS_DISPLAY_MSG = _("You tried to access this resource "
 INVALID_ACCESS_DISPLAY_DESC = _("Come back to Home page to "
                                 "renew your session")
 INVALID_ACCESS_DISPLAY = {'title': INVALID_ACCESS_DISPLAY_TITLE,
-                           'avviso': INVALID_ACCESS_DISPLAY_MSG,
-                           'description': INVALID_ACCESS_DISPLAY_DESC}
+                          'avviso': INVALID_ACCESS_DISPLAY_MSG,
+                          'description': INVALID_ACCESS_DISPLAY_DESC}
 
 INVALID_TOKEN_DISPLAY_TITLE = _("Resource expired")
 INVALID_TOKEN_DISPLAY_MSG = _("This token is expired, "

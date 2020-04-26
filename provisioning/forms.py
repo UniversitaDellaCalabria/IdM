@@ -16,8 +16,7 @@ from .models import *
 _passwd_msg = _('The secret must contains lowercase'
                 ' and uppercase characters, '
                 ' number and at least one of these symbols:'
-                ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
-                'Example: This\Is_A.g00d/P4ssw0rd.')
+                ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')
 
 _regexp_pt = r'[A-Za-z0-9!"#$%&\'()*+,-./:;<=>?@\[\\\]^_`{|}~]*'
 _field_class = "col-xs-12 col-sm-12 col-md-12 col-lg-12"

@@ -21,18 +21,20 @@ class CustomUserAdmin(UserAdmin):
         (_('Personal data'), {'fields': (( 'first_name', 'last_name'),
                                          ( 'email'),
                                          ('codice_fiscale',),
-                                         ('gender', 'location', 'birth_date',),
+                                         ('gender', 'place_of_birth',
+                                          'birth_date',),
                                         )}),
 
         (_('Permissions'), {'fields': ('groups', 'user_permissions'),
                             'classes':('collapse',)
-                            ,}),
+                           }),
 
 
         (_('System data accesses'), {'fields': (('access_notification',),
                                                 ('date_joined',
                                                  'last_login', ),
-                                                          )}),
+                                                )
+                                    }),
     )
     add_fieldsets = (
         (None, {
