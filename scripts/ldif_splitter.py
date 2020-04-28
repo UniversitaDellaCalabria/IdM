@@ -1,7 +1,7 @@
 import os
 from subprocess import run, PIPE
 
-CHUNKS = 5
+CHUNKS = 10
 FILE = 'ldap_importable.20200427.1754.ldif.fixed'
 
 fsize = os.path.getsize(FILE)
@@ -29,7 +29,7 @@ for i in range(len(blocks)):
     f.close()
 
 
-# for i in *ldif.fixed.* ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > ldapadd.log.$i &) ; done
+# for i in *ldif.fixed.* ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > $i.log 2>&1 &) ; done
 # ps ax | grep ldif.fixed | awk -F' ' {'print $1'} | xargs kill -TERM
 
 
