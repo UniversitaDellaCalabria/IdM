@@ -1,6 +1,9 @@
 import copy
+import datetime
 import re
 from ldap_peoples import ldif
+
+SCHAC_HOMEORG = 'unical.it'
 
 LDIF_TMPL = """{dn}
 objectclass: inetOrgPerson
@@ -26,15 +29,14 @@ objectclass: schacUserEntitlements
 {displayName}
 {mail}
 {userPassword}
-{sambaNTPassword}
 {eduPersonPrincipalName}
 {eduPersonAffiliation}
+{eduPersonScopedAffiliation}
 {eduPersonEntitlement}
-schacHomeOrganization: unical.it
+{schacHomeOrganization}
 schacHomeOrganizationType: urn:schac:homeOrganizationType:IT:educationInstit
  ution
 schacHomeOrganizationType: urn:schac:homeOrganizationType:IT:university
-{schacPersonalUniqueID}
 """
 
 LDIF_STAFF_ATTR = """eduPersonEntitlement: urn:mace:terena.org:tcs:escience-user
@@ -90,23 +92,63 @@ def get_duplicates_by_attribute(entries, attribute):
 
 
 def repr_duplicates(dup):
-    for k,v in dup.items():
-        print(k.decode(), '\n', '\n'.join(v), '\n--\n')
+    rows = []
+    if isinstance(dup, dict):
+        for k,v in dup.items():
+            row = '{}\n{}\n-------------\n'.format(k.decode(),
+                                                   '\n'.join(v))
+            rows.append(row)
+    elif isinstance(dup, list):
+        for i in dup:
+            row = '{}\n'.format(i)
+            rows.append(row)
+    else:
+        raise Exception('Should be a dict or a list')
+    return tuple(rows)
+
+
+def print_duplicates(dup):
+    print(''.join(repr_duplicates(dup)))
+
+
+def dump_duplicates(dup, fpath):
+    f = open(fpath, 'w')
+    f.write(''.join(repr_duplicates(dup)))
+    return fpath
 
 
 def get_new_ldif(entry):
     dentr = copy.copy(entry[1])
-    dentr['dn'] = (entry[0].encode(),)
+    dn = entry[0].encode()
+    dentr['dn'] = [dn,]
     new_entry = dict()
+    dentr['schacHomeOrganization'] = [SCHAC_HOMEORG.encode(),]
+    dentr['eduPersonScopedAffiliation'] = []
     dentr['eduPersonEntitlement'] = []
     dentr['eduPersonEntitlement'].extend(eduPersonEntitlement)
-    if 'staff' in [i.decode() for i in dentr['eduPersonAffiliation']]:
+    affdec = [i.decode() for i in dentr['eduPersonAffiliation']]
+    if 'staff' in affdec:
         dentr['eduPersonEntitlement'].extend(eduPersonEntitlement_staff)
+    elif 'student' in affdec:
+        dentr['sambaSID'] = ['{}@studenti.unical.it'.format(
+                                dn[4:].decode().partition(',')[0]
+                                ).encode()]
+    for aff in dentr['eduPersonAffiliation']:
+        scopaff = '{}@{}'.format(aff.decode(), SCHAC_HOMEORG)
+        if scopaff not in dentr['eduPersonScopedAffiliation']: 
+            dentr['eduPersonScopedAffiliation'].append(scopaff.encode())
     for k,val in dentr.items():
         new_entry[k] = '\n'.join(['{}: {}'.format(k, subval.decode())
                                   for subval in val])
+    res = LDIF_TMPL.format(**new_entry)
+    if new_entry.get('sambaNTPassword'):
+        res += '{}\n'.format(new_entry['sambaNTPassword'])
+    if new_entry.get('schacPersonalUniqueID'):
+        res += '{}\n'.format(new_entry['schacPersonalUniqueID'])
+    if new_entry.get('sambaSID'):
+        res += '{}\n'.format(new_entry['sambaSID'])
+    return res
 
-    return LDIF_TMPL.format(**new_entry)
 
 # the more used password
 def get_most_used_passwd(dup_passwd):
@@ -118,14 +160,16 @@ def get_most_used_passwd(dup_passwd):
             that = k
 
 
-fopen = open('/home/wert/ldap_dump.20200423.2348.ldif')
+fopen = open('ldap_backups/ldap_dump.20200427.1113.ldif')
 ldif_rec = ldif.LDIFRecordList(fopen)
 ldif_rec.parse()
 
 entries, missings = filter_dn(ldif_rec.all_records)
 duplicates_emails = get_duplicates_by_attribute(entries, 'mail')
-duplicates_schacuid = get_duplicates_by_attribute(entries, 'schacPersonalUniqueID')
-duplicates_schacucode = get_duplicates_by_attribute(entries, 'schacPersonalUniqueCode')
+duplicates_schacuid = get_duplicates_by_attribute(entries,
+                                                  'schacPersonalUniqueID')
+duplicates_schacucode = get_duplicates_by_attribute(entries,
+                                                    'schacPersonalUniqueCode')
 duplicates_uid = get_duplicates_by_attribute(entries, 'uid')
 duplicates_passwd = get_duplicates_by_attribute(entries, 'sambaNTPassword')
 
@@ -141,8 +185,17 @@ for i in entries:
     if 'sambaNTPassword' not in i[1].keys():
         without_eduroam.append(i[0])
 
-EXCLUDED_DN.extend(without_eduroam)
-EXCLUDED_DN.extend(without_uniqueid)
+# invalid uid
+invalid_uids = []
+for i in entries:
+    if 'AAAAAAA' in i[0]:
+        invalid_uids.append(i[0])
+
+EXCLUDED_DN.extend(invalid_uids)
+
+# import they as they are ...
+#EXCLUDED_DN.extend(without_eduroam)
+#EXCLUDED_DN.extend(without_uniqueid)
 
 # i colleghi con le email duplicate non posso importarli
 duplicates = list(duplicates_emails.values())
@@ -150,16 +203,20 @@ duplicates.extend(duplicates_schacuid.values())
 duplicates.extend(duplicates_schacucode.values())
 for i in duplicates:
     EXCLUDED_DN.extend(i)
-
-#uids = tuple([i[0] for i in ldif_rec.all_records])
-
 # remove duplicates
 EXCLUDED_DN = list(set(EXCLUDED_DN))
 
+
+now = datetime.datetime.now().strftime('%Y%m%d.%H%M')
+f = open('ldap_importable.{}.ldif'.format(now), 'w')
 for entry in entries[:]:
     if entry[0] in EXCLUDED_DN: continue
-    print(get_new_ldif(entry))
+    new_entry = get_new_ldif(entry)
+    #print(new_entry)
+    f.write(new_entry+'\n')
+f.close()
 
+#uids = tuple([i[0] for i in ldif_rec.all_records])
 #for i in ldif_rec.all_records:
     #passw = i[1].get('userPassword')
     #if not passw: continue

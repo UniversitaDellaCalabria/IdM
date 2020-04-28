@@ -143,6 +143,8 @@ LDAP_CONNECTION_OPTIONS = {
                             # ldap.OPT_X_TLS_DEMAND: False,
                           }
 
+# RAW patch for limiting search_s
+LDAP_SEARCH_LIMIT = 5000
 
 DATABASES = {
     'ldap': {
