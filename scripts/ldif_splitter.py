@@ -2,7 +2,7 @@ import os
 from subprocess import run, PIPE
 
 CHUNKS = 5
-FILE = 'ldap_importable.20200427.1754.ldif.fixed'
+FILE = 'ldap_importable.20200429.0134.ldif.fixed'
 
 fsize = os.path.getsize(FILE)
 first_block = int(fsize / CHUNKS)
@@ -28,11 +28,13 @@ for i in range(len(blocks)):
     f.write(blocks[i])
     f.close()
 
+# do a dump
+# ldapsearch -LLL -Y EXTERNAL -H ldapi:// -b "ou=people,dc=unical,dc=it"  > ldap_dump.$(date +%Y%m%d.%H%M).ldif
 
-# for i in *ldif.fixed.* ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > ldapadd.log.$i &) ; done
+# run unildap_utils.py
+
+# do things
+# sed -e 's\ou=personale,\\g' -e 's\ou=studenti,\\g' -e 's\ou=People,\ou=people,\g' ldap_importable.20200428.1550.ldif  > ldap_importable.20200427.1754.ldif.fixed
+
+# for i in *ldif.fixed.* ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > $i.log 2>&1 &) ; done
 # ps ax | grep ldif.fixed | awk -F' ' {'print $1'} | xargs kill -TERM
-
-
-
-#run(['grep', 'f'], stdout=PIPE,
-        #input='one\ntwo\nthree\nfour\nfive\nsix\n', encoding='ascii')
