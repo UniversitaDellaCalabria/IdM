@@ -1,8 +1,8 @@
 import os
 from subprocess import run, PIPE
 
-CHUNKS = 5
-FILE = 'ldap_importable.20200429.0134.ldif.fixed'
+CHUNKS = 10
+FILE = 'ldap_importable.20200429.1818.ldif.fixed'
 
 fsize = os.path.getsize(FILE)
 first_block = int(fsize / CHUNKS)
@@ -36,5 +36,9 @@ for i in range(len(blocks)):
 # do things
 # sed -e 's\ou=personale,\\g' -e 's\ou=studenti,\\g' -e 's\ou=People,\ou=people,\g' ldap_importable.20200428.1550.ldif  > ldap_importable.20200427.1754.ldif.fixed
 
+# test uniqueness
+# grep "mail:" ldap_importable.20200429.1714.ldif.fixed |  uniq -d
+
 # for i in *ldif.fixed.* ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > $i.log 2>&1 &) ; done
 # ps ax | grep ldif.fixed | awk -F' ' {'print $1'} | xargs kill -TERM
+

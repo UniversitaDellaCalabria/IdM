@@ -75,10 +75,11 @@ def get_duplicates_by_attribute(entries, attribute):
     unique_codes = dict()
     duplicates = dict()
     for i in entries:
-        dn = i[0]
+        dn = i[0].lower()
         ucodes = i[1].get(attribute)
         if not ucodes: continue
         for ucode in ucodes:
+            ucode = ucode.lower()
             if ucode not in unique_codes.keys():
                 unique_codes[ucode] = dn
             else:
@@ -120,7 +121,7 @@ def dump_duplicates(dup, fpath):
 def get_new_ldif(entry):
     dentr = copy.copy(entry[1])
     dn = entry[0].encode()
-    dentr['dn'] = [dn,]
+    dentr['dn'] = [dn.lower(),]
     new_entry = dict()
     dentr['schacHomeOrganization'] = [SCHAC_HOMEORG.encode(),]
     dentr['eduPersonScopedAffiliation'] = []
@@ -133,6 +134,9 @@ def get_new_ldif(entry):
         dentr['sambaSID'] = ['{}@studenti.unical.it'.format(
                                 dn[4:].decode().partition(',')[0]
                                 ).encode()]
+    dentr['mail'] = [i.lower() for i in dentr.get('mail', '')]
+    dentr['schacPersonalUniqueID'] = [i.lower() for i in dentr.get('schacPersonalUniqueID', '')]
+    dentr['uid'] = [dentr['uid'][0].lower()]
     for aff in dentr['eduPersonAffiliation']:
         scopaff = '{}@{}'.format(aff.decode(), SCHAC_HOMEORG)
         if scopaff not in dentr['eduPersonScopedAffiliation']: 
@@ -146,7 +150,7 @@ def get_new_ldif(entry):
     if new_entry.get('schacPersonalUniqueID'):
         res += '{}\n'.format(new_entry['schacPersonalUniqueID'])
     if new_entry.get('sambaSID'):
-        res += '{}\n'.format(new_entry['sambaSID'])
+        res += '{}\n'.format(new_entry['sambaSID'].lower())
     return res
 
 
@@ -178,6 +182,10 @@ without_uniqueid = []
 for i in entries:
     if 'schacPersonalUniqueID' not in i[1].keys():
         without_uniqueid.append(i[0])
+        continue
+    for e in i[1]['schacPersonalUniqueID']:
+        if len(e) < 38:
+            without_uniqueid.append(i[0])
 
 # Without samba password
 without_eduroam = []
@@ -193,9 +201,10 @@ for i in entries:
 
 EXCLUDED_DN.extend(invalid_uids)
 
+# those who have: schacpersonaluniqueid: urn:schac:personaluniqueid:it:cf: 
+EXCLUDED_DN.extend(without_uniqueid)
 # import they as they are ...
 #EXCLUDED_DN.extend(without_eduroam)
-#EXCLUDED_DN.extend(without_uniqueid)
 
 # i colleghi con le email duplicate non posso importarli
 duplicates = list(duplicates_emails.values())
@@ -212,7 +221,7 @@ f = open('ldap_importable.{}.ldif'.format(now), 'w')
 for entry in entries[:]:
     if entry[0] in EXCLUDED_DN: continue
     new_entry = get_new_ldif(entry)
-    #print(new_entry)
+    print(new_entry)
     f.write(new_entry+'\n')
 f.close()
 
