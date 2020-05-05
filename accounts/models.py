@@ -37,7 +37,7 @@ class User(AbstractUser):
         verbose_name_plural = ' '.join((_("Users"), settings.APP_NAME))
 
     def __str__(self): # pragma: no cover
-        return '{} {}'.format(self.first_name, self.last_name)
+        return '{}'.format(self.first_name)
 
 
 class LdapDump(models.Model):

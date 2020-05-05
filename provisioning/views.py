@@ -1,6 +1,7 @@
 import copy
 import json
 import logging
+import ldap
 
 from collections import OrderedDict
 from django.conf import settings
@@ -189,7 +190,15 @@ def get_ldapuser_aai_html_attrs(lu):
 def dashboard(request):
     d = {}
     if request.user.dn:
-        lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
+        try:
+            lu = LdapAcademiaUser.objects.filter(dn=request.user.dn).first()
+        except ldap.NO_SUCH_OBJECT as e:
+            _msg = 'request.user {} authenticated but his DN dows not match with {}.'.format(request.user, request.user.dn)
+            logger.error(_msg)
+            return render(request,
+                          'custom_message.html',
+                          USER_DEFINITION_ERROR,
+                          status=500)
         if not lu:
             return render(request,
                           'custom_message.html',
