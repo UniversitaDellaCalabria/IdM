@@ -102,8 +102,11 @@ def account_create(request, token_value):
 
         # additional personal unique codes from additionals affiliations
         ldap_user.schacPersonalUniqueCode = [aff.get_urn() for aff in addaff]
-        ldap_user.save()
+        ldap_user.reset_schacExpiryDate()
 
+        # probably useless - TODO
+        ldap_user.save()
+        
         # altrimenti mi fallisce lo unit test!
         ldap_user.set_password(form.cleaned_data['password'])
 
@@ -491,8 +494,8 @@ def reset_password_ask(request):
         return render(request,
                       'custom_message.html',
                       INVALID_DATA_DISPLAY, status=403)
-    username = request.POST.get('username')
-    mail = request.POST['mail']
+    username = form.cleaned_data['username']
+    mail = form.cleaned_data['mail']
     if username:
         lu = LdapAcademiaUser.objects.filter(uid=username,
                                              mail__icontains=mail).first()
