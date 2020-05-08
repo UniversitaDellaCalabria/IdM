@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'sass_processor',
     'bootstrap_italia_template',
     'django_unical_bootstrap_italia',
-
+    'django_form_builder',
+    
     'rangefilter',
     'ldapdb',
     'ldap_peoples',

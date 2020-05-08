@@ -19,8 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if 'provisioning' in INSTALLED_APPS:
     from provisioning.settings import *
 
-if PROVISONING_REQUEST_ID_APPNAME in INSTALLED_APPS:
-    from request_identity.settings import *
+if 'registration' in INSTALLED_APPS:
+    from registration.settings import *
 
 if 'ldap_peoples' in INSTALLED_APPS:
     from ldap_peoples.settings import *

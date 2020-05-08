@@ -13,8 +13,9 @@
         <div class="it-btn-container d-none d-md-block">
             <a class="btn btn-lg btn-secondary" href="{% login_url %}">{% trans "Login" %}</a>
 
-            {% if new_identity_requestable %}
-                <a class="btn btn-lg btn-primary" href="#">{% trans "Request a new identity" %}</a>
+            {% new_identity_requestable request as registration %}
+            {% if registration %}
+                <a class="btn btn-lg btn-primary" href="{% url 'registration:ask' %}">{% trans "Create Account" %}</a>
             {% endif %}
         </div>
 

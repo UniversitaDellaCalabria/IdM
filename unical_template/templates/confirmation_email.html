@@ -6,20 +6,12 @@
 {% block container_content %}
 <section class="section text-center">
   <div class="container">
-        <h1>{{ title }}</h1>
-        {{ avviso|safe }}
-        {% if description %}
-            <p>{{ description|safe }}</p>
-        {% endif %}
-        <hr>
-        <a role="button" class="btn btn-outline-secondary"
-           href="javascript:history.back()">
-            {% trans "Back" %}
-        </a>
+        <h1>{% trans 'Congratulation' %}</h1>
+        <p class="mb-5">{% trans 'A Confirmation EMail was just sent to you' %}</p>
         <a role="button" class="btn btn-outline-secondary"
            href="{% url 'provisioning:home' %}">
             {% trans "Main page" %}
         </a>
- </div>
-</section>
+</div>
+ </section>
 {% endblock container_content %}

@@ -19,6 +19,7 @@ omit =
     *site-packages/bs4*
     *site-packages/ldapdb*
     *site-packages/pySSHA*
+    *site-packages/asgiref*
     *django-ldapdb*
     */distutils/*
     tests/*

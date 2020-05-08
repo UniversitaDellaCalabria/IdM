@@ -43,6 +43,7 @@ _test_guy = {'fiscal_code': 'psopql86e56d086s{}'.format(randomString()),
 _PURGE_LDAP_TEST_USER = True
 _WAIT_FOR_A_CHECK = False
 
+
 class ProvisioningTestCase(TestCase):
     databases = '__all__'
 
@@ -239,7 +240,9 @@ class ProvisioningTestCase(TestCase):
     # def test_d_clean(self):
         # """cleanup"""
         d = LdapAcademiaUser.objects.filter(uid=_new_uid).first()
+        print('\nCreated User Attributes:\n')
         for k,v in d.__dict__.items():
-            print('{}: {}'.format(k, v))
+            if k[0] == '_': continue
+            print('\t{}: {}'.format(k, v))
         if _PURGE_LDAP_TEST_USER:
             d.delete()

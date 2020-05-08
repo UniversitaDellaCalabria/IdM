@@ -28,5 +28,5 @@ def field_type(field):
 
 @register.simple_tag
 def new_identity_requestable(request):
-    if settings.PROVISONING_REQUEST_ID_APPNAME in settings.INSTALLED_APPS:
+    if 'registration' in settings.INSTALLED_APPS:
         return True

@@ -1,0 +1,50 @@
+{% extends "page.html" %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block container_content %}
+
+<!-- contact section -->
+<section class="section text-center">
+  <div class="container">
+        <h1>{% trans "Create a new Account" %}</h1>
+
+        <p class="mb-5">{% trans "Insert the requested informations, a confirmation email will be sent to you." %}</p>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
+
+                <form method="post" action="{% url 'registration:ask' %}" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                    {% for field in form %}
+                        <div class="bootstrap-select-wrapper form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm  align-text-bottom">
+                            <p class="text-justify">
+                                {% trans 'Agreement ...' %}
+                                {% lorem %}
+                            </p>
+                        </div>
+                        <div class="col-sm">
+                          {{ form_captcha }}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    </div>
+                    <input type="submit" class="btn btn-secondary btn-block" value="{% trans 'Submit' %}">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- contact section -->
+{% endblock container_content %}

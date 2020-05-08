@@ -17,9 +17,14 @@ Including another URLconf
 from django.urls import path
 from .views import *
 
-app_name="accounts"
+app_name="unical_templates"
 
 urlpatterns = [
     path('base', base_template, name='base'),
     path('dashboard', dashboard_template, name='dashboard'),
+    path(
+        'confirmation-email',
+        confirmation_email,
+        name='confirmation-email',
+    ),
 ]

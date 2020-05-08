@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.http import is_safe_url
 
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 # Logging
 logger = logging.getLogger(__name__)
@@ -21,8 +21,10 @@ formatter = logging.Formatter('%(name)s: %(levelname)s %(message)s')
 hdlr.setFormatter( formatter )
 logger.setLevel( logging.INFO )
 
+
 def redirect(request):
     return HttpResponseRedirect('http://www.unical.it')
+
 
 def base_template(request):
     """render the home page"""
@@ -33,13 +35,16 @@ def base_template(request):
     }    
     return render(request, "base.html", context=context)
 
+
 def dashboard_template(request):
     """render the dashboard page"""
     return render(request, "dashboard.html")
 
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(request.GET.get('next'))
+
 
 @login_required
 def protected_serve(request, path):
@@ -57,9 +62,15 @@ def protected_serve(request, path):
         return serve(request, path, document_root=document_root, show_indexes=False)
     return HttpResponseForbidden()
 
+
 def test_500(request):
     #return HttpResponseServerError()
     return not_existent_var
 
+
 def error_500(request):
     return render(request, 'custom_500.html', {})
+
+
+def confirmation_email(request):
+    return render(request, 'confirmation_email.html', {})

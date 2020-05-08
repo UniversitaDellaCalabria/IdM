@@ -39,6 +39,11 @@ if settings.MANTEINANCE:
     urlpatterns.append(re_path(r'^[0-9a-zA-Z\ \.\-\/]*',
                        views.maintenance, name='maintenance'))
 
+if 'unical_template' in settings.INSTALLED_APPS:
+    import unical_template.urls
+    urlpatterns += path('', include(unical_template.urls,
+                                    namespace='unical_template')),
+
 if 'ldap_peoples' in settings.INSTALLED_APPS:
     import ldap_peoples.urls
     urlpatterns += path('', include(ldap_peoples.urls,
@@ -53,3 +58,8 @@ if 'provisioning' in settings.INSTALLED_APPS:
     import provisioning.urls
     urlpatterns += path('', include(provisioning.urls,
                                     namespace='provisioning')),
+
+if 'registration' in settings.INSTALLED_APPS:
+    import registration.urls
+    urlpatterns += path('registration/', include(registration.urls,
+                                        namespace='registration')),
