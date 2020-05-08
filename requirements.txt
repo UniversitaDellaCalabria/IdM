@@ -38,10 +38,12 @@ chardet
 pycountry
 
 # Oracle CSA support
-cx_Oracle
-
+# cx_Oracle
 # SQL Alchemy
-sqlalchemy
+#sqlalchemy
 
 # tests
 BeautifulSoup4
+
+# validazione CF
+git+https://github.com/arthurdejong/python-stdnum.git

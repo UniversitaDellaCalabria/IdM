@@ -16,7 +16,6 @@ from django.http import (HttpResponse,
                          HttpResponseForbidden,
                          HttpResponseRedirect,
                          HttpResponseNotFound)
-from django.db.models import Q
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse

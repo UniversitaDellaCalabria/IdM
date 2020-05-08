@@ -4,6 +4,7 @@ import logging
 
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -11,9 +12,10 @@ from django.utils.translation import ugettext_lazy as _
 from django_form_builder.enc import encrypt, decrypt
 from django_form_builder.forms import BaseDynamicForm
 from django_form_builder.models import DynamicFieldMap
-
+from ldap_peoples.models import LdapAcademiaUser
 
 from . forms import AskForm_1
+from . utils import validate_personal_id
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +39,17 @@ def ask(request):
             logger.error('Registration form is not valid: {}'.format(json.dumps(form.cleaned_data)))
             return render(request, 'ask.html', {'form': form,
                                                 'form_captcha': form_captcha})
+        # validate tin
+        if not validate_personal_id(form.cleaned_data['tin']):
+            logger.error('Registration form is not valid, tin validation failed: {}'\
+                          .format(form.cleaned_data['tin']))
+            return render(request,
+                          'custom_message.html',
+                          dict(title = _('TIN code validation failed'),
+                               avviso = _('It have been occurred an Error validating your TIN'),
+                               description = _('')), status=403)
+
+            
         # it seems quite good, check its delivery address
         token = base64.b64encode(encrypt(json.dumps(form.cleaned_data)))
         _msg = _('{} {} [{}] have requested to be registered as a new user.')
@@ -63,17 +76,41 @@ def ask(request):
             return render(request,
                           'custom_message.html',
                           dict(title = _('EMail send error'),
-                               avviso = _('It have been occurred an Error sending the confirmation email to you'),
+                               avviso = _('It have been occurred an Error '
+                                          'sending the confirmation email to you'),
                                description = _('Please try later.')), status=403)
         else:
             return HttpResponseRedirect(reverse('unical_template:confirmation-email'))
 
 def confirm(request, token):
     if request.method == 'GET':
-        data = json.loads(decrypt(token).decode())
-        import pdb; pdb.set_trace()      
-        # check collissions
-        # email, cf
+        data = {}
+        try:
+            data = json.loads(decrypt(token).decode())
+        except Exception as e:
+            logger.error('Registration request Token encryption error')
+            _msg = {'title': _("Invalid Token"),
+                   'avviso': _("Invalid data submission"),
+                   'description': ''}
+            return render(request, 'custom_message.html',
+                          _msg, status=403)
+            
+        lu = LdapAcademiaUser.objects.filter(Q(schacPersonalUniqueID__icontains=data['tin'])\
+                                             | Q(mail=data['mail']))
+        if lu:
+            _msg = ', '.join(('{}:{}'.format(k,v) for k,v in data.items()))
+            logger.error('Registration request - user already exists {}'.format(_msg))
+            _msg = {'title': _("Invalid Data"),
+                   'avviso': _("It seems that you are already registered"),
+                   'description': _('Please go in the Home Page and activate '
+                                    'the "Forgot your Password" procedure')}
+            return render(request, 'custom_message.html',
+                          _msg, status=403)
+
+        # ok, it seems that he would go ...
+        # create an identity
+        import pdb; pdb.set_trace()
+        
             
         # if true redirect to an informational page
     else:
