@@ -1,0 +1,57 @@
+{% extends "page.html" %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block container_content %}
+
+<!-- contact section -->
+<section class="section text-center">
+  <div class="container">
+        
+        <h1>{% trans "Confirm your Unical ID Account" %}</h1>
+
+        <p class="mb-5">{% trans "Review your data and uplooad your identity document." %}</p>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
+
+                {% if form_document.errors %}
+                    <div class="alert alert-danger" role="alert">
+                      {% for k,v in form_document.errors.items %}
+                          <p><b>{{ k }}</b>:{{ v|escape }}.</p>
+                      {% endfor %}
+                    </div>
+                    <br>
+                {% endif %}
+
+                <form method="post" action="" class="needs-validation" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                    {% for field in form %}
+                        <div class="bootstrap-select-wrapper form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <hr><br>
+                    <h6>
+                        {% trans "Please upload an IMAGE scan of your Identification Document (Not PDF)." %}
+                    </h6>
+                    <br>
+                    {% for field in form_document %}
+                        <div class="bootstrap-select-wrapper form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    
+                    </div>
+                    <input type="submit" class="btn btn-secondary btn-block" value="{% trans 'Submit' %}">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- contact section -->
+{% endblock container_content %}

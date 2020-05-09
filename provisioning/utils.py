@@ -15,9 +15,11 @@ def get_default_translations(message, sep='\n'):
         messages.append(msg)
     return sep.join(messages)
 
+
 def translate_to(message, lang='en'):
     translation.activate(lang)
     return translation.gettext(message)
+
 
 def get_date_from_string(value):
     for f in settings.DATE_INPUT_FORMATS:
@@ -26,9 +28,11 @@ def get_date_from_string(value):
         except:
             print('Failed: get_date_from_string {}'.format(value))
 
+
 def get_default_valid_until():
     return timezone.localtime() + \
            timezone.timedelta(minutes=settings.CHANGE_CONFIRMATION_EXPIRATION_MINUTES)
+
 
 def change_user_username(user, lu, new_username):
     # Update Changed Username list
@@ -47,6 +51,7 @@ def change_user_username(user, lu, new_username):
     user.dn = lu.dn
     user.save()
     return user
+
 
 def get_ldapuser_attrs_from_formbuilder_conf(lu):
     # delivery_dict = {'mail': lu.mail[0]}

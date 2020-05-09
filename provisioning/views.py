@@ -72,8 +72,8 @@ def account_create(request, token_value):
                  'displayName' : ' '.join((id_prov.identity.name,
                                            id_prov.identity.surname)),
                  'mail' : [form.cleaned_data['mail']],
-                 'telephoneNumber' : [id_prov.identity.telephone,],
-                 'schacPlaceOfBirth' : ','.join((id_prov.identity.nation,
+                 'telephoneNumber' : [id_prov.identity.telephoneNumber,],
+                 'schacPlaceOfBirth' : ','.join((id_prov.identity.nation_of_birth,
                                                  id_prov.identity.place_of_birth)),
                  'schacDateOfBirth' : id_prov.identity.date_of_birth,
                  'schacHomeOrganization' : settings.SCHAC_HOMEORGANIZATION_DEFAULT}
@@ -82,7 +82,7 @@ def account_create(request, token_value):
         #ldap_user.userPassword = form.cleaned_data['password']
         # ldap_user.set_password_custom(form.cleaned_data['password'])
         ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin,
-                                            country_code=id_prov.identity.nation)
+                                            country_code=id_prov.identity.nation_of_birth)
         ldap_user.set_default_eppn()
         for homeorgtype in settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT:
             ldap_user.set_schacHomeOrganizationType(value=homeorgtype)

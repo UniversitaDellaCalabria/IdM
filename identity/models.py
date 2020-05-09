@@ -16,8 +16,7 @@ from .decorators import is_apps_installed
 
 def _attachment_upload(instance, filename):
     """ this function has to return the location to upload the file """
-    return os.path.join('identity_attachments/{}'.format(instance.tin,
-                                                         filename))
+    return 'identity_attachments/{}/{}'.format(instance.tin, filename)
 
 
 class TimeStampedModel(models.Model): # pragma: no cover
@@ -93,19 +92,21 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
                             help_text=_('Name'))
     surname = models.CharField(max_length=135, blank=False, null=False)
     mail = models.EmailField()
-    telephone = models.CharField(max_length=135, blank=True, null=True)
+    telephoneNumber = models.CharField(max_length=135, blank=True, null=True)
     common_name = models.CharField(max_length=256, blank=True, null=True,
                                    help_text=_('Common Name'))
     #country = CountryField(blank=True, help_text=_('nazionalità, cittadinanza'))
-    nation = models.CharField(max_length=3, blank=False, null=True,
-                              default='IT', choices=[(e.alpha_2, e.alpha_2)
-                                                     for e in pycountry.countries])
+    nation_of_birth = models.CharField(max_length=3, blank=False, null=True,
+                                       default='IT', choices=[(e.alpha_2, e.alpha_2)
+                                                              for e in pycountry.countries])
     country = models.CharField(max_length=128, blank=True, null=True,
                                help_text=_('Country'))
     city = models.CharField(max_length=128, blank=True, null=True,
                             help_text=_('City'))
     tin = models.CharField(help_text=_('Tax Payer\'s Number or UniqueID'),
                                    max_length=16, blank=False, null=True)
+    gender = models.CharField(max_length=3, blank=True, null=True,
+                              choices=(('m', _('Male')),('f', _('Female')),('o', _('Other'))))
     date_of_birth = models.DateField(blank=False, null=True)
     place_of_birth = models.CharField(max_length=128,
                                       blank=False, null=True, help_text='')
@@ -219,7 +220,7 @@ class AddressType(models.Model):
 class IdentityDelivery(TimeStampedModel):
     """
         Generalized contacts classification
-        mail, telephone, facebook, twitter
+        mail, telephoneNumber, facebook, twitter
     """
     identity = models.ForeignKey(Identity, on_delete=models.CASCADE)
     type     = models.ForeignKey(AddressType,

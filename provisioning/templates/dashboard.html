@@ -47,7 +47,7 @@
 <section id="modify" class="section text-center">
   <div class="container">
         <h1>{% trans "Identity Management System" %}</h1>
-        <h4>{% trans "Welcome " %} {{ request.user }}</h4>
+        <h4>{% trans "Welcome " %} {{ request.user.first_name|default_if_none:"Utente" }}</h4>
 
         <p class="mb-5">{% trans "Here you can modify your profile" %} {% trans "A confirmation email will be also sent." %}</p>
         <div class="row">

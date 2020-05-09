@@ -19,6 +19,23 @@ from . utils import (get_default_translations,
 logger = logging.getLogger(__name__)
 
 
+ACCOUNT_CREATION_TOKEN_EXPIRATION_HOURS = getattr(settings,
+                                                  'ACCOUNT_CREATION_TOKEN_EXPIRATION_HOURS',
+                                                  5)
+
+
+def create_activation_token(identity):
+    # create new one if there are not existing ones
+    until = timezone.localtime() + \
+            timezone.timedelta(hours=ACCOUNT_CREATION_TOKEN_EXPIRATION_HOURS)
+    data = dict(identity=identity,
+                is_active=True,
+                valid_until=until)
+    id_prov = IdentityProvisioning.objects.create(**data)
+    return id_prov
+
+
+
 class AbstractProvisioning(models.Model):
     token = models.UUIDField(unique=True, default=uuid.uuid4,
                              blank=True,

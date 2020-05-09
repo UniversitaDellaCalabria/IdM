@@ -39,7 +39,7 @@ def create_accounts_from_csv(csv_file='',
                         name = clean_field(da['first_name']),
                         surname = clean_field(da['last_name']),
                         email = clean_field(da['mail']),
-                        telephone = clean_field(da['tel']),
+                        telephoneNumber = clean_field(da['tel']),
                         codice_fiscale = clean_field(da['codice_fiscale']))
 
             date_of_birth = clean_field(da['date_of_birth'])

@@ -1,10 +1,21 @@
 import pycountry
 
 from django import forms
+from django.conf import settings
+from django.contrib.admin.widgets import AdminDateWidget
+from django.forms.fields import DateField
+from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
 
 
 _field_class = "form-control col-xs-12 col-sm-12 col-md-12 col-lg-12"
+
+IMG_PERMITTED_UPLOAD_FILETYPE = getattr(settings,
+                                        'IMG_PERMITTED_UPLOAD_FILETYPE',
+                                        ("image/jpeg", "image/png",
+                                         "image/gif", "image/x-ms-bmp"))
+IMG_MAX_UPLOAD_SIZE = getattr(settings, 'IMG_MAX_UPLOAD_SIZE', 10485760)
+ATTACH_NAME_MAX_LEN = getattr(settings, 'ATTACH_NAME_MAX_LEN', 50)
 
 
 class AskForm_1(forms.Form):
@@ -54,3 +65,36 @@ class AskForm_1(forms.Form):
                                       widget=forms.TextInput(
                                        attrs={'class': _field_class,
                                               'placeholder': _('Telephone number with prefix')}))
+
+
+class IdentityDocumentForm(forms.Form):
+    document_front = forms.FileField(label=_('Identification Document Front side'))
+    document_retro = forms.FileField(label=_('Identification Document Back side'))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        for field_name in ('document_front', 'document_retro'):
+            content = self.cleaned_data.get(field_name)
+            # rimuovere caratteri di encoding altrimenti il download fallisce lato ws
+            if not content:
+                msg = _("An Error occourred, please upload again your document")
+                self.add_error(field_name, msg)
+                return
+            content._name = content._name.encode('ascii',
+                                                 errors='ignore').decode('ascii')
+
+            if content.content_type not in IMG_PERMITTED_UPLOAD_FILETYPE:
+                msg_tmpl = _("Only these format are permitted: '{}'")
+                msg = msg_tmpl.format(', '.join(IMG_PERMITTED_UPLOAD_FILETYPE))
+                self.add_error(field_name, msg)
+            elif content.size > int(IMG_MAX_UPLOAD_SIZE):
+                msg_tmpl = _("Maximum upload size is {}. {} is {}")
+                msg = msg_tmpl.format(filesizeformat(MAX_UPLOAD_SIZE),
+                                      content._name,
+                                      filesizeformat(content.size))
+                self.add_error(field_name, msg)
+            elif len(content._name) > ATTACH_NAME_MAX_LEN:
+                msg_tmpl = _("Maximum filename length is {}")
+                msg = msg_tmpl.format(ATTACH_NAME_MAX_LEN,
+                                      len(content._name))
+                self.add_error(field_name, msg)

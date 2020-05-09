@@ -23,19 +23,12 @@ def send_activation_email(modeladmin, request, queryset):
                 _('{} {}. Already activated: {}.)'.format(i, i.email, id_prov.used)))
                 continue
         else:
-            # create new one if there are not existing ones
-            until = timezone.localtime() + \
-                    timezone.timedelta(hours=settings.ACCOUNT_CREATION_TOKEN_EXPIRATION_HOURS)
-            data = dict(identity=i,
-                        is_active=True,
-                        valid_until=until)
-            id_prov = IdentityProvisioning.objects.create(**data)
-
+            id_prov = create_activation_token(i)
+        
         sent = id_prov.send_email()
         if sent:
             messages.add_message(request, messages.INFO,
-                                 _('{} {}. Email sent.').format(i,
-                                                                i.email))
+                                 _('{} {}. Email sent.').format(i, i.email))
             cnt_sent += 1
         else:
             messages.add_message(request, messages.ERROR,

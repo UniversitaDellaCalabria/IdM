@@ -17,11 +17,11 @@ urlpatterns = [
         name='confirm',
     ),
 
-    #path(
-        #'change/data/<uuid:token_value>',
-        #change_data,
-        #name='change_data_confirm',
-    #),
+    path(
+        'build/token',
+        get_registration_token,
+        name='get_registration_token',
+    ),
 
     # re_path(
         # r'^change/data/(?P<token_value>[0-9a-fA-F]{32}\Z)?/?$',

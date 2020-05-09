@@ -3,7 +3,7 @@ from django.contrib import admin
 from .admin_inline import *
 from .models import *
 
-# @admin.register(Identity)
+@admin.register(Identity)
 class IdentityAdmin(admin.ModelAdmin):
     inlines = [IdentityAttachmentInline,
                IdentityDeliveryInline,
@@ -12,7 +12,7 @@ class IdentityAdmin(admin.ModelAdmin):
                IdentityProvisioningInline]
     list_display  = ('name', 'surname','mail', 'created')
     search_fields = ('name', 'surname','common_name',
-                     'mail', 'telephone')
+                     'mail', 'telephoneNumber')
     list_filter   = ('created', 'modified',
                      'affiliation',)
     readonly_fields = ('created',
@@ -23,9 +23,9 @@ class IdentityAdmin(admin.ModelAdmin):
                 (None, { 'fields' :
                     (  ('personal_title', 'common_name'),
                        ('name', 'surname'),
-                       ('mail', 'telephone', ),
-                       ('nation', 'country', 'city', ),
-                       ('tin',),
+                       ('mail', 'telephoneNumber', ),
+                       ('nation_of_birth', 'country', 'city', ),
+                       ('tin', 'gender'),
                        ('place_of_birth', 'date_of_birth'),
                        ('document_front', 'document_retro',),
                        ('description',),
@@ -49,6 +49,7 @@ class IdentityAdmin(admin.ModelAdmin):
 
     class Media:
         js = ('js/textarea-autosize.js',)
+
 
 class AdditionalAffiliationAdmin(admin.ModelAdmin):
     list_display  = ('identity', 'name', 'origin')

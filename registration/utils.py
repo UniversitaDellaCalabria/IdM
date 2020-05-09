@@ -1,7 +1,11 @@
-import importlib
+import base64
 import datetime
+import importlib
+import json
 
 from django.conf import settings
+from django.urls import reverse
+from django_form_builder.enc import encrypt
 
 
 REGISTRATION_ENABLED_CODES = ('stdnum.it.codicefiscale',
@@ -35,3 +39,17 @@ def serialize_dict(form_cleaned_data):
         else:
             serialized_dict[k] = v
     return serialized_dict
+
+
+def create_registration_token(serialized_dict):
+    ser_dict = serialize_dict(serialized_dict)
+    enc_value = encrypt(json.dumps(ser_dict))
+    return base64.b64encode(enc_value)
+
+
+def build_registration_token_url(request, token):
+    request_path = reverse('registration:confirm', kwargs={'token': token.decode()})
+    _offset = request.build_absolute_uri().index('/', 7)
+    request_fqdn = '{}{}'.format(request.build_absolute_uri()[:_offset],
+                                 request_path)
+    return request_fqdn

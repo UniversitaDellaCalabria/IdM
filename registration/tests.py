@@ -54,9 +54,15 @@ class RegistrationTestCase(TestCase):
         req = c.post(url, data, follow=True)
         self.assertContains(req, 'TIN code validation failed', status_code=403)
 
-    #def test_confirmation(self):
-        #c = Client()
-        #token = base64.b64encode(encrypt(json.dumps(DATA))).decode()
-        #url = reverse('registration:confirm', kwargs={'token': token})
-        #req = c.get(url, follow=True)
-        #import pdb; pdb.set_trace()
+    def test_confirmation(self):
+        c = Client()
+        token = base64.b64encode(encrypt(json.dumps(DATA))).decode()
+        url = reverse('registration:confirm', kwargs={'token': token})
+        print('Registration confirmation: {}'.format(url))
+
+        dr = open('unical_template/static/images/logo.png', 'rb')
+        df = open('unical_template/static/images/logo.png', 'rb')
+        data = dict(document_front = df,
+                    document_retro = dr)
+        req = c.post(url, data=data, follow=True)
+        self.assertIs(req.status_code, 200)
