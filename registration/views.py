@@ -1,4 +1,5 @@
 import base64
+import datetime
 import json
 import logging
 
@@ -36,7 +37,8 @@ def ask(request):
                                                 data = request.POST)
 
         if not (form.is_valid() and form_captcha.is_valid()):
-            logger.error('Registration form is not valid: {}'.format(json.dumps(form.cleaned_data)))
+            dform = str(dict(form.cleaned_data))
+            logger.error('Registration form is not valid: {}'.format(dform))
             return render(request, 'ask.html', {'form': form,
                                                 'form_captcha': form_captcha})
         # validate tin
@@ -46,12 +48,18 @@ def ask(request):
             return render(request,
                           'custom_message.html',
                           dict(title = _('TIN code validation failed'),
-                               avviso = _('It have been occurred an Error validating your TIN'),
+                               avviso = _('It have been occurred an error validating your TIN'),
                                description = _('')), status=403)
-
             
         # it seems quite good, check its delivery address
-        token = base64.b64encode(encrypt(json.dumps(form.cleaned_data)))
+        serialized_dict = dict()
+        for k,v in form.cleaned_data.items():
+            if isinstance(v, datetime.date):
+                serialized_dict[k] = v.strftime('%Y-%m-%d')
+            else:
+                serialized_dict[k] = v
+
+        token = base64.b64encode(encrypt(json.dumps(serialized_dict)))
         _msg = _('{} {} [{}] have requested to be registered as a new user.')
         logger.info(_msg.format(form.cleaned_data['name'],
                                 form.cleaned_data['surname'],
@@ -82,6 +90,7 @@ def ask(request):
         else:
             return HttpResponseRedirect(reverse('unical_template:confirmation-email'))
 
+
 def confirm(request, token):
     if request.method == 'GET':
         data = {}
@@ -101,18 +110,22 @@ def confirm(request, token):
             _msg = ', '.join(('{}:{}'.format(k,v) for k,v in data.items()))
             logger.error('Registration request - user already exists {}'.format(_msg))
             _msg = {'title': _("Invalid Data"),
-                   'avviso': _("It seems that you are already registered"),
-                   'description': _('Please go in the Home Page and activate '
+                    'avviso': _("It seems that you are already registered"),
+                    'description': _('Please go in the Home Page and activate '
                                     'the "Forgot your Password" procedure')}
             return render(request, 'custom_message.html',
                           _msg, status=403)
 
         # ok, it seems that he would go ...
         # create an identity
+
+        # the redirect to password reset
         import pdb; pdb.set_trace()
         
             
         # if true redirect to an informational page
     else:
         import pdb; pdb.set_trace()
+
+    # nothing here, delete
     pass
