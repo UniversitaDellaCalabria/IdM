@@ -4,7 +4,6 @@ import uuid
 
 from django.db import models
 from django.conf import settings
-#from django_countries.fields import CountryField
 
 from model_utils.fields import AutoCreatedField, AutoLastModifiedField
 from django.utils.translation import ugettext_lazy as _
@@ -17,7 +16,7 @@ from .decorators import is_apps_installed
 
 def _attachment_upload(instance, filename):
     """ this function has to return the location to upload the file """
-    return os.path.join('identity_attachments/{}'.format(instance.fiscal_code,
+    return os.path.join('identity_attachments/{}'.format(instance.tin,
                                                          filename))
 
 
@@ -93,18 +92,19 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
     name = models.CharField(max_length=256, blank=False, null=False,
                             help_text=_('Name'))
     surname = models.CharField(max_length=135, blank=False, null=False)
-    email = models.EmailField()
+    mail = models.EmailField()
     telephone = models.CharField(max_length=135, blank=True, null=True)
     common_name = models.CharField(max_length=256, blank=True, null=True,
                                    help_text=_('Common Name'))
     #country = CountryField(blank=True, help_text=_('nazionalità, cittadinanza'))
     nation = models.CharField(max_length=3, blank=False, null=True,
-                              default='IT', choices=[(e.alpha_2, e.alpha_2) for e in pycountry.countries])
+                              default='IT', choices=[(e.alpha_2, e.alpha_2)
+                                                     for e in pycountry.countries])
     country = models.CharField(max_length=128, blank=True, null=True,
                                help_text=_('Country'))
     city = models.CharField(max_length=128, blank=True, null=True,
                             help_text=_('City'))
-    fiscal_code = models.CharField(help_text=_('Fiscal code or uniqueID'),
+    tin = models.CharField(help_text=_('Tax Payer\'s Number or UniqueID'),
                                    max_length=16, blank=False, null=True)
     date_of_birth = models.DateField(blank=False, null=True)
     place_of_birth = models.CharField(max_length=128,
@@ -117,7 +117,8 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
                                       null=True, blank=False)
     affiliation = models.CharField(max_length=128, blank=False, null=True,
                                    help_text=_(("Affiliation")),
-                                   choices=[(','.join(v), k) for k,v in IDEM_AFFILIATION_MAP.items()],
+                                   choices=[(','.join(v), k)
+                                            for k,v in IDEM_AFFILIATION_MAP.items()],
                                    default=list(IDEM_AFFILIATION_MAP.keys())[0])
     description = models.TextField(max_length=1024, blank=True, null=True)
 
@@ -208,7 +209,7 @@ class IdentityCustomAttribute(TimeStampedModel):
 class AddressType(models.Model):
     name = models.CharField(max_length=12, blank=False,  null=False,
                             help_text=_(('delivery type as '
-                                         'email, telephone...')),
+                                         'mail, telephone...')),
                             unique=True)
     description = models.CharField(max_length=256, blank=True)
     def __str__(self):
@@ -218,7 +219,7 @@ class AddressType(models.Model):
 class IdentityDelivery(TimeStampedModel):
     """
         Generalized contacts classification
-        email, telephone, facebook, twitter
+        mail, telephone, facebook, twitter
     """
     identity = models.ForeignKey(Identity, on_delete=models.CASCADE)
     type     = models.ForeignKey(AddressType,

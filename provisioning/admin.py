@@ -17,9 +17,9 @@ class IdentityAdmin(admin.ModelAdmin):
                IdentityAddressInline,
                AdditionalAffiliationInline,
                IdentityProvisioningInline]
-    list_display  = ('name', 'surname','email', 'created')
+    list_display  = ('name', 'surname','mail', 'created')
     search_fields = ('name', 'surname','common_name',
-                     'email', 'telephone')
+                     'mail', 'telephone')
     list_filter   = ('created', 'modified')
     list_filter = (
                    ('created', DateTimeRangeFilter),
@@ -34,9 +34,9 @@ class IdentityAdmin(admin.ModelAdmin):
                 (None, { 'fields' :
                     (  ('personal_title', 'common_name'),
                        ('name', 'surname'),
-                       ('email', 'telephone', ),
+                       ('mail', 'telephone', ),
                        ('nation', 'country', 'city', ),
-                       ('fiscal_code',),
+                       ('tin',),
                        ('place_of_birth', 'date_of_birth'),
                        ('document_front', 'document_retro',),
                        ('description',),

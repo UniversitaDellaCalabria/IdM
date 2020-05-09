@@ -83,11 +83,11 @@ valid = table_query.filter(~gruppo.contains('legacy'))
         # print(i)
 
 # key = cineca, value = idm.unical.it
-# IDENTITY_MAP = {'cod_fiscale': 'fiscal_code',
+# IDENTITY_MAP = {'tin': 'tin',
                 # 'cognome': 'surname',
                 # 'comune_nascita': 'place_of_birth',
                 # 'data_nascita': fix_date_of_birth,
-                # 'email': 'email',
+                # 'mail': 'mail',
                 # 'gruppo': get_affiliations,
                 # 'matricola_dipendente': get_affiliations,
                 # 'matricola_studente': get_affiliations,
@@ -101,7 +101,7 @@ for guy in valid:
                                        surname = guy.cognome,
                                        place_of_birth = guy.comune_nascita,
                                        date_of_birth = fix_date_of_birth(guy.data_nascita),
-                                       fiscal_code = guy.cod_fiscale,
+                                       tin = guy.tin,
                                        email = guy.email)
     if guy.matricola_dipendente:
         AdditionalAffiliation.objects.create(identity = identity,

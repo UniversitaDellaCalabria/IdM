@@ -13,10 +13,11 @@ from django.utils.translation import ugettext_lazy as _
 from django_form_builder.enc import encrypt, decrypt
 from django_form_builder.forms import BaseDynamicForm
 from django_form_builder.models import DynamicFieldMap
+from identity.models import Identity
 from ldap_peoples.models import LdapAcademiaUser
 
 from . forms import AskForm_1
-from . utils import validate_personal_id
+from . utils import validate_personal_id, serialize_dict
 
 logger = logging.getLogger(__name__)
 
@@ -52,12 +53,7 @@ def ask(request):
                                description = _('')), status=403)
             
         # it seems quite good, check its delivery address
-        serialized_dict = dict()
-        for k,v in form.cleaned_data.items():
-            if isinstance(v, datetime.date):
-                serialized_dict[k] = v.strftime('%Y-%m-%d')
-            else:
-                serialized_dict[k] = v
+        serialized_dict = serialize_dict(form.cleaned_data)
 
         token = base64.b64encode(encrypt(json.dumps(serialized_dict)))
         _msg = _('{} {} [{}] have requested to be registered as a new user.')
@@ -104,8 +100,8 @@ def confirm(request, token):
             return render(request, 'custom_message.html',
                           _msg, status=403)
             
-        lu = LdapAcademiaUser.objects.filter(Q(schacPersonalUniqueID__icontains=data['tin'])\
-                                             | Q(mail=data['mail']))
+        lu = LdapAcademiaUser.objects.filter(Q(schacPersonalUniqueID__icontains=data['tin'])|\
+                                             Q(mail=data['mail']))
         if lu:
             _msg = ', '.join(('{}:{}'.format(k,v) for k,v in data.items()))
             logger.error('Registration request - user already exists {}'.format(_msg))
@@ -117,7 +113,10 @@ def confirm(request, token):
                           _msg, status=403)
 
         # ok, it seems that he would go ...
+        # 
+        
         # create an identity
+        
 
         # the redirect to password reset
         import pdb; pdb.set_trace()

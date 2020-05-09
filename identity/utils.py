@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import csv
 import dateutil.parser
+import logging
 
 from django.db import transaction
 from django.conf import settings
@@ -12,33 +13,32 @@ from .models import Identity
 def clean_field(value):
     return value.strip()
 
+logger = logging.getLogger(__name__)
+
 
 @transaction.atomic
 def create_accounts_from_csv(csv_file='',
                              test=False,
                              debug=False):
-    proc_msg = 'Processing '
+    proc_msg = 'Processing: '
     input_file = csv.DictReader(open(csv_file))
     cnt = 0
     for da in input_file:
-        if debug:
-            print(proc_msg)
-            pprint(da)
+        logger.debug(proc_msg+str(da))
 
         # gets identity from email
-        email = clean_field(da['email'])
-        identity = Identity.objects.filter(email=email)
+        mail = clean_field(da['mail'])
+        identity = Identity.objects.filter(mail=mail)
 
         if identity:
             identity = identity.first()
-            if debug:
-                msg = 'INFO: Found already stored identity {} from email {}'
-                print(msg.format(identity, email))
+            msg = 'INFO: Found already stored identity {} from email {}'
+            logger.debug(msg.format(identity, mail))
         else:
             identity = Identity(
                         name = clean_field(da['first_name']),
                         surname = clean_field(da['last_name']),
-                        email = clean_field(da['email']),
+                        email = clean_field(da['mail']),
                         telephone = clean_field(da['tel']),
                         codice_fiscale = clean_field(da['codice_fiscale']))
 
@@ -53,12 +53,11 @@ def create_accounts_from_csv(csv_file='',
             if not test:
                 identity.save()
 
-        if debug:
-            print('identity: {}'.format(identity))
-
-        print('Create Identity for {}'.format(identity))
+        logger.debug('identity: {}'.format(identity))
+        logger.info('Create Identity for {}'.format(identity))
         cnt += 1
     return cnt
+
 
 if __name__ == '__main__':
     import argparse

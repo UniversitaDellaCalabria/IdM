@@ -32,10 +32,10 @@ matricola_studente =  '111190{}'.format(randomString())
 matricola_dipendente = '982388{}'.format(randomString())
 additional_affiliations = [('otherinst.net', 'student', matricola_studente),
                            ('othst.gov', 'employee', matricola_dipendente),]
-_test_guy = {'fiscal_code': 'psopql86e56d086s{}'.format(randomString()),
+_test_guy = {'tin': 'psopql86e56d086s{}'.format(randomString()),
              'surname': 'posto',
              'name': 'pasqualino',
-             'email': '{}@yahoo.it'.format(_uid),
+             'mail': '{}@yahoo.it'.format(_uid),
              'date_of_birth': get_date_from_string('16/05/1986'),
              'place_of_birth': 'Cosenza',
              'affiliation': ['member', 'student']}
@@ -66,14 +66,14 @@ class ProvisioningTestCase(TestCase):
                                                  name=addaff[1],
                                                  unique_code=addaff[2])
 
-        d = Identity.objects.get(email=_test_guy['email'])
+        d = Identity.objects.get(mail=_test_guy['mail'])
         p = IdentityProvisioning.objects.create(identity=d)
         token_url = p.get_activation_url()
         c = Client()
         request = c.post(token_url, {'username': _uid,
                                      'password': _passwd,
                                      'password_verifica': _passwd,
-                                     'mail': _test_guy['email']})
+                                     'mail': _test_guy['mail']})
         # check = (b'errorlist' in request.content)
         check = (b'alert-error' in request.content)
         if check:
@@ -122,7 +122,7 @@ class ProvisioningTestCase(TestCase):
         self.assertEqual(request.status_code, 302)
 
         lurl = reverse('provisioning:change_data')
-        request = c.post(lurl, {'mail': 'ingo_'+_test_guy['email'],
+        request = c.post(lurl, {'mail': 'ingo_'+_test_guy['mail'],
                                 'telephoneNumber': '0984567683'})
         self.assertEqual(request.status_code, 200)
         #self.assertEqual(request.status_code, 302)
@@ -142,13 +142,13 @@ class ProvisioningTestCase(TestCase):
         c = Client()
         lurl = reverse('provisioning:reset_password_ask')
         request = c.post(lurl, {'username': _uid,
-                                'mail': 'ingo_'+_test_guy['email']})
+                                'mail': 'ingo_'+_test_guy['mail']})
         # self.assertEqual(request.status_code, 200)
         self.assertEqual(request.status_code, 302)
         p = IdentityLdapPasswordReset.objects.filter(ldap_dn=d.dn).last()
         token_url = p.get_activation_url()
         request = c.post(token_url, {'username': _uid,
-                                     'mail': 'ingo_'+_test_guy['email'],
+                                     'mail': 'ingo_'+_test_guy['mail'],
                                      'password': _passwd+_passwd,
                                      'password_verifica': _passwd+_passwd})
         self.assertIs(request.status_code, 200)

@@ -58,7 +58,7 @@ def get_guys(update = False):
             continue
 
         identity = Identity.objects.filter(email=guy.email,
-                                           fiscal_code=guy.cod_fiscale).first()
+                                           tin=guy.tin).first()
         if identity and update:
             # get it and update
             identity.name = guy.nome
@@ -83,8 +83,8 @@ def get_guys(update = False):
                                                surname = guy.cognome,
                                                place_of_birth = guy.comune_nascita,
                                                date_of_birth = fix_date_of_birth(guy.data_nascita),
-                                               fiscal_code = guy.cod_fiscale,
-                                               email = guy.email,
+                                               tin = guy.tin,
+                                               mail = guy.mail,
                                                flusso = 'import',
                                                descrizione_flusso = guy_repr)
             LogEntry.objects.log_action(

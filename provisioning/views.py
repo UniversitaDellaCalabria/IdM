@@ -59,7 +59,7 @@ def account_create(request, token_value):
             return render(request, 'account_create.html', d)
 
         if data['token'] != id_prov.token or \
-           data['mail'] != id_prov.identity.email:
+           data['mail'] != id_prov.identity.mail:
                return render(request,
                              'custom_message.html',
                              INVALID_DATA_DISPLAY, status=403)
@@ -81,7 +81,7 @@ def account_create(request, token_value):
         ldap_user = LdapAcademiaUser.objects.create(**entry)
         #ldap_user.userPassword = form.cleaned_data['password']
         # ldap_user.set_password_custom(form.cleaned_data['password'])
-        ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.fiscal_code,
+        ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin,
                                             country_code=id_prov.identity.nation)
         ldap_user.set_default_eppn()
         for homeorgtype in settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT:

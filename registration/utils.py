@@ -1,4 +1,5 @@
 import importlib
+import datetime
 
 from django.conf import settings
 
@@ -24,3 +25,13 @@ def validate_personal_id(value):
                 return i.__name__
         except Exception as e:
             pass
+
+
+def serialize_dict(form_cleaned_data):
+    serialized_dict = dict()
+    for k,v in form_cleaned_data.items():
+        if isinstance(v, datetime.date):
+            serialized_dict[k] = v.strftime('%Y-%m-%d')
+        else:
+            serialized_dict[k] = v
+    return serialized_dict
