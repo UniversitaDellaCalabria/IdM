@@ -22,8 +22,6 @@ ALLOWED_HOSTS = [HOSTNAME,
 
 LOGIN_REDIRECT_URL = '/dashboard'
 
-PROVISONING_REQUEST_ID_APPNAME = 'request_identity'
-
 # Application definition
 INSTALLED_APPS = [
     # customizzazione gestione degli utenti
@@ -37,21 +35,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_admin_multiple_choice_list_filter',
-
+    'django_form_builder',
     'unical_template',
     'sass_processor',
     'bootstrap_italia_template',
     'django_unical_bootstrap_italia',
     'django_form_builder',
-    
+
     'rangefilter',
     'ldapdb',
     'ldap_peoples',
     'identity',
     'provisioning',
 
-    'cineca_repl',
-    #PROVISONING_REQUEST_ID_APPNAME,
+    #'cineca_repl',
+    'registration',
 ]
 
 if 'saml2_sp' in INSTALLED_APPS or \
