@@ -20,8 +20,8 @@ from .views import *
 app_name="unical_templates"
 
 urlpatterns = [
-    path('base', base_template, name='base'),
-    path('dashboard', dashboard_template, name='dashboard'),
+    #path('base', base_template, name='base'),
+    #path('dashboard', dashboard_template, name='dashboard'),
     path(
         'confirmation-email',
         confirmation_email,

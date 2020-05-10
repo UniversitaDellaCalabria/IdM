@@ -34,6 +34,8 @@ from ldap_peoples.models import LdapAcademiaUser
 
 
 logger = logging.getLogger(__name__)
+EDUPERSON_DEFAULT_ASSURANCE = getattr(settings, 'EDUPERSON_DEFAULT_ASSURANCE',
+                                      'https://refeds.org/assurance/IAP/medium')
 
 
 def account_create(request, token_value):
@@ -73,24 +75,29 @@ def account_create(request, token_value):
                                            id_prov.identity.surname)),
                  'mail' : [form.cleaned_data['mail']],
                  'telephoneNumber' : [id_prov.identity.telephoneNumber,],
+                 'eduPersonPrincipalName': '@'.join((form.cleaned_data['username'],
+                                                     settings.LDAP_BASE_DOMAIN)),
+                 'eduPersonAssurance': EDUPERSON_DEFAULT_ASSURANCE, 
+                 'schacGender' : id_prov.identity.gender,
                  'schacPlaceOfBirth' : ','.join((id_prov.identity.nation_of_birth,
                                                  id_prov.identity.place_of_birth)),
                  'schacDateOfBirth' : id_prov.identity.date_of_birth,
-                 'schacHomeOrganization' : settings.SCHAC_HOMEORGANIZATION_DEFAULT}
+                 'schacHomeOrganization' : settings.SCHAC_HOMEORGANIZATION_DEFAULT,
+                 'schacHomeOrganizationType': settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT}
 
         ldap_user = LdapAcademiaUser.objects.create(**entry)
         #ldap_user.userPassword = form.cleaned_data['password']
         # ldap_user.set_password_custom(form.cleaned_data['password'])
         ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin,
                                             country_code=id_prov.identity.nation_of_birth)
-        ldap_user.set_default_eppn()
-        for homeorgtype in settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT:
-            ldap_user.set_schacHomeOrganizationType(value=homeorgtype)
+        #ldap_user.set_default_eppn()
+        #for homeorgtype in settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT:
+            #ldap_user.set_schacHomeOrganizationType(value=homeorgtype)
 
         # AFFILIATIONS
-        affiliations = id_prov.identity.affiliation.split(',')
         ldap_user.eduPersonAffiliation = id_prov.identity.affiliation.split(',')
-        eduPersonScopedAffiliation = [aff+'@'+settings.LDAP_BASE_DOMAIN for aff in affiliations]
+        eduPersonScopedAffiliation = [aff+'@'+settings.SCHAC_HOMEORGANIZATION_DEFAULT
+                                      for aff in ldap_user.eduPersonAffiliation]
         # additionals
 
         # additionals affiliations
@@ -103,8 +110,8 @@ def account_create(request, token_value):
         ldap_user.schacPersonalUniqueCode = [aff.get_urn() for aff in addaff]
         ldap_user.reset_schacExpiryDate()
 
-        # probably useless - TODO
-        ldap_user.save()
+        # previous set already saved ...
+        # ldap_user.save()
         
         # altrimenti mi fallisce lo unit test!
         ldap_user.set_password(form.cleaned_data['password'])
@@ -208,7 +215,6 @@ def dashboard(request):
                           status=403)
 
         delivery_dict = get_ldapuser_attrs_from_formbuilder_conf(lu)
-
         dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
                                                   constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                                   ignore_format_field_name=True)

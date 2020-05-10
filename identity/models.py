@@ -106,7 +106,10 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
     tin = models.CharField(help_text=_('Tax Payer\'s Number or UniqueID'),
                                    max_length=16, blank=False, null=True)
     gender = models.CharField(max_length=3, blank=True, null=True,
-                              choices=(('m', _('Male')),('f', _('Female')),('o', _('Other'))))
+                              choices=((0, _('Not know')),
+                                       (1, _('Male')),
+                                       (2, _('Female')),
+                                       (9, _('Not specified'))))
     date_of_birth = models.DateField(blank=False, null=True)
     place_of_birth = models.CharField(max_length=128,
                                       blank=False, null=True, help_text='')
@@ -120,7 +123,8 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
                                    help_text=_(("Affiliation")),
                                    choices=[(','.join(v), k)
                                             for k,v in IDEM_AFFILIATION_MAP.items()],
-                                   default=list(IDEM_AFFILIATION_MAP.keys())[0])
+                                   default=','.join(tuple(DEFAULT_AFFILIATION.values())[0])
+                                   )
     description = models.TextField(max_length=1024, blank=True, null=True)
 
     def is_valid(self):

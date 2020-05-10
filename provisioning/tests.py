@@ -38,7 +38,8 @@ _test_guy = {'tin': 'psopql86e56d086s{}'.format(randomString()),
              'mail': '{}@yahoo.it'.format(_uid),
              'date_of_birth': get_date_from_string('16/05/1986'),
              'place_of_birth': 'Cosenza',
-             'affiliation': ['member', 'student']}
+             'affiliation': 'member,student',
+             'gender': 1}
 
 _PURGE_LDAP_TEST_USER = True
 _WAIT_FOR_A_CHECK = False
