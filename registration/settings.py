@@ -21,7 +21,7 @@ Please click on the following url to confirm:
 {url}
 
 Do not reply to this email,
-Regards 
+Regards
 """)
 
 ENCRYPTION_SECRET = b'thatsecret'

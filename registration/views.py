@@ -1,3 +1,4 @@
+import copy
 import datetime
 import json
 import logging
@@ -9,6 +10,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 from django_form_builder.enc import encrypt, decrypt
 from django_form_builder.forms import BaseDynamicForm
@@ -33,10 +35,12 @@ LDAP_UNIQUEID_TMPL = getattr(settings, 'LDAP_UNIQUEID_TMPL',
 
 
 def ask(request):
+    cdict = copy.copy(settings.REGISTRATION_CAPTCHA_FORM)
+    cdict['CaPTCHA'][1]['lang'] = translation.get_language()
+
     if request.method == 'GET':
         form_captcha = DynamicFieldMap.get_form(BaseDynamicForm,
-                                                constructor_dict=settings.REGISTRATION_CAPTCHA_FORM)
-
+                                                constructor_dict=cdict)
         d = dict(form = AskForm_1(),
                  form_captcha = form_captcha)
 
@@ -44,7 +48,7 @@ def ask(request):
     else:
         form = AskForm_1(request.POST)
         form_captcha = DynamicFieldMap.get_form(BaseDynamicForm,
-                                                constructor_dict=settings.REGISTRATION_CAPTCHA_FORM,
+                                                constructor_dict=cdict,
                                                 data = request.POST)
 
         if not (form.is_valid() and form_captcha.is_valid()):
@@ -61,7 +65,7 @@ def ask(request):
                           dict(title = _('TIN code validation failed'),
                                avviso = _('It have been occurred an error validating your TIN'),
                                description = _('')), status=403)
-            
+
         # it seems quite good, check its delivery address
         serialized_dict = serialize_dict(form.cleaned_data)
 
@@ -75,7 +79,7 @@ def ask(request):
         mail_body = dict(name = '{} {}'.format(form.cleaned_data['name'],
                                                form.cleaned_data['surname']),
                          url = request_fqdn)
-        
+
         mail_sent = send_mail(settings.REGISTRATION_ASK_OBJ,
                               settings.REGISTRATION_ASK_BODY.format(**mail_body),
                               settings.DEFAULT_FROM_EMAIL,
@@ -83,7 +87,7 @@ def ask(request):
                               fail_silently=True)
         if not mail_sent:
             logger.error('Email to {} cannot be send.'.format(cleaned_data['mail']))
-            
+
             return render(request,
                           'custom_message.html',
                           dict(title = _('EMail send error'),
@@ -114,7 +118,7 @@ def confirm(request, token):
     # check if identity was already created, if yes drive the user to the provisioning token
     identity = Identity.objects.filter(Q(tin=data['tin'])|\
                                        Q(mail=data['mail']))
-    
+
     # TEST RDBMS REGISTRATION IDENTITY
     _msg = ', '.join(('{}:{}'.format(k,v) for k,v in data.items()))
     if identity:
@@ -126,7 +130,7 @@ def confirm(request, token):
                                  'If the problem persists please contact our technical assistance.')}
         return render(request, 'custom_message.html', _msg, status=403)
 
-    # TEST LDAP 
+    # TEST LDAP
     tin = LDAP_UNIQUEID_TMPL.format(data['tin'])
     lu = LdapAcademiaUser.objects.filter(Q(schacPersonalUniqueID=tin)|\
                                          Q(mail=data['mail']))
