@@ -47,3 +47,6 @@ BeautifulSoup4
 
 # validazione CF
 git+https://github.com/arthurdejong/python-stdnum.git
+
+# deprovisioning
+django-q==1.2.1

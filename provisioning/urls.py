@@ -17,7 +17,7 @@ urlpatterns = [
     ),
 
     path(
-        'local/login',
+        'local/login/',
         provisioning_login,
         name='provisioning_login',
     ),

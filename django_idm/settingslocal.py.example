@@ -47,9 +47,10 @@ INSTALLED_APPS = [
     'ldap_peoples',
     'identity',
     'provisioning',
-
-    #'cineca_repl',
     'registration',
+    'deprovisioning'
+    'django_q'
+    #'cineca_repl'
 ]
 
 if 'saml2_sp' in INSTALLED_APPS or \
@@ -73,7 +74,27 @@ else:
                             # 'django_idm.auth.SessionUniqueBackend',
                           ]
     LOGIN_URLNAME = 'provisioning:provisioning_login'
-    LOGIN_URL = '/local/login'
+    LOGIN_URL = '/local/login/'
+
+if 'django_q' in INSTALLED_APPS:
+   # settings.py example
+    Q_CLUSTER = {
+    'name': 'deprovisioning',
+    'workers': 2,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': False,
+    'save_limit': 1000,
+    'queue_limit': 2000,
+    'cpu_affinity': 1,
+    'label': 'Deprovisioning Workers',
+    'orm': 'default'
+    #'redis': {
+    #    'host': '127.0.0.1',
+    #    'port': 6379,
+    #    'db': 0, }
+   }
+
 
 if DEBUG:
     SESSION_COOKIE_SECURE = False
