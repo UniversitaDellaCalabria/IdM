@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 19:08+0200\n"
+"POT-Creation-Date: 2020-05-15 20:23+0200\n"
 "PO-Revision-Date: 2020-05-15 20:20+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,11 +37,11 @@ msgstr ""
 msgid "Authentication and Authorization about Users"
 msgstr ""
 
-#: accounts/models.py:10 identity/models.py:110 registration/forms.py:41
+#: accounts/models.py:10 identity/models.py:109 registration/forms.py:41
 msgid "Male"
 msgstr ""
 
-#: accounts/models.py:11 identity/models.py:111 registration/forms.py:41
+#: accounts/models.py:11 identity/models.py:110 registration/forms.py:41
 msgid "Female"
 msgstr ""
 
@@ -53,7 +53,7 @@ msgstr ""
 msgid "active"
 msgstr ""
 
-#: accounts/models.py:18 identity/models.py:92 registration/forms.py:22
+#: accounts/models.py:18 identity/models.py:91 registration/forms.py:22
 #: registration/forms.py:26
 msgid "Name"
 msgstr ""
@@ -124,75 +124,75 @@ msgstr ""
 msgid "Record year (Prot. year)"
 msgstr ""
 
-#: identity/models.py:70
+#: identity/models.py:69
 msgid "Address"
 msgstr ""
 
-#: identity/models.py:71
+#: identity/models.py:70
 msgid "Locality"
 msgstr ""
 
-#: identity/models.py:72
+#: identity/models.py:71
 msgid "Region"
 msgstr ""
 
-#: identity/models.py:73
+#: identity/models.py:72
 msgid "Postal code"
 msgstr ""
 
-#: identity/models.py:75 identity/models.py:103
+#: identity/models.py:74 identity/models.py:102
 msgid "Country"
 msgstr ""
 
-#: identity/models.py:77
+#: identity/models.py:76
 msgid "Main delivery address"
 msgstr ""
 
-#: identity/models.py:80
+#: identity/models.py:79
 msgid "Address book"
 msgstr ""
 
-#: identity/models.py:97
+#: identity/models.py:96
 msgid "Common Name"
 msgstr ""
 
-#: identity/models.py:105
+#: identity/models.py:104
 msgid "City"
 msgstr ""
 
-#: identity/models.py:106
+#: identity/models.py:105
 msgid "Tax Payer's Number or UniqueID"
 msgstr ""
 
-#: identity/models.py:109
+#: identity/models.py:108
 msgid "Not know"
 msgstr ""
 
-#: identity/models.py:112
+#: identity/models.py:111
 msgid "Not specified"
 msgstr ""
 
-#: identity/models.py:116
+#: identity/models.py:115
 msgid "Identity card front"
 msgstr ""
 
-#: identity/models.py:119
+#: identity/models.py:118
 msgid "Identity card retro"
 msgstr ""
 
-#: identity/models.py:138
+#: identity/models.py:137
 msgid "Digital Identities"
 msgstr ""
 
-#: identity/models.py:168
+#: identity/models.py:167
 msgid "Additional Affiliation"
 msgstr ""
 
-#: identity/models.py:169
+#: identity/models.py:168
 msgid "Additional Affiliations"
 msgstr ""
 
-#: identity/models.py:197
+#: identity/models.py:196
 msgid "Addresses"
 msgstr ""
 
@@ -318,7 +318,7 @@ msgid "You have inserted a wrong actual username"
 msgstr ""
 
 #: provisioning/custom_messages.py:74
-msgid "Please, be carefoul"
+msgid "Please, be careful"
 msgstr ""
 
 #: provisioning/custom_messages.py:76
@@ -403,7 +403,7 @@ msgid "Your username"
 msgstr ""
 
 #: provisioning/forms.py:34
-msgid "Telefono"
+msgid "Telephone number"
 msgstr ""
 
 #: provisioning/forms.py:37
@@ -917,7 +917,7 @@ msgid "Confirm your Unical ID Account"
 msgstr ""
 
 #: registration/templates/confirm.html:15
-msgid "Review your data and uplooad your identity document."
+msgid "Review your data and upload your identity document."
 msgstr ""
 
 #: registration/templates/confirm.html:39
@@ -1136,8 +1136,7 @@ msgid "Contacts"
 msgstr "Contact us"
 
 #: unical_template/templates/base.html:67
-#: unical_template_old/templates/base.html:48
-msgid "Forget password?"
+msgid "Forget your password?"
 msgstr ""
 
 #: unical_template/templates/confirmation_email.html:9
@@ -1334,6 +1333,10 @@ msgstr ""
 #: unical_template_old/templates/base.html:60
 msgid "APP_NAME"
 msgstr "Unical IDM"
+
+#: unical_template_old/templates/base.html:48
+msgid "Forgotten password?"
+msgstr ""
 
 #: unical_template_old/templates/base.html:52
 msgid "Menu"
