@@ -65,7 +65,6 @@ class IdentityExtendendStatus(models.Model):
         abstract = True
 
 
-# TODO tradurre fields
 class AbstractIdentityAddress(models.Model):
     address = models.CharField(_('Address'),max_length=150, blank=True, null=True)
     locality_name = models.CharField(_('Locality'),max_length=135, blank=True, null=True)

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-15 19:08+0200\n"
-"PO-Revision-Date: 2020-05-15 19:42+0200\n"
+"PO-Revision-Date: 2020-05-15 20:20+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -1248,7 +1248,7 @@ msgstr "Contatti"
 
 #: unical_template/templates/base.html:67
 #: unical_template_old/templates/base.html:48
-msgid "Forgotten password?"
+msgid "Forget password?"
 msgstr "Password dimenticata?"
 
 #: unical_template/templates/confirmation_email.html:9
