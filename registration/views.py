@@ -86,7 +86,7 @@ def ask(request):
                               [form.cleaned_data['mail']], # it's a list :)
                               fail_silently=True)
         if not mail_sent:
-            logger.error('Email to {} cannot be send.'.format(cleaned_data['mail']))
+            logger.error('Email to {} cannot be send.'.format(form.cleaned_data['mail']))
 
             return render(request,
                           'custom_message.html',

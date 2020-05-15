@@ -10,7 +10,7 @@
 
 <!-- contact section -->
 <section class="section text-center">
-    
+
   <div class="container">
         <h1>{% trans "Create a new Unical ID Account" %}</h1>
         <p class="mb-5">{% trans "Insert the requested informations, a confirmation email will be sent to you." %}</p>
@@ -26,20 +26,37 @@
                         </div>
                     {% endfor %}
 
+                    {% block agreement %}
                     <div class="container">
                       <div class="row">
-                        <div class="col-sm  align-text-bottom">
-                            <p class="text-justify">
-                                {% trans 'Agreement ...' %}
-                                {% lorem %}
-                            </p>
+                        <div class="border-bottom border-light w-100 text-left">
+                          <div class="form-check">
+                            <input id="checkbox1" type="checkbox" required>
+                            <label for="checkbox1">
+                                {% trans "By submitting this form I consent to the processing of data." %}
+                            </label>
+                          </div>
+                          </div>
+                          <div class="border-bottom  border-light w-100 text-left">
+                          <div class="form-check">
+                            <input id="checkbox2" type="checkbox" required>
+                            <label for="checkbox2">
+                                {% trans "By submitting this form I declare that I have read the term of privacy." %}
+                            </label>
+                          </div>
+                          </div>
                         </div>
-                        <div class="col-sm">
+                    </div>
+                    {% endblock %}
+
+                    <div class="container mt-5">
+                      <div class="row">
+                        <div class="col-5">
                           {{ form_captcha }}
                         </div>
                       </div>
                     </div>
-                    
+
                     </div>
                     <input type="submit" class="btn btn-secondary btn-block" value="{% trans 'Submit' %}">
                 </form>

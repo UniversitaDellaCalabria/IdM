@@ -20,6 +20,7 @@ ALLOWED_HOSTS = [HOSTNAME,
                  'ldap.testunical.it',
                  'localhost']
 
+IDM_USERNAME_EDITABLE = False
 LOGIN_REDIRECT_URL = '/dashboard'
 
 # Application definition
@@ -40,16 +41,16 @@ INSTALLED_APPS = [
     'sass_processor',
     'bootstrap_italia_template',
     'django_unical_bootstrap_italia',
-    'django_form_builder',
 
     'rangefilter',
     'ldapdb',
     'ldap_peoples',
     'identity',
+
     'provisioning',
     'registration',
-    'deprovisioning'
-    'django_q'
+    'deprovisioning',
+    'django_q',
     #'cineca_repl'
 ]
 
@@ -94,7 +95,6 @@ if 'django_q' in INSTALLED_APPS:
     #    'port': 6379,
     #    'db': 0, }
    }
-
 
 if DEBUG:
     SESSION_COOKIE_SECURE = False
@@ -289,7 +289,6 @@ LOGGING = {
 # prints to stdout when test runs
 NOSE_ARGS = ['--nocapture',
              '--nologcapture',]
-
 
 DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
      ('mail', ('CustomEmailField', {'label': 'Email',
