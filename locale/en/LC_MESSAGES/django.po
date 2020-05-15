@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 20:23+0200\n"
+"POT-Creation-Date: 2020-05-15 23:57+0200\n"
 "PO-Revision-Date: 2020-05-15 20:20+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,15 +37,15 @@ msgstr ""
 msgid "Authentication and Authorization about Users"
 msgstr ""
 
-#: accounts/models.py:10 identity/models.py:109 registration/forms.py:41
+#: accounts/models.py:10 identity/models.py:109 registration/forms.py:43
 msgid "Male"
 msgstr ""
 
-#: accounts/models.py:11 identity/models.py:110 registration/forms.py:41
+#: accounts/models.py:11 identity/models.py:110 registration/forms.py:44
 msgid "Female"
 msgstr ""
 
-#: accounts/models.py:12 registration/forms.py:41
+#: accounts/models.py:12 registration/forms.py:45
 msgid "Other"
 msgstr ""
 
@@ -53,12 +53,12 @@ msgstr ""
 msgid "active"
 msgstr ""
 
-#: accounts/models.py:18 identity/models.py:91 registration/forms.py:22
-#: registration/forms.py:26
+#: accounts/models.py:18 identity/models.py:91 registration/forms.py:23
+#: registration/forms.py:27
 msgid "Name"
 msgstr ""
 
-#: accounts/models.py:19 registration/forms.py:27 registration/forms.py:31
+#: accounts/models.py:19 registration/forms.py:28 registration/forms.py:32
 msgid "Surname"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgstr ""
 msgid "TIN - Tax payer's Identification number"
 msgstr ""
 
-#: accounts/models.py:23 registration/forms.py:39
+#: accounts/models.py:23 registration/forms.py:40
 msgid "Gender"
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "name.surname@{} or other email used for registration. "
 msgstr ""
 
-#: provisioning/forms.py:48 registration/forms.py:60
+#: provisioning/forms.py:48 registration/forms.py:65
 msgid "email@domain.eu"
 msgstr ""
 
@@ -801,73 +801,67 @@ msgstr ""
 msgid "Password changed"
 msgstr ""
 
-#: registration/forms.py:33 registration/forms.py:38
+#: registration/forms.py:34 registration/forms.py:39
 msgid "Tax Payer's Identification Number"
 msgstr ""
 
-#: registration/forms.py:35
+#: registration/forms.py:36
 msgid "National identification number"
 msgstr ""
 
-#: registration/forms.py:42
+#: registration/forms.py:47
 msgid "Nation of Birth"
 msgstr ""
 
-#: registration/forms.py:45
+#: registration/forms.py:50 registration/forms.py:53
 msgid "Place of Birth"
 msgstr ""
 
-#: registration/forms.py:48
-msgid "\"Comune di nascita\" or International identifier"
-msgstr ""
-
-#: registration/forms.py:50
-msgid ""
-"If you are Italian please insert your 'Comune di nascita' otherwise a human "
-"readable Place of Bird"
-msgstr ""
-
-#: registration/forms.py:53
+#: registration/forms.py:58
 msgid "Date of Birth"
 msgstr ""
 
-#: registration/forms.py:57
+#: registration/forms.py:62
 msgid "name.surname@your.mail.com"
 msgstr ""
 
-#: registration/forms.py:61
+#: registration/forms.py:66
 msgid "Mobile Phone"
 msgstr ""
 
-#: registration/forms.py:64
+#: registration/forms.py:69
 msgid "Mobile phone number"
 msgstr ""
 
-#: registration/forms.py:67
+#: registration/forms.py:72
 msgid "Telephone number with prefix"
 msgstr ""
 
-#: registration/forms.py:71
-msgid "Identification Document Front side"
-msgstr ""
-
-#: registration/forms.py:72
-msgid "Identification Document Back side"
+#: registration/forms.py:76
+msgid "You must be of age"
 msgstr ""
 
 #: registration/forms.py:80
+msgid "Identification Document Front side"
+msgstr ""
+
+#: registration/forms.py:81
+msgid "Identification Document Back side"
+msgstr ""
+
+#: registration/forms.py:89
 msgid "An Error occourred, please upload again your document"
 msgstr ""
 
-#: registration/forms.py:87
+#: registration/forms.py:96
 msgid "Only these format are permitted: '{}'"
 msgstr ""
 
-#: registration/forms.py:91
+#: registration/forms.py:100
 msgid "Maximum upload size is {}. {} is {}"
 msgstr ""
 
-#: registration/forms.py:97
+#: registration/forms.py:106
 msgid "Maximum filename length is {}"
 msgstr ""
 
@@ -890,25 +884,28 @@ msgid ""
 "Regards\n"
 msgstr ""
 
-#: registration/templates/ask.html:15
+#: registration/templates/ask.html:13
 msgid "Create a new Unical ID Account"
 msgstr ""
 
-#: registration/templates/ask.html:16
+#: registration/templates/ask.html:14
 msgid ""
 "Insert the requested informations, a confirmation email will be sent to you."
 msgstr ""
 
-#: registration/templates/ask.html:36
-msgid "By submitting this form I consent to the processing of data."
+#: registration/templates/ask.html:20 registration/templates/confirm.html:21
+msgid "Some Errors has occourred"
 msgstr ""
 
-#: registration/templates/ask.html:44
-msgid ""
-"By submitting this form I declare that I have read the terms of privacy."
+#: registration/templates/ask.html:47 registration/templates/ask.html:56
+msgid "By submitting this form I declare that I have read the data ..."
 msgstr ""
 
-#: registration/templates/ask.html:61 registration/templates/confirm.html:50
+#: registration/templates/ask.html:50 registration/templates/ask.html:59
+msgid "I have read the ..."
+msgstr ""
+
+#: registration/templates/ask.html:76 registration/templates/confirm.html:56
 msgid "Submit"
 msgstr ""
 
@@ -920,7 +917,7 @@ msgstr ""
 msgid "Review your data and upload your identity document."
 msgstr ""
 
-#: registration/templates/confirm.html:39
+#: registration/templates/confirm.html:44
 msgid "Please upload an IMAGE scan of your Identification Document (Not PDF)."
 msgstr ""
 
@@ -1335,7 +1332,7 @@ msgid "APP_NAME"
 msgstr "Unical IDM"
 
 #: unical_template_old/templates/base.html:48
-msgid "Forgotten password?"
+msgid "Forget password?"
 msgstr ""
 
 #: unical_template_old/templates/base.html:52

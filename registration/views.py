@@ -90,7 +90,7 @@ def ask(request):
 
             return render(request,
                           'custom_message.html',
-                          dict(title = _('EMail send error'),
+                          dict(title = _('Email send error'),
                                avviso = _('It have been occurred an Error '
                                           'sending the confirmation email to you'),
                                description = _('Please try later.')), status=403)

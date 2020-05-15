@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
 from django.template.defaultfilters import filesizeformat
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -36,20 +37,24 @@ class AskForm_1(forms.Form):
                                   widget=forms.TextInput
                                    (attrs={'class': _field_class,
                                            'placeholder': _("Tax Payer's Identification Number")}))
-    gender = forms.CharField(label=_('Gender'),
+    gender = forms.CharField(label=_('Gender'), initial='',
                                      widget=forms.Select(
-                                      choices=(('m', _('Male')),('f', _('Female')),('other', _('Other')))))
+                                      choices=(('', '------'),
+                                               ('m', _('Male')),
+                                               ('f', _('Female')),
+                                               ('other', _('Other'))
+                                               )))
     nation_of_birth = forms.CharField(label=_('Nation of Birth'), max_length=3, initial='IT',
                                       widget=forms.Select(
                                        choices=[(e.alpha_2, e.name) for e in pycountry.countries]))
     place_of_birth = forms.CharField(label=_('Place of Birth'),
                                      max_length=50,
                                      widget=forms.TextInput(
-                                      attrs={'placeholder': _('"Comune di nascita" or International '
-                                                              'identifier')}),
-                                      help_text=_("If you are Italian please insert your "
-                                                  "'Comune di nascita' otherwise a human "
-                                                  "readable Place of Bird"))
+                                      attrs={'placeholder': _('Place of Birth')}),
+                                      #  help_text=_("If you are Italian please insert your "
+                                                  #  "'Comune di nascita' otherwise a human "
+                                                  #  "readable Place of Bird")
+                                      )
     date_of_birth = forms.DateField(label=_('Date of Birth'),
                                     widget=forms.TextInput(attrs={'type': 'date'}))
 
@@ -65,7 +70,11 @@ class AskForm_1(forms.Form):
                                       widget=forms.TextInput(
                                        attrs={'class': _field_class,
                                               'placeholder': _('Telephone number with prefix')}))
-
+    def clean_date_of_birth(self):
+        date = self.cleaned_data['date_of_birth']
+        if (timezone.localdate() - date) < timezone.timedelta(days=6205):
+            self.add_error('date_of_birth', _("You must be of age"))
+        return date
 
 class IdentityDocumentForm(forms.Form):
     document_front = forms.FileField(label=_('Identification Document Front side'))
