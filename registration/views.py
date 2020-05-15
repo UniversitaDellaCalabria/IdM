@@ -64,7 +64,7 @@ def ask(request):
                           'custom_message.html',
                           dict(title = _('TIN code validation failed'),
                                avviso = _('It have been occurred an error validating your TIN'),
-                               description = _('')), status=403)
+                               description = ''), status=403)
 
         # it seems quite good, check its delivery address
         serialized_dict = serialize_dict(form.cleaned_data)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-14 12:39+0100\n"
+"POT-Creation-Date: 2020-05-15 19:08+0200\n"
 "PO-Revision-Date: 2020-02-11 16:48+0100\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:19
+#: accounts/admin.py:20
+msgid "Change username"
+msgstr ""
+
+#: accounts/admin.py:21
 msgid "Personal data"
 msgstr ""
 
-#: accounts/admin.py:25
+#: accounts/admin.py:28
 msgid "Permissions"
 msgstr ""
 
-#: accounts/admin.py:30
+#: accounts/admin.py:33
 msgid "System data accesses"
 msgstr ""
 
@@ -33,141 +37,162 @@ msgstr ""
 msgid "Authentication and Authorization about Users"
 msgstr ""
 
-#: accounts/models.py:11
+#: accounts/models.py:10 identity/models.py:110 registration/forms.py:41
 msgid "Male"
 msgstr ""
 
-#: accounts/models.py:12
+#: accounts/models.py:11 identity/models.py:111 registration/forms.py:41
 msgid "Female"
 msgstr ""
 
-#: accounts/models.py:13
+#: accounts/models.py:12 registration/forms.py:41
 msgid "Other"
 msgstr ""
 
-#: accounts/models.py:18
+#: accounts/models.py:16
 msgid "active"
 msgstr ""
 
-#: accounts/models.py:20 identity/models.py:94
+#: accounts/models.py:18 identity/models.py:92 registration/forms.py:22
+#: registration/forms.py:26
 msgid "Name"
 msgstr ""
 
-#: accounts/models.py:21
+#: accounts/models.py:19 registration/forms.py:27 registration/forms.py:31
 msgid "Surname"
 msgstr ""
 
-#: accounts/models.py:22
-msgid "Fiscal code"
+#: accounts/models.py:20
+msgid "TIN - Tax payer's Identification number"
 msgstr ""
 
-#: accounts/models.py:24
+#: accounts/models.py:23 registration/forms.py:39
 msgid "Gender"
 msgstr ""
 
-#: accounts/models.py:27
+#: accounts/models.py:25
+msgid "Place of birth"
+msgstr ""
+
+#: accounts/models.py:28
+msgid "Date of birth"
+msgstr ""
+
+#: accounts/models.py:29
 msgid "Send Email notification accesses"
 msgstr ""
 
 #: accounts/models.py:32
+msgid "Allow user to change his username"
+msgstr ""
+
+#: accounts/models.py:37
 msgid "Users"
 msgstr ""
 
-#: accounts/models.py:40
+#: accounts/models.py:45
 msgid "Json attributes"
 msgstr ""
 
-#: identity/models.py:28 unical_template/models.py:31
+#: identity/models.py:26 unical_template/models.py:31
 #: unical_template_old/models.py:31
 msgid "created"
 msgstr ""
 
-#: identity/models.py:29 unical_template/models.py:32
+#: identity/models.py:27 unical_template/models.py:32
 #: unical_template_old/models.py:32
 msgid "modified"
 msgstr ""
 
-#: identity/models.py:48
+#: identity/models.py:46
 msgid "Import"
 msgstr ""
 
-#: identity/models.py:50
+#: identity/models.py:48
 msgid "Flow"
 msgstr ""
 
-#: identity/models.py:55
+#: identity/models.py:53
 msgid "Flow description"
 msgstr ""
 
-#: identity/models.py:57
+#: identity/models.py:55
 msgid "Record number (Prot.num.)"
 msgstr ""
 
-#: identity/models.py:60
+#: identity/models.py:58
 msgid "Record year (Prot. year)"
 msgstr ""
 
-#: identity/models.py:72
+#: identity/models.py:70
 msgid "Address"
 msgstr ""
 
-#: identity/models.py:73
+#: identity/models.py:71
 msgid "Locality"
 msgstr ""
 
-#: identity/models.py:74
+#: identity/models.py:72
 msgid "Region"
 msgstr ""
 
-#: identity/models.py:75
-msgid "Cap"
+#: identity/models.py:73
+msgid "Postal code"
 msgstr ""
 
-#: identity/models.py:77 identity/models.py:104
+#: identity/models.py:75 identity/models.py:103
 msgid "Country"
 msgstr ""
 
-#: identity/models.py:79
+#: identity/models.py:77
 msgid "Main delivery address"
 msgstr ""
 
-#: identity/models.py:82
+#: identity/models.py:80
 msgid "Address book"
 msgstr ""
 
-#: identity/models.py:99
+#: identity/models.py:97
 msgid "Common Name"
 msgstr ""
 
-#: identity/models.py:106
+#: identity/models.py:105
 msgid "City"
 msgstr ""
 
-#: identity/models.py:107
-msgid "Fiscal code or uniqueID"
+#: identity/models.py:106
+msgid "Tax Payer's Number or UniqueID"
+msgstr ""
+
+#: identity/models.py:109
+msgid "Not know"
 msgstr ""
 
 #: identity/models.py:112
+msgid "Not specified"
+msgstr ""
+
+#: identity/models.py:116
 msgid "Identity card front"
 msgstr ""
 
-#: identity/models.py:115
+#: identity/models.py:119
 msgid "Identity card retro"
 msgstr ""
 
-#: identity/models.py:132
+#: identity/models.py:138
 msgid "Digital Identities"
 msgstr ""
 
-#: identity/models.py:162
+#: identity/models.py:168
 msgid "Additional Affiliation"
 msgstr ""
 
-#: identity/models.py:163
+#: identity/models.py:169
 msgid "Additional Affiliations"
 msgstr ""
 
-#: identity/models.py:191
+#: identity/models.py:197
 msgid "Addresses"
 msgstr ""
 
@@ -175,7 +200,7 @@ msgstr ""
 msgid "Access notification"
 msgstr ""
 
-#: provisioning/admin.py:153
+#: provisioning/admin.py:77
 msgid "Data"
 msgstr ""
 
@@ -183,291 +208,354 @@ msgstr ""
 msgid "{} {}. Already activated: {}.)"
 msgstr ""
 
-#: provisioning/admin_actions.py:37
+#: provisioning/admin_actions.py:31
 msgid "{} {}. Email sent."
 msgstr ""
 
-#: provisioning/admin_actions.py:42
+#: provisioning/admin_actions.py:35
 msgid "{} {}. Email send failed."
 msgstr ""
 
-#: provisioning/admin_actions.py:44
+#: provisioning/admin_actions.py:37
 msgid "{} sendend Email over {} send requests."
 msgstr ""
 
-#: provisioning/admin_actions.py:46
+#: provisioning/admin_actions.py:39
 msgid "Send Token - Activation Email"
 msgstr ""
 
-#: provisioning/custom_messages.py:4 provisioning/custom_messages.py:44
+#: provisioning/custom_messages.py:5
+msgid "Invalid Action"
+msgstr ""
+
+#: provisioning/custom_messages.py:7 provisioning/custom_messages.py:47
 msgid "Invalid Access"
 msgstr ""
 
-#: provisioning/custom_messages.py:5
+#: provisioning/custom_messages.py:8
 msgid "You tried to access this resource directly. Try to do login first."
 msgstr ""
 
-#: provisioning/custom_messages.py:7
+#: provisioning/custom_messages.py:10
 msgid "Come back to Home page to renew your session"
 msgstr ""
 
-#: provisioning/custom_messages.py:13
+#: provisioning/custom_messages.py:16
 msgid "Resource expired"
 msgstr ""
 
-#: provisioning/custom_messages.py:14
+#: provisioning/custom_messages.py:17
 msgid "This token is expired, please ask for another one"
 msgstr ""
 
-#: provisioning/custom_messages.py:20
+#: provisioning/custom_messages.py:23
 msgid "Data not valid"
 msgstr ""
 
-#: provisioning/custom_messages.py:21
+#: provisioning/custom_messages.py:24
 msgid "Please insert valid data"
 msgstr ""
 
-#: provisioning/custom_messages.py:26
+#: provisioning/custom_messages.py:29
 msgid "Identity disabled"
 msgstr ""
 
-#: provisioning/custom_messages.py:27
+#: provisioning/custom_messages.py:30
 msgid "You cannot request a password reset"
 msgstr ""
 
-#: provisioning/custom_messages.py:28
+#: provisioning/custom_messages.py:31
 msgid ""
 "Your identity was disabled by administrators, please contact ourtechnical "
 "staff for acknowledge."
 msgstr ""
 
-#: provisioning/custom_messages.py:36
+#: provisioning/custom_messages.py:39
 msgid "Account succesfully created"
 msgstr ""
 
-#: provisioning/custom_messages.py:37
+#: provisioning/custom_messages.py:40
 msgid ""
 "Now you can login with your credentials, using the form in the main page"
 msgstr ""
 
-#: provisioning/custom_messages.py:45
+#: provisioning/custom_messages.py:48
 msgid ""
 "Your account seems to be disabled or not existent. Please renew it or "
 "contact the technical assistance."
 msgstr ""
 
-#: provisioning/custom_messages.py:52
+#: provisioning/custom_messages.py:55
 msgid "User definition error"
 msgstr ""
 
-#: provisioning/custom_messages.py:57
+#: provisioning/custom_messages.py:60
 msgid "Data succesfully changed"
 msgstr ""
 
-#: provisioning/custom_messages.py:58
+#: provisioning/custom_messages.py:61
 msgid "Now you can come back to your Dashboard."
 msgstr ""
 
-#: provisioning/custom_messages.py:63
+#: provisioning/custom_messages.py:67
+msgid "Your username has been successfully changed"
+msgstr ""
+
+#: provisioning/custom_messages.py:68
+msgid "Please login with your new username"
+msgstr ""
+
+#: provisioning/custom_messages.py:70
+msgid "You are not able to change your username"
+msgstr ""
+
+#: provisioning/custom_messages.py:71
+msgid "Contact the administrator"
+msgstr ""
+
+#: provisioning/custom_messages.py:73
+msgid "You have inserted a wrong actual username"
+msgstr ""
+
+#: provisioning/custom_messages.py:74
+msgid "Please, be carefoul"
+msgstr ""
+
+#: provisioning/custom_messages.py:76
+msgid "You have already changed your username"
+msgstr ""
+
+#: provisioning/custom_messages.py:79
+msgid "You have choose a blacklisted or already used username"
+msgstr ""
+
+#: provisioning/custom_messages.py:82
 msgid "A confirmation email was sent"
 msgstr ""
 
-#: provisioning/custom_messages.py:64
+#: provisioning/custom_messages.py:83
 msgid "You have {} minutes to confirm your request"
 msgstr ""
 
-#: provisioning/custom_messages.py:65
+#: provisioning/custom_messages.py:84
 msgid ""
 "In the email message you'll find a special url (web link) that you will use "
 "to confirm your changes."
 msgstr ""
 
-#: provisioning/custom_messages.py:73
+#: provisioning/custom_messages.py:92
 msgid "Password succesfully changed"
 msgstr ""
 
-#: provisioning/custom_messages.py:74
+#: provisioning/custom_messages.py:93
 msgid "You're still logged in in your previous sessions."
 msgstr ""
 
-#: provisioning/custom_messages.py:80
+#: provisioning/custom_messages.py:99
 msgid "You asked for a password reset"
 msgstr ""
 
-#: provisioning/custom_messages.py:81
+#: provisioning/custom_messages.py:100
 msgid "If the data you have inserted are valid, an email was sent to you."
 msgstr ""
 
-#: provisioning/custom_messages.py:83
+#: provisioning/custom_messages.py:102
 msgid ""
 "In the email message you'll find a special url (web link) that you will use "
 "to renew your password."
 msgstr ""
 
-#: provisioning/custom_messages.py:91
+#: provisioning/custom_messages.py:110
 msgid "username/email/token combination is wrong"
 msgstr ""
 
-#: provisioning/custom_messages.py:92
+#: provisioning/custom_messages.py:111
 msgid ""
 "Please check the data you have inserted. If problem persists please contact "
 "our thecnical staff."
 msgstr ""
 
-#: provisioning/custom_messages.py:101
+#: provisioning/custom_messages.py:120
 msgid ""
 "It seems that you tried to use a password that you already used in the past."
 msgstr ""
 
-#: provisioning/custom_messages.py:103
+#: provisioning/custom_messages.py:122
 msgid "This is not permitted, please choose a real brand new password."
 msgstr ""
 
 #: provisioning/forms.py:16
 msgid ""
 "The secret must contains lowercase and uppercase characters,  number and at "
-"least one of these symbols:! % - _ + = [ ] { } : , . ? < > ( ) ; Example: "
-"This\\Is_A.g00d/P4ssw0rd."
+"least one of these symbols: !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 msgstr ""
 
-#: provisioning/forms.py:25 provisioning/forms.py:122
+#: provisioning/forms.py:24 provisioning/forms.py:121
 msgid "Username"
 msgstr ""
 
-#: provisioning/forms.py:27 provisioning/forms.py:73
+#: provisioning/forms.py:26 provisioning/forms.py:72
 msgid "Password"
 msgstr ""
 
-#: provisioning/forms.py:31
+#: provisioning/forms.py:30
 msgid "Your username"
 msgstr ""
 
-#: provisioning/forms.py:35
+#: provisioning/forms.py:34
 msgid "Telefono"
 msgstr ""
 
-#: provisioning/forms.py:38
+#: provisioning/forms.py:37
 msgid "Your telephone number"
 msgstr ""
 
-#: provisioning/forms.py:40
+#: provisioning/forms.py:39
 msgid "Telephone with prefix"
 msgstr ""
 
-#: provisioning/forms.py:45
+#: provisioning/forms.py:44
 msgid "name.surname@{} or other email used for registration. "
 msgstr ""
 
-#: provisioning/forms.py:49
+#: provisioning/forms.py:48 registration/forms.py:60
 msgid "email@domain.eu"
 msgstr ""
 
-#: provisioning/forms.py:66
+#: provisioning/forms.py:65
 msgid "Your username. Leave it blank to receive an email as reminder."
 msgstr ""
 
-#: provisioning/forms.py:80
+#: provisioning/forms.py:79
 msgid "Password verification"
 msgstr ""
 
-#: provisioning/forms.py:86
+#: provisioning/forms.py:85
 msgid "The same password you typed before, for verification."
 msgstr ""
 
-#: provisioning/forms.py:93
+#: provisioning/forms.py:92
 msgid "You must confirm your password"
 msgstr ""
 
-#: provisioning/forms.py:96
+#: provisioning/forms.py:95
 msgid "Your passwords do not match"
 msgstr ""
 
-#: provisioning/forms.py:111 provisioning/forms.py:117
+#: provisioning/forms.py:110 provisioning/forms.py:116
 msgid "Old Password"
 msgstr ""
 
-#: provisioning/forms.py:118
+#: provisioning/forms.py:117
 msgid "The password you used to login."
 msgstr ""
 
-#: provisioning/forms.py:123
+#: provisioning/forms.py:122
 msgid "Your desidered username, if available."
 msgstr ""
 
-#: provisioning/forms.py:134
+#: provisioning/forms.py:133
 msgid "This username already exists, please use another one."
 msgstr ""
 
-#: provisioning/forms.py:140
+#: provisioning/forms.py:139
 msgid "Not a valid Username, the accepted symbols are:_ - . @"
 msgstr ""
 
-#: provisioning/forms.py:154
+#: provisioning/forms.py:153
 msgid ""
 "This email already exists, cannot create a new identity with an already used "
 "email!"
 msgstr ""
 
-#: provisioning/forms.py:162
+#: provisioning/forms.py:161
 msgid ""
 "Failed to manage your token, it could have been disabled or the email you "
 "typed was not linked to any valid registrations."
 msgstr ""
 
-#: provisioning/forms.py:185
+#: provisioning/forms.py:187
 msgid "Notify accesses via email"
 msgstr ""
 
-#: provisioning/models.py:32
+#: provisioning/forms.py:193
+msgid "Current Username"
+msgstr ""
+
+#: provisioning/forms.py:196
+msgid "New Username"
+msgstr ""
+
+#: provisioning/forms.py:199
+msgid "Confirm your new Username"
+msgstr ""
+
+#: provisioning/forms.py:208
+msgid "You must re-type new username"
+msgstr ""
+
+#: provisioning/forms.py:211
+msgid "Your usernames do not match"
+msgstr ""
+
+#: provisioning/models.py:50
 msgid "disable it if needed"
 msgstr ""
 
-#: provisioning/models.py:76
+#: provisioning/models.py:97
 msgid "New Account creation"
 msgstr ""
 
-#: provisioning/models.py:189
+#: provisioning/models.py:211
 msgid "Identity Account Creation token"
 msgstr ""
 
-#: provisioning/models.py:190
+#: provisioning/models.py:212
 msgid "Identity Account Creation tokens"
 msgstr ""
 
-#: provisioning/models.py:200
+#: provisioning/models.py:222
 msgid "username choosen by user"
 msgstr ""
 
-#: provisioning/models.py:206
+#: provisioning/models.py:228
 msgid "Identity Creation"
 msgstr ""
 
-#: provisioning/models.py:207
+#: provisioning/models.py:229
 msgid "Identity Creations"
 msgstr ""
 
-#: provisioning/models.py:217
+#: provisioning/models.py:239
 msgid "Identity Password Reset Token"
 msgstr ""
 
-#: provisioning/models.py:218
+#: provisioning/models.py:240
 msgid "Identity Password Reset Tokens"
 msgstr ""
 
-#: provisioning/models.py:230
+#: provisioning/models.py:252
 msgid "Identity Ldap Attributes Confirmation Change Token"
 msgstr ""
 
-#: provisioning/models.py:231
+#: provisioning/models.py:253
 msgid "Identity Ldap Attributes Confirmation Change Tokens"
 msgstr ""
 
-#: provisioning/models.py:243
+#: provisioning/models.py:265
 msgid "Identity Ldap account expiration Notification"
 msgstr ""
 
-#: provisioning/models.py:244
+#: provisioning/models.py:266
 msgid "Identity Ldap account expiration Notifications"
+msgstr ""
+
+#: provisioning/models.py:280
+msgid "Changed Username"
+msgstr ""
+
+#: provisioning/models.py:281
+msgid "Changed Usernames"
 msgstr ""
 
 #: provisioning/settings.py:9
@@ -586,84 +674,101 @@ msgid "Please fill this form to create your brand new account."
 msgstr ""
 
 #: provisioning/templates/account_create.html:22
-#: provisioning/templates/dashboard.html:68
-#: provisioning/templates/dashboard.html:114
+#: provisioning/templates/dashboard.html:106
+#: provisioning/templates/dashboard.html:155
 #: provisioning/templates/password_reset_token.html:21
+#: provisioning/templates/provisioning_change_username.html:24
 msgid "Save"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:9
+#: provisioning/templates/dashboard.html:10
 #: provisioning/templates/password_reset_token.html:7
-#: unical_template/templates/custom_message.html:26
+#: unical_template/templates/confirmation_email.html:13
+#: unical_template/templates/custom_message.html:21
 #: unical_template_old/templates/custom_message.html:28
 msgid "Main page"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:14
+#: provisioning/templates/dashboard.html:15
 msgid "Modify"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:19
-#: provisioning/templates/dashboard.html:79
+#: provisioning/templates/dashboard.html:20
+#: provisioning/templates/dashboard.html:117
 msgid "Attributes"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:24
+#: provisioning/templates/dashboard.html:25
 msgid "Change Password"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:30
+#: provisioning/templates/dashboard.html:31
 #: unical_template/templates/page.html:15
 #: unical_template_old/templates/page.html:20
 msgid "Admin"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:36
-#: unical_template/templates/page.html:22
-#: unical_template_old/templates/page.html:24
-msgid "Logout / Esci"
-msgstr ""
-
-#: provisioning/templates/dashboard.html:45
+#: provisioning/templates/dashboard.html:49
 #: provisioning/templates/empty_dashboard.html:10
 #: provisioning/templates/password_reset_token.html:14
 msgid "Identity Management System"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:46
+#: provisioning/templates/dashboard.html:50
 #: provisioning/templates/empty_dashboard.html:11
 #: provisioning/templates/password_reset_token.html:15
 msgid "Welcome "
 msgstr ""
 
-#: provisioning/templates/dashboard.html:47
+#: provisioning/templates/dashboard.html:52
 msgid "Here you can modify your profile"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:52
+#: provisioning/templates/dashboard.html:152
+msgid "A confirmation email will be also sent."
+msgstr ""
+
+#: provisioning/templates/dashboard.html:59
 msgid "Options"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:82
-msgid ""
-"These would be also used as permissions and roles in third party web "
-"services."
-msgstr ""
-
-#: provisioning/templates/dashboard.html:86
-msgid "Attribute name"
+msgid "Change your username"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:87
+msgid "One time only"
+msgstr ""
+
+#: provisioning/templates/dashboard.html:98
+msgid "Change your password"
+msgstr ""
+
+#: provisioning/templates/dashboard.html:100
+msgid "Change"
+msgstr ""
+
+#: provisioning/templates/dashboard.html:120
+msgid ""
+"Your Research & Scholarship Account Attributes, according to eduPerson and "
+"SCHAC schemas. See  "
+msgstr ""
+
+#: provisioning/templates/dashboard.html:122
+msgid "for further informations."
+msgstr ""
+
+#: provisioning/templates/dashboard.html:127
+msgid "Attribute name"
+msgstr ""
+
+#: provisioning/templates/dashboard.html:128
 msgid "Value"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:108
+#: provisioning/templates/dashboard.html:149
 msgid "Renew your Password"
-msgstr ""
-
-#: provisioning/templates/dashboard.html:111
-msgid "A confirmation email will be also sent."
 msgstr ""
 
 #: provisioning/templates/empty_dashboard.html:15
@@ -676,8 +781,207 @@ msgid ""
 "email for check."
 msgstr ""
 
-#: provisioning/views.py:297
+#: provisioning/templates/provisioning_change_username.html:10
+msgid "Change Username"
+msgstr ""
+
+#: provisioning/templates/provisioning_change_username.html:11
+msgid "You can modify your username only for one time"
+msgstr ""
+
+#: provisioning/templates/provisioning_change_username.html:21
+msgid "Cancel and comeback"
+msgstr ""
+
+#: provisioning/views.py:307
+msgid "No data edited"
+msgstr ""
+
+#: provisioning/views.py:432
 msgid "Password changed"
+msgstr ""
+
+#: registration/forms.py:33 registration/forms.py:38
+msgid "Tax Payer's Identification Number"
+msgstr ""
+
+#: registration/forms.py:35
+msgid "National identification number"
+msgstr ""
+
+#: registration/forms.py:42
+msgid "Nation of Birth"
+msgstr ""
+
+#: registration/forms.py:45
+msgid "Place of Birth"
+msgstr ""
+
+#: registration/forms.py:48
+msgid "\"Comune di nascita\" or International identifier"
+msgstr ""
+
+#: registration/forms.py:50
+msgid ""
+"If you are Italian please insert your 'Comune di nascita' otherwise a human "
+"readable Place of Bird"
+msgstr ""
+
+#: registration/forms.py:53
+msgid "Date of Birth"
+msgstr ""
+
+#: registration/forms.py:57
+msgid "name.surname@your.mail.com"
+msgstr ""
+
+#: registration/forms.py:61
+msgid "Mobile Phone"
+msgstr ""
+
+#: registration/forms.py:64
+msgid "Mobile phone number"
+msgstr ""
+
+#: registration/forms.py:67
+msgid "Telephone number with prefix"
+msgstr ""
+
+#: registration/forms.py:71
+msgid "Identification Document Front side"
+msgstr ""
+
+#: registration/forms.py:72
+msgid "Identification Document Back side"
+msgstr ""
+
+#: registration/forms.py:80
+msgid "An Error occourred, please upload again your document"
+msgstr ""
+
+#: registration/forms.py:87
+msgid "Only these format are permitted: '{}'"
+msgstr ""
+
+#: registration/forms.py:91
+msgid "Maximum upload size is {}. {} is {}"
+msgstr ""
+
+#: registration/forms.py:97
+msgid "Maximum filename length is {}"
+msgstr ""
+
+#: registration/settings.py:15
+msgid "Unical ID - Registration request"
+msgstr ""
+
+#: registration/settings.py:16
+#, python-brace-format
+msgid ""
+"Dear {name},\n"
+"\n"
+"You have succesfully requested an Account Registration to Università della "
+"Calabria.\n"
+"Please click on the following url to confirm:\n"
+"\n"
+"{url}\n"
+"\n"
+"Do not reply to this email,\n"
+"Regards\n"
+msgstr ""
+
+#: registration/templates/ask.html:15
+msgid "Create a new Unical ID Account"
+msgstr ""
+
+#: registration/templates/ask.html:16
+msgid ""
+"Insert the requested informations, a confirmation email will be sent to you."
+msgstr ""
+
+#: registration/templates/ask.html:36
+msgid "By submitting this form I consent to the processing of data."
+msgstr ""
+
+#: registration/templates/ask.html:44
+msgid ""
+"By submitting this form I declare that I have read the terms of privacy."
+msgstr ""
+
+#: registration/templates/ask.html:61 registration/templates/confirm.html:50
+msgid "Submit"
+msgstr ""
+
+#: registration/templates/confirm.html:13
+msgid "Confirm your Unical ID Account"
+msgstr ""
+
+#: registration/templates/confirm.html:15
+msgid "Review your data and uplooad your identity document."
+msgstr ""
+
+#: registration/templates/confirm.html:39
+msgid "Please upload an IMAGE scan of your Identification Document (Not PDF)."
+msgstr ""
+
+#: registration/views.py:65
+msgid "TIN code validation failed"
+msgstr ""
+
+#: registration/views.py:66
+msgid "It have been occurred an error validating your TIN"
+msgstr ""
+
+#: registration/views.py:73
+msgid "{} {} [{}] have requested to be registered as a new user."
+msgstr ""
+
+#: registration/views.py:93
+msgid "EMail send error"
+msgstr ""
+
+#: registration/views.py:94
+msgid "It have been occurred an Error sending the confirmation email to you"
+msgstr ""
+
+#: registration/views.py:96
+msgid "Please try later."
+msgstr ""
+
+#: registration/views.py:107
+msgid "Invalid Token"
+msgstr ""
+
+#: registration/views.py:108
+msgid "Invalid data submission"
+msgstr ""
+
+#: registration/views.py:126
+msgid "Invalid Registration"
+msgstr ""
+
+#: registration/views.py:127
+msgid "It seems that your email or your identification code already exists"
+msgstr ""
+
+#: registration/views.py:128
+msgid ""
+"Please go in the Home Page and activate the \"Forgot your Password\" "
+"procedure. If the problem persists please contact our technical assistance."
+msgstr ""
+
+#: registration/views.py:139
+msgid "Invalid Data"
+msgstr ""
+
+#: registration/views.py:140
+msgid "It seems that you are already registered"
+msgstr ""
+
+#: registration/views.py:141
+msgid ""
+"Please go in the Home Page and activate the \"Forgot your Password\" "
+"procedure"
 msgstr ""
 
 #: templates/admin/identity/change_form.html:18
@@ -743,6 +1047,28 @@ msgstr ""
 msgid "Questo servizio è in Manutenzione, le attività riprenderanno presto."
 msgstr ""
 
+#: unical_template/templates/404.html:12
+msgid "Page or Resource not found 404"
+msgstr ""
+
+#: unical_template/templates/404.html:14
+msgid "Go back"
+msgstr ""
+
+#: unical_template/templates/500.html:12
+msgid "Internal Error 500"
+msgstr ""
+
+#: unical_template/templates/500.html:14
+msgid "This service has encourrend and unexpected error"
+msgstr ""
+
+#: unical_template/templates/500.html:16
+msgid ""
+"We apologize for the temporary inconvenience, a notification was sent to the "
+"technical staff."
+msgstr ""
+
 #: unical_template/templates/admin/base.html:31
 #: unical_template_old/templates/admin/base.html:31
 msgid "Welcome,"
@@ -778,47 +1104,75 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: unical_template/templates/base.html:22
-#: unical_template/templates/home.html:12
+#: unical_template/templates/base.html:19
+#: unical_template_old/templates/page.html:24
+msgid "Logout / Esci"
+msgstr ""
+
+#: unical_template/templates/base.html:25
+#: unical_template/templates/base.html:47
+#: unical_template/templates/home.html:14
 #: unical_template/templates/sezione_login.html:13
 #: unical_template_old/templates/base.html:44
 #: unical_template_old/templates/sezione_login.html:21
 msgid "Login"
 msgstr ""
 
-#: unical_template/templates/base.html:27
+#: unical_template/templates/base.html:52
 #: unical_template_old/templates/base.html:45
 msgid "Data protection"
 msgstr ""
 
-#: unical_template/templates/base.html:32
+#: unical_template/templates/base.html:57
 #: unical_template_old/templates/base.html:46
 #: unical_template_old/templates/sezione_funzionalita.html:8
 msgid "Features"
 msgstr ""
 
-#: unical_template/templates/base.html:37
+#: unical_template/templates/base.html:62
 #: unical_template_old/templates/base.html:47
 #: unical_template_old/templates/sezione_team.html:63
 msgid "Contacts"
 msgstr "Contact us"
 
-#: unical_template/templates/base.html:42
+#: unical_template/templates/base.html:67
 #: unical_template_old/templates/base.html:48
 msgid "Forgotten password?"
 msgstr ""
 
-#: unical_template/templates/custom_message.html:22
+#: unical_template/templates/confirmation_email.html:9
+msgid "Congratulation"
+msgstr ""
+
+#: unical_template/templates/confirmation_email.html:10
+msgid "A Confirmation EMail was just sent to you"
+msgstr ""
+
+#: unical_template/templates/custom_message.html:17
 #: unical_template_old/templates/custom_message.html:21
 msgid "Back"
 msgstr ""
 
-#: unical_template/templates/home.html:10
+#: unical_template/templates/home.html:11
 msgid "Platform for managing access credentials to Unical services"
 msgstr ""
 
-#: unical_template/templates/home.html:13
-msgid "Request a new identity"
+#: unical_template/templates/home.html:18
+msgid "Create your Account"
+msgstr ""
+
+#: unical_template/templates/maintenance.html:12
+msgid "Maintenance"
+msgstr ""
+
+#: unical_template/templates/maintenance.html:14
+msgid "This service is under maintenance"
+msgstr ""
+
+#: unical_template/templates/maintenance.html:16
+msgid ""
+"We apologize for the temporary inconvenience, we will soon start working "
+"again."
 msgstr ""
 
 #: unical_template/templates/page.html:9

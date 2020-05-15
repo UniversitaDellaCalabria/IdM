@@ -70,7 +70,7 @@ class AbstractIdentityAddress(models.Model):
     address = models.CharField(_('Address'),max_length=150, blank=True, null=True)
     locality_name = models.CharField(_('Locality'),max_length=135, blank=True, null=True)
     state = models.CharField(_('Region'), max_length=60, blank=True, null=True)
-    postal_code    = models.CharField(_('Cap'),max_length=60, blank=True, null=True)
+    postal_code    = models.CharField(_('Postal code'),max_length=60, blank=True, null=True)
     country_name = models.CharField(max_length=128, blank=True, null=True,
                                     help_text=_('Country'))
     note = models.TextField(max_length=768, blank=True, null=True)

@@ -21,12 +21,12 @@ ATTACH_NAME_MAX_LEN = getattr(settings, 'ATTACH_NAME_MAX_LEN', 50)
 class AskForm_1(forms.Form):
     name = forms.CharField(label=_("Name"),
                                   max_length=128,
-                                  help_text=_(""),
+                                  help_text='',
                                   widget=forms.TextInput(attrs={'class': _field_class,
                                                                 'placeholder': _('Name')}))
     surname = forms.CharField(label=_("Surname"),
                                   max_length=128,
-                                  help_text=_(""),
+                                  help_text='',
                                   widget=forms.TextInput(attrs={'class': _field_class,
                                                                 'placeholder': _('Surname')}))
 
@@ -52,7 +52,7 @@ class AskForm_1(forms.Form):
                                                   "readable Place of Bird"))
     date_of_birth = forms.DateField(label=_('Date of Birth'),
                                     widget=forms.TextInput(attrs={'type': 'date'}))
-    
+
     mail = forms.EmailField(label="E-mail", max_length=64,
                             help_text=_("name.surname@your.mail.com"),
                             widget=forms.EmailInput(

@@ -109,6 +109,10 @@ else:
 # SuspiciousOperation (TooManyFields) is raised. You can set this to None to disable the check.
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 100
 
+# CaPTCHA encryption parameters
+CAPTCHA_SECRET = b'your_secret'
+CAPTCHA_SALT = b'your_salt'
+
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 

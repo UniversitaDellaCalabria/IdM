@@ -71,7 +71,7 @@ CANNOT_CHANGE_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                          'description': _('Contact the administrator')}
 NOT_YOUR_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                      'avviso': _('You have inserted a wrong actual username'),
-                     'description': _('Please, be carefoul')}
+                     'description': _('Please, be careful')}
 ALREADY_CHANGED_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                             'avviso': _('You have already changed your username'),
                             'description': 'This is a one time operation'}
