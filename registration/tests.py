@@ -3,25 +3,25 @@ import copy
 import logging
 import json
 
+from django.conf import settings
 from django.test import TestCase, Client
 from django.urls import reverse
 from django_form_builder.enc import encrypt, decrypt
 
-
 logger = logging.getLogger(__name__)
 
-
+_captcha = "VlGYR"
 DATA = dict(name = 'PeppeTest',
-            surname = 'PeppeTest', 
+            surname = 'PeppeTest',
             tin = 'PPPPPT80A01D086B',
             gender = 'M',
-            nation_of_birth = 'IT', 
+            nation_of_birth = 'IT',
             place_of_birth = 'Cosenza',
             date_of_birth = '1980-01-01',
             mail = 'peppelinux@yahoo.it',
             telephoneNumber = '2345678987654',
-            _hidden_dyn = "Z0FBQUFBQmV0c1dLS2NMUXc3VHFxNGZPZ0gtcGdfcEpTdUxNWnJnYVlZOUhzalhsbzY1dWMxMTlqM0lUQkp4b2IwMzEtWTQ0bTA2eUc0eGFkYnZBeXBUNnN3UEdzQTZqS0E9PQ==",
-            _dyn = "VlGYR")
+            _hidden_dyn = base64.b64encode(encrypt(_captcha)).decode(),
+            _dyn = _captcha)
 
 
 class RegistrationTestCase(TestCase):
@@ -35,8 +35,8 @@ class RegistrationTestCase(TestCase):
     def test_registration(self):
         url = reverse('registration:ask')
         c = Client()
-        req = c.post(url, DATA, follow=True)
-        self.assertContains(req, 'sent to you', status_code=200)
+        req = c.post(url, DATA, follow=True, HTTP_ACCEPT_LANGUAGE='en')
+        self.assertContains(req, 'Congratulation', status_code=200)
 
     def test_registration_wrong_captcha(self):
         url = reverse('registration:ask')
@@ -51,7 +51,7 @@ class RegistrationTestCase(TestCase):
         c = Client()
         data = copy.copy(DATA)
         data['tin'] = '3wetgsd'
-        req = c.post(url, data, follow=True)
+        req = c.post(url, data, follow=True, HTTP_ACCEPT_LANGUAGE='en')
         self.assertContains(req, 'TIN code validation failed', status_code=403)
 
     def test_confirmation(self):
