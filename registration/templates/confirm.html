@@ -18,8 +18,12 @@
 
                 {% if form_document.errors %}
                     <div class="alert alert-danger" role="alert">
+                        <p>{% trans "Some Errors has occourred" %}</p>
                       {% for k,v in form_document.errors.items %}
-                          <p><b>{{ k }}</b>:{{ v|escape }}.</p>
+                          <span class="text-align: left;"><b>{{ k }}</b>:</span>
+                              {% for error in v %}
+                                <span class="errorlist">{{ error|escape }}</span>
+                              {% endfor %}
                       {% endfor %}
                     </div>
                     <br>
@@ -32,6 +36,7 @@
                         <div class="bootstrap-select-wrapper form-group">
                             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                             {{ field }}
+                            <span>{{ field.errors }}</span>
                         </div>
                     {% endfor %}
                     <hr><br>
@@ -43,6 +48,7 @@
                         <div class="bootstrap-select-wrapper form-group">
                             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                             {{ field }}
+                            <span>{{ field.errors }}</span>
                         </div>
                     {% endfor %}
 

@@ -6,8 +6,6 @@
 
 {% block container_content %}
 
-
-
 <!-- contact section -->
 <section class="section text-center">
 
@@ -16,6 +14,20 @@
         <p class="mb-5">{% trans "Insert the requested informations, a confirmation email will be sent to you." %}</p>
         <div class="row">
             <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
+
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <p>{% trans "Some Errors has occourred" %}</p>
+                      {% for k,v in form.errors.items %}
+                          <span class="text-align: left;"><b>{{ k }}</b>:</span>
+                              {% for error in v %}
+                                <span class="errorlist">{{ error|escape }}</span>
+                              {% endfor %}
+                      {% endfor %}
+                    </div>
+                    <br>
+                {% endif %}
+
                 <form method="post" action="{% url 'registration:ask' %}" class="needs-validation">
                     {% csrf_token %}
                     <div class="form-group">
@@ -23,6 +35,7 @@
                         <div class="bootstrap-select-wrapper form-group">
                             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                             {{ field }}
+                            <span>{{ field.errors }}</span>
                         </div>
                     {% endfor %}
 
@@ -31,17 +44,19 @@
                       <div class="row">
                         <div class="border-bottom border-light w-100 text-left">
                           <div class="form-check">
+                            <p>{% trans "By submitting this form I declare that I have read the data ..." %}</p>
                             <input id="checkbox1" type="checkbox" required>
                             <label for="checkbox1">
-                                {% trans "By submitting this form I consent to the processing of data." %}
+                                {% trans "I have read the ..." %}
                             </label>
                           </div>
                           </div>
                           <div class="border-bottom  border-light w-100 text-left">
                           <div class="form-check">
+                            <p>{% trans "By submitting this form I declare that I have read the data ..." %}</p>
                             <input id="checkbox2" type="checkbox" required>
-                            <label for="checkbox2">
-                                {% trans "By submitting this form I declare that I have read the terms of privacy." %}
+                            <label for="checkbox2" class="col-xs-4 control-label">
+                                {% trans "I have read the ..." %}
                             </label>
                           </div>
                           </div>
