@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-15 23:57+0200\n"
-"PO-Revision-Date: 2020-05-15 23:59+0200\n"
+"PO-Revision-Date: 2020-05-16 14:42+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -1016,10 +1016,8 @@ msgid "Confirm your Unical ID Account"
 msgstr "Conferma il tuo account Unical ID"
 
 #: registration/templates/confirm.html:15
-#, fuzzy
-#| msgid "Review your data and uplooad your identity document."
 msgid "Review your data and upload your identity document."
-msgstr "Controlla i dati immessi è carica il tuo documento di identità"
+msgstr "Controlla i dati immessi e carica il tuo documento di identità"
 
 #: registration/templates/confirm.html:44
 msgid "Please upload an IMAGE scan of your Identification Document (Not PDF)."
