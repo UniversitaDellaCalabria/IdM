@@ -64,6 +64,26 @@ class IdentityTokenAskForm(IdentityEmailForm):
                                        "Leave it blank to receive an "
                                        "email as reminder."),
                            widget=_username_widget)
+    tin = forms.CharField(label=_("Tax Payer's Identification Number"),
+                                  required=False,
+                                  max_length=64,
+                                  widget=forms.TextInput
+                                   (attrs={'class': _field_class,
+                                           'placeholder': _("Tax Payer's Identification Number")}))
+
+    def clean(self, *args, **kwargs):
+        super().__init__(self, *args, *kwargs)
+        username = self.cleaned_data.get('username')
+        tin = self.cleaned_data.get('tin')
+        if not username and not tin:
+            if not self._errors:
+                self._errors = dict()
+            _msg = _("Insert your username or your "
+                     "Tax Payer's Identification Number")
+            self._errors["username"] = ErrorList([_msg])
+            self._errors["tin"] = ErrorList([_msg])
+            return self._errors
+        return self.cleaned_data
 
 
 class PasswordForm(forms.Form):
@@ -166,6 +186,7 @@ class AccountCreationForm(PasswordForm, IdentityTokenAskForm):
 
 class PasswordAskResetForm(IdentityTokenAskForm):
     pass
+
 
 
 class PasswordResetForm(PasswordForm, IdentityEmailForm):#, IdentityTokenAskForm):

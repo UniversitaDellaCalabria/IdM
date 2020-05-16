@@ -63,6 +63,14 @@ DATA_CHANGED = {'title': DATA_CHANGED_TITLE,
                 'avviso': DATA_CHANGED_MSG,
                 'description': ""}
 
+DATA_NOT_CHANGED_TITLE = _("Error")
+DATA_NOT_CHANGED_MSG = _("The data you have submitted cannot be saved.")
+DATA_NOT_CHANGED = {'title': DATA_NOT_CHANGED_TITLE,
+                    'avviso': DATA_NOT_CHANGED_MSG,
+                    'description': _("A contraint violation has occourred."
+                                     " Probably the values you submitted are"
+                                     " owned by another user")}
+
 USERNAME_SUCCESSIFULLY_CHANGED = {'title': DATA_CHANGED_TITLE,
                                   'avviso': _('Your username has been successfully changed'),
                                   'description': _('Please login with your new username')}
