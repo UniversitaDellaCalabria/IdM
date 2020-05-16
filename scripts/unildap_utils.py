@@ -124,12 +124,12 @@ def dump_duplicates(dup, fpath):
 
 def get_new_ldif(entry, mail=True, cf=True, code=True):
     dentr = copy.copy(entry[1])
-    dn = entry[0].encode()
+    dn = entry[0]
     cleaned_dn = dn.lower().\
                       replace('ou=personale,', '').\
                       replace('ou=studenti,', '').\
                       replace('ou=People,', 'ou=people,')
-    dentr['dn'] = [cleaned_dn,]
+    dentr['dn'] = [cleaned_dn.encode(),]
     dentr['uid'] = [dentr['uid'][0].lower()]
     dentr['schacHomeOrganization'] = [SCHAC_HOMEORG.encode(),]
     dentr['eduPersonScopedAffiliation'] = []
@@ -140,10 +140,14 @@ def get_new_ldif(entry, mail=True, cf=True, code=True):
         dentr['eduPersonEntitlement'].extend(eduPersonEntitlement_staff)
     elif 'student' in affdec:
         dentr['sambaSID'] = ['{}@studenti.unical.it'.format(
-                                dn[4:].decode().partition(',')[0]
+                                dn[4:].partition(',')[0]
                                 ).encode()]
-    if mail:
-        dentr['mail'] = [i.lower() for i in dentr.get('mail', '')]
+    if dentr.get('mail'):
+        if mail:
+            dentr['mail'] = [i.lower() for i in dentr['mail']]
+        else:
+            del(dentr['mail'])
+
     for aff in dentr['eduPersonAffiliation']:
         scopaff = '{}@{}'.format(aff.decode(), SCHAC_HOMEORG)
         if scopaff not in dentr['eduPersonScopedAffiliation']:
@@ -155,6 +159,8 @@ def get_new_ldif(entry, mail=True, cf=True, code=True):
     res = LDIF_TMPL.format(**new_entry)
     if new_entry.get('sambaNTPassword'):
         res += '{}\n'.format(new_entry['sambaNTPassword'])
+    if mail and dentr.get('mail'):
+        res += '{}\n'.format(new_entry['mail'])
     if cf and new_entry.get('schacPersonalUniqueID'):
         res += '{}\n'.format(new_entry['schacPersonalUniqueID'])
     if new_entry.get('sambaSID'):

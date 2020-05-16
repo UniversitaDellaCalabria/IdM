@@ -36,7 +36,8 @@ from ldap_peoples.models import LdapAcademiaUser
 logger = logging.getLogger(__name__)
 EDUPERSON_DEFAULT_ASSURANCE = getattr(settings, 'EDUPERSON_DEFAULT_ASSURANCE',
                                       'https://refeds.org/assurance/IAP/medium')
-
+SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE = getattr(settings, 'SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE',
+                                                         'urn:schac:personalUniqueID:it:cf:')
 
 def account_create(request, token_value):
     id_prov = get_object_or_404(IdentityProvisioning, token=token_value)
@@ -256,8 +257,15 @@ def change_data(request, token_value=None):
                     attr.append(data[i])
             else:
                 setattr(lu, i, data[i])
-        lu.save()
-        id_prov.mark_as_used()
+        try:
+            lu.save()
+            id_prov.mark_as_used()
+        except ldap.CONSTRAINT_VIOLATION:
+            logger.error(_('Error, {} tried to save data that violates a '
+                           'LADP constraint with : {}').format(lu, json.dumps(data)))
+            return render(request,
+                          'custom_message.html',
+                          DATA_NOT_CHANGED, status=403)
 
         return render(request,
                       'custom_message.html',
@@ -501,11 +509,14 @@ def reset_password_ask(request):
                       INVALID_DATA_DISPLAY, status=403)
     username = form.cleaned_data['username']
     mail = form.cleaned_data['mail']
+    schacPersonalUniqueID = '*:{}'.format(SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE,
+                                          form.cleaned_data['tin'])
     if username:
         lu = LdapAcademiaUser.objects.filter(uid=username,
                                              mail__icontains=mail).first()
     else:
-        lu = LdapAcademiaUser.objects.filter(mail__icontains=mail).first()
+        lu = LdapAcademiaUser.objects.filter(schacPersonalUniqueID__icontains=schacPersonalUniqueID,
+                                             mail__icontains=mail).first()
     # is user exists run the game
     if lu:
         if not lu.is_renewable():
@@ -524,7 +535,7 @@ def reset_password_ask(request):
         # send email and update token status
         id_pwd_reset.send_email(ldap_user=lu,
                                 lang=request.LANGUAGE_CODE)
-        logger.info('{} asked for a Password reset'.format(lu.uid))
+        logger.info('Password Reset Ask for {}'.format(lu.uid))
     messages.add_message(request, messages.SUCCESS,
                          settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**PASSWORD_ASK_RESET))
     return redirect('provisioning:home')
