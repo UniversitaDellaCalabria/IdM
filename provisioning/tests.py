@@ -33,7 +33,7 @@ matricola_dipendente = '982388{}'.format(randomString())
 #  additional_affiliations = [('otherinst.net', 'student', matricola_studente),
                            #  ('othst.gov', 'employee', matricola_dipendente),]
 additional_affiliations = []
-_test_guy = {'tin': 'psopql86e56d086s{}'.format(randomString()),
+_test_guy = {'tin': 'abcdef{}'.format(randomString()),
              'surname': 'posto',
              'name': 'pasqualino',
              'mail': '{}@yahoo.it'.format(_uid),
