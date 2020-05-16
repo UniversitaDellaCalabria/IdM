@@ -77,7 +77,7 @@ def account_create(request, token_value):
                  'telephoneNumber' : [id_prov.identity.telephoneNumber,],
                  'eduPersonPrincipalName': '@'.join((form.cleaned_data['username'],
                                                      settings.LDAP_BASE_DOMAIN)),
-                 'eduPersonAssurance': EDUPERSON_DEFAULT_ASSURANCE, 
+                 'eduPersonAssurance': EDUPERSON_DEFAULT_ASSURANCE,
                  'schacGender' : id_prov.identity.gender,
                  'schacPlaceOfBirth' : ','.join((id_prov.identity.nation_of_birth,
                                                  id_prov.identity.place_of_birth)),
@@ -97,12 +97,12 @@ def account_create(request, token_value):
         # AFFILIATIONS
         ldap_user.eduPersonAffiliation = id_prov.identity.affiliation.split(',')
         eduPersonScopedAffiliation = [aff+'@'+settings.SCHAC_HOMEORGANIZATION_DEFAULT
-                                      for aff in ldap_user.eduPersonAffiliation]
-        # additionals
-
+                                      for aff in ldap_user.eduPersonAffiliation
+                                      if aff]
         # additionals affiliations
         addaff = id_prov.identity.additionalaffiliation_set.all()
-        additional_affiliations = [aff.get_scoped() for aff in addaff]
+        additional_affiliations = [aff.get_scoped()
+                                   for aff in addaff if aff]
         eduPersonScopedAffiliation.extend(additional_affiliations)
         ldap_user.eduPersonScopedAffiliation = eduPersonScopedAffiliation
 
@@ -112,7 +112,7 @@ def account_create(request, token_value):
 
         # previous set already saved ...
         # ldap_user.save()
-        
+
         # altrimenti mi fallisce lo unit test!
         ldap_user.set_password(form.cleaned_data['password'])
 
