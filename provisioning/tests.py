@@ -30,15 +30,17 @@ _uid = 'unittest_john1298731289371283123-kgkgk-{}'.format(randomString())
 _passwd = 'Ssmith_67!'
 matricola_studente =  '111190{}'.format(randomString())
 matricola_dipendente = '982388{}'.format(randomString())
-additional_affiliations = [('otherinst.net', 'student', matricola_studente),
-                           ('othst.gov', 'employee', matricola_dipendente),]
+#  additional_affiliations = [('otherinst.net', 'student', matricola_studente),
+                           #  ('othst.gov', 'employee', matricola_dipendente),]
+additional_affiliations = []
 _test_guy = {'tin': 'psopql86e56d086s{}'.format(randomString()),
              'surname': 'posto',
              'name': 'pasqualino',
              'mail': '{}@yahoo.it'.format(_uid),
              'date_of_birth': get_date_from_string('16/05/1986'),
              'place_of_birth': 'Cosenza',
-             'affiliation': 'member,student',
+             #  'affiliation': 'member,student',
+             'affiliation': '',
              'gender': 1}
 
 _PURGE_LDAP_TEST_USER = True

@@ -39,10 +39,11 @@ class IdentityGenericManyToOne(models.Model):
 
 class IdentityExtendendStatus(models.Model):
     TIPO_CHOICES = (
+                    ('web','web'),
                     ('de-visu','de-visu'),
                     ('SPID', 'SPID'),
-                    ('Esse3', 'Esse3'),
-                    ('CSA','CSA'),
+                    #  ('Esse3', 'Esse3'),
+                    #  ('CSA','CSA'),
                     ('import', _('Import')),
                     )
     flusso = models.CharField(_('Flow'),max_length=135, blank=False,
@@ -122,7 +123,7 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
                                    help_text=_(("Affiliation")),
                                    choices=[(','.join(v), k)
                                             for k,v in IDEM_AFFILIATION_MAP.items()],
-                                   default=','.join(tuple(DEFAULT_AFFILIATION.values())[0])
+                                   #default=','.join(tuple(DEFAULT_AFFILIATION.values())[0])
                                    )
     description = models.TextField(max_length=1024, blank=True, null=True)
 
