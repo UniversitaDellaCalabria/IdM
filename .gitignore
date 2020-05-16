@@ -15,3 +15,5 @@ data/media/identity_attachments/*
 certificates/*
 !certificates/README.md
 cineca_repl/cineca_repl.py
+*.ldif
+dumps/*
