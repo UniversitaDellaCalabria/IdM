@@ -60,7 +60,7 @@ class Command(BaseCommand):
         for lu in ldap_users:
             if (lu.schacExpiryDate - timezone.localtime()).days >= SHAC_EXPIRY_DURATION_DAYS:
                 continue
-            self.stdout.write('Processing {}'.format(lu.dn))
+            print('Processing {}'.format(lu.dn))
             # check if an email was already sent, otherwise continue to the next loop
             n = Notifications.objects.filter(ldap_dn=lu.dn,
                                              sent=True,
