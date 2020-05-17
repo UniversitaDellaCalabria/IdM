@@ -43,12 +43,18 @@ class Command(BaseCommand):
             if not exp.pwdAccountLockedTime:
                 exp.disable()
                 disabled.append(exp.uid)
+            if not exp.schacExpiryDate:
+                exp.schacExpiryDate = timezone.localtime() + timezone.timedelta(days=SHAC_EXPIRY_DURATION_DAYS)
+                exp.save()
 
         for exp in exp_ldap_users2:
             if exp.uid in disabled: continue
             if not exp.pwdAccountLockedTime:
                 exp.disable()
                 disabled.append(exp.uid)
+            if not exp.schacExpiryDate:
+                exp.schacExpiryDate = timezone.localtime() + timezone.timedelta(days=SHAC_EXPIRY_DURATION_DAYS)
+                exp.save()
 
         ldap_users = LdapAcademiaUser.objects.filter(schacExpiryDate__gt=from_that_time)
         for lu in ldap_users:
