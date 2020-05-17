@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.mail import send_mail, mail_admins
 from django.core.management.base import BaseCommand, CommandError
+from django.db.models import Q
 from django.utils import timezone
 from identity.utils import create_accounts_from_csv
 from ldap_peoples.models import LdapAcademiaUser
@@ -8,6 +9,13 @@ from ldap_peoples.models import LdapAcademiaUser
 from provisioning.models import Notifications
 from provisioning.utils import (get_default_translations,
                                 translate_to)
+
+# an account should be renewed every 6 months
+SHAC_EXPIRY_DURATION_DAYS = getattr(settings, 'SHAC_EXPIRY_DURATION_DAYS', 183)
+
+if settings.LDAP_SEARCH_LIMIT:
+    settings.LDAP_SEARCH_LIMIT = 0
+
 
 class Command(BaseCommand):
     help = 'Check Accounts Expirations'
@@ -20,15 +28,24 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         _debug = options.get('debug')
-        l = []
+        emailed = []
         failed = []
         disabled = []
-        from_that_time = timezone.localtime() - timezone.timedelta(days=settings.SHAC_EXPIRY_DURATION_DAYS)
+        from_that_time = timezone.localtime() - timezone.timedelta(days=SHAC_EXPIRY_DURATION_DAYS)
 
         # disable all the already expired
         exp_ldap_users = LdapAcademiaUser.objects.filter(schacExpiryDate__lte=timezone.localtime())
-        print(exp_ldap_users)
+        exp_ldap_users2 = LdapAcademiaUser.objects.filter(pwdChangedTime__lte=from_that_time)
+        print('Found {} users with "schacExpiryDate__lte=timezone.localtime()"'.format(exp_ldap_users.count()))
+        print('Found {} users with "pwdChangedTime" >= SHAC_EXPIRY_DURATION_DAYS"'.format(exp_ldap_users2.count()))
+
         for exp in exp_ldap_users:
+            if not exp.pwdAccountLockedTime:
+                exp.disable()
+                disabled.append(exp.uid)
+
+        for exp in exp_ldap_users2:
+            if exp.uid in disabled: continue
             if not exp.pwdAccountLockedTime:
                 exp.disable()
                 disabled.append(exp.uid)
@@ -54,55 +71,54 @@ class Command(BaseCommand):
             days = (lu.schacExpiryDate - timezone.localtime()).days
 
             # if there's still a lot of time...do not send the notification
-            if days > settings.EXPIRATION_NOTIFICATION_DAYS_BEFORE:
+            if days <= settings.EXPIRATION_NOTIFICATION_DAYS_BEFORE:
                 if _debug: print(lu.uid, 'still have {} days to renew.'.format(days))
-                continue
 
-            if options.get('mail'):
-                smd = {'user': lu.uid,
-                       'datetime': lu.schacExpiryDate.isoformat(),
-                       'days': days,
-                       'hostname': settings.HOSTNAME}
-                # IDENTITY_PROVISIONING_MSG - two language for everyone!
-                mail_subject = get_default_translations(settings.IDENTITY_MSG_EXPIRATION_SUBJECT,
-                                                        sep = ' - ')
-                mail_body_partlist = [settings.IDENTITY_MSG_HEADER,
-                                      settings.IDENTITY_MSG_EXPIRATION_MESSAGE,
-                                      settings.IDENTITY_MSG_FOOTER]
-                body_translated = []
-                for lang in settings.MSG_DEFAULT_LANGUAGES:
-                    for i in mail_body_partlist:
-                        body_translated.append(translate_to(i, lang))
+                if options.get('mail'):
+                    smd = {'user': lu.uid,
+                           'datetime': lu.schacExpiryDate.isoformat().replace('T', ' '),
+                           'days': days,
+                           'hostname': settings.HOSTNAME}
+                    # IDENTITY_PROVISIONING_MSG - two language for everyone!
+                    mail_subject = get_default_translations(settings.IDENTITY_MSG_EXPIRATION_SUBJECT,
+                                                            sep = ' - ')
+                    mail_body_partlist = [settings.IDENTITY_MSG_HEADER,
+                                          settings.IDENTITY_MSG_EXPIRATION_MESSAGE,
+                                          settings.IDENTITY_MSG_FOOTER]
+                    body_translated = []
+                    for lang in settings.MSG_DEFAULT_LANGUAGES:
+                        for i in mail_body_partlist:
+                            body_translated.append(translate_to(i, lang))
 
-                msg_body = ''.join(body_translated)
-                sent = send_mail(mail_subject,
-                                 msg_body.format(**smd),
-                                 settings.DEFAULT_FROM_EMAIL,
-                                 lu.mail, # this is a list!
-                                 fail_silently=True,
-                                 auth_user=None,
-                                 auth_password=None,
-                                 connection=None,
-                                 html_message=None)
+                    msg_body = ''.join(body_translated)
+                    sent = send_mail(mail_subject,
+                                     msg_body.format(**smd),
+                                     settings.DEFAULT_FROM_EMAIL,
+                                     lu.mail, # this is a list!
+                                     fail_silently=True,
+                                     auth_user=None,
+                                     auth_password=None,
+                                     connection=None,
+                                     html_message=None)
 
-                n = Notifications.objects.create(ldap_dn=lu.dn,
-                                                 remaining_days = days,
-                                                 expiration_date=lu.schacExpiryDate)
-                if sent:
-                    n.sent = True
-                    n.save()
-                    l.append(lu.uid)
-                else:
-                    failed.append(lu.uid)
+                    n = Notifications.objects.create(ldap_dn=lu.dn,
+                                                     remaining_days = days,
+                                                     expiration_date=lu.schacExpiryDate)
+                    if sent:
+                        n.sent = True
+                        n.save()
+                        emailed.append(lu.uid)
+                    else:
+                        failed.append(lu.uid)
 
-        msg = 'Successfully sent {} notifications'.format(len(l))
+        msg = 'Successfully sent {} notifications'.format(len(emailed))
         self.stdout.write(self.style.SUCCESS(msg))
         msg = 'Failed {} notifications'.format(len(failed))
         self.stdout.write(self.style.ERROR(msg))
         msg = 'Disabled {} users with pwdAccountLockedTime'.format(len(disabled))
         self.stdout.write(self.style.ERROR(msg))
         if _debug:
-            for i in l:
+            for i in emailed:
                 print('Sent to: ', i)
             for i in failed:
                 print('Failed: ', i)
