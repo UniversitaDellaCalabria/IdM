@@ -52,6 +52,8 @@ class Command(BaseCommand):
 
         ldap_users = LdapAcademiaUser.objects.filter(schacExpiryDate__gt=from_that_time)
         for lu in ldap_users:
+            if (lu.schacExpiryDate - timezone.localtime()).days >= SHAC_EXPIRY_DURATION_DAYS:
+                continue
             self.stdout.write('Processing {}'.format(lu.dn))
             # check if an email was already sent, otherwise continue to the next loop
             n = Notifications.objects.filter(ldap_dn=lu.dn,
@@ -111,12 +113,12 @@ class Command(BaseCommand):
                     else:
                         failed.append(lu.uid)
 
-        msg = 'Successfully sent {} notifications'.format(len(emailed))
-        self.stdout.write(self.style.SUCCESS(msg))
-        msg = 'Failed {} notifications'.format(len(failed))
-        self.stdout.write(self.style.ERROR(msg))
-        msg = 'Disabled {} users with pwdAccountLockedTime'.format(len(disabled))
-        self.stdout.write(self.style.ERROR(msg))
+                    msg = 'Successfully sent {} notifications'.format(len(emailed))
+                    self.stdout.write(self.style.SUCCESS(msg))
+                    msg = 'Failed {} notifications'.format(len(failed))
+                    self.stdout.write(self.style.ERROR(msg))
+                    msg = 'Disabled {} users with pwdAccountLockedTime'.format(len(disabled))
+                    self.stdout.write(self.style.ERROR(msg))
         if _debug:
             for i in emailed:
                 print('Sent to: ', i)
