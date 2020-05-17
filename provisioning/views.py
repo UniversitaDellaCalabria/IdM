@@ -109,7 +109,7 @@ def account_create(request, token_value):
 
         # additional personal unique codes from additionals affiliations
         ldap_user.schacPersonalUniqueCode = [aff.get_urn() for aff in addaff]
-        ldap_user.reset_schacExpiryDate()
+        ldap_user.set_default_schacExpiryDate()
 
         # previous set already saved ...
         # ldap_user.save()
@@ -215,6 +215,9 @@ def dashboard(request):
                           USER_DEFINITION_ERROR,
                           status=403)
 
+        if not lu.schacExpiryDate:
+            lu.set_default_schacExpiryDate()
+
         delivery_dict = get_ldapuser_attrs_from_formbuilder_conf(lu)
         dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
                                                   constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
@@ -224,7 +227,8 @@ def dashboard(request):
              'form_profile': ProfileForm(initial={'access_notification': \
                                                   request.user.access_notification}),
              'lu': lu,
-             'attrs': get_ldapuser_aai_html_attrs(lu)}
+             'attrs': get_ldapuser_aai_html_attrs(lu),
+             'expiration_days': (lu.schacExpiryDate - timezone.localtime()).days}
         return render(request, 'dashboard.html', d)
     return render(request, 'empty_dashboard.html')
 
@@ -492,7 +496,7 @@ def change_password(request):
         return render(request,
                       'custom_message.html',
                       INVALID_DATA_DISPLAY, status=403)
-    lu.reset_schacExpiryDate()
+    lu.set_default_schacExpiryDate()
     send_email_password_changed(lu, request)
     messages.add_message(request, messages.SUCCESS,
                          settings.MESSAGES_ALERT_TEMPLATE.format(**PASSWORD_CHANGED))
@@ -589,7 +593,7 @@ def reset_password_token(request, token_value):
         send_email_password_changed(lu, request)
         id_prov.mark_as_used()
         lu.enable()
-        lu.reset_schacExpiryDate()
+        lu.set_default_schacExpiryDate()
         logger.info('{} changed his Password with a Token'.format(lu.uid))
 
         return render(request,
