@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-15 23:57+0200\n"
-"PO-Revision-Date: 2020-05-16 14:42+0200\n"
+"POT-Creation-Date: 2020-05-17 19:57+0200\n"
+"PO-Revision-Date: 2020-05-17 20:00+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -38,11 +38,11 @@ msgstr "Accessi al sistema"
 msgid "Authentication and Authorization about Users"
 msgstr "Autenticazioni e Autorizzazioni Utenti di Sistema"
 
-#: accounts/models.py:10 identity/models.py:109 registration/forms.py:43
+#: accounts/models.py:10 identity/models.py:110 registration/forms.py:43
 msgid "Male"
 msgstr "Maschio"
 
-#: accounts/models.py:11 identity/models.py:110 registration/forms.py:44
+#: accounts/models.py:11 identity/models.py:111 registration/forms.py:44
 msgid "Female"
 msgstr "Femmina"
 
@@ -54,7 +54,7 @@ msgstr "Altro"
 msgid "active"
 msgstr "attivo"
 
-#: accounts/models.py:18 identity/models.py:91 registration/forms.py:23
+#: accounts/models.py:18 identity/models.py:92 registration/forms.py:23
 #: registration/forms.py:27
 msgid "Name"
 msgstr "Nome"
@@ -105,95 +105,95 @@ msgstr "creato"
 msgid "modified"
 msgstr "modificato"
 
-#: identity/models.py:46
+#: identity/models.py:47
 msgid "Import"
 msgstr "Importato"
 
-#: identity/models.py:48
+#: identity/models.py:49
 msgid "Flow"
 msgstr "Flusso"
 
-#: identity/models.py:53
+#: identity/models.py:54
 msgid "Flow description"
 msgstr "Descrizione flusso"
 
-#: identity/models.py:55
+#: identity/models.py:56
 msgid "Record number (Prot.num.)"
 msgstr "Protocollo numero"
 
-#: identity/models.py:58
+#: identity/models.py:59
 msgid "Record year (Prot. year)"
 msgstr "Protocollo anno"
 
-#: identity/models.py:69
+#: identity/models.py:70
 msgid "Address"
 msgstr "Indirizzo"
 
-#: identity/models.py:70
+#: identity/models.py:71
 msgid "Locality"
 msgstr "Località"
 
-#: identity/models.py:71
+#: identity/models.py:72
 msgid "Region"
 msgstr "Regione"
 
-#: identity/models.py:72
+#: identity/models.py:73
 msgid "Postal code"
 msgstr "CAP"
 
-#: identity/models.py:74 identity/models.py:102
+#: identity/models.py:75 identity/models.py:103
 msgid "Country"
 msgstr "Paese"
 
-#: identity/models.py:76
+#: identity/models.py:77
 msgid "Main delivery address"
 msgstr "Recapito principale"
 
-#: identity/models.py:79
+#: identity/models.py:80
 msgid "Address book"
 msgstr "Rubrica"
 
-#: identity/models.py:96
+#: identity/models.py:97
 msgid "Common Name"
 msgstr "Nome comune, soprannome"
 
-#: identity/models.py:104
+#: identity/models.py:105
 msgid "City"
 msgstr "Città"
 
-#: identity/models.py:105
+#: identity/models.py:106
 msgid "Tax Payer's Number or UniqueID"
 msgstr "Codice Fiscale"
 
-#: identity/models.py:108
+#: identity/models.py:109
 msgid "Not know"
 msgstr "Sconosciuto"
 
-#: identity/models.py:111
+#: identity/models.py:112
 msgid "Not specified"
 msgstr "Non specificato"
 
-#: identity/models.py:115
+#: identity/models.py:116
 msgid "Identity card front"
 msgstr "Carta di identità fronte"
 
-#: identity/models.py:118
+#: identity/models.py:119
 msgid "Identity card retro"
 msgstr "Carta di identità retro"
 
-#: identity/models.py:137
+#: identity/models.py:138
 msgid "Digital Identities"
 msgstr "Identità digitale"
 
-#: identity/models.py:167
+#: identity/models.py:168
 msgid "Additional Affiliation"
 msgstr "Affiliazione addizionale"
 
-#: identity/models.py:168
+#: identity/models.py:169
 msgid "Additional Affiliations"
 msgstr "Affiliazione addizionali"
 
-#: identity/models.py:196
+#: identity/models.py:197
 msgid "Addresses"
 msgstr "Indirizzo"
 
@@ -302,50 +302,68 @@ msgid "Data succesfully changed"
 msgstr "I Dati sono stati modificati con successo"
 
 #: provisioning/custom_messages.py:61
+#, fuzzy
 msgid "Now you can come back to your Dashboard."
 msgstr "Torna alla Pagina Principale"
 
+#: provisioning/custom_messages.py:66
+msgid "Error"
+msgstr "Errore"
+
 #: provisioning/custom_messages.py:67
+msgid "The data you have submitted cannot be saved."
+msgstr "I dati da te immessi non possono essere salvati"
+
+#: provisioning/custom_messages.py:70
+#, fuzzy
+msgid ""
+"A contraint violation has occourred. Probably the values you submitted are "
+"owned by another user"
+msgstr ""
+"Un controllo di integrità ha bloccato la transazione, probabilmente hai "
+"immesso un valore già posseduto da un altro utente"
+
+#: provisioning/custom_messages.py:75
 msgid "Your username has been successfully changed"
 msgstr "Il tuo username è stato modificato con successo"
 
-#: provisioning/custom_messages.py:68
+#: provisioning/custom_messages.py:76
 msgid "Please login with your new username"
 msgstr "Perfavore accedi con le tue nuove credenziali"
 
-#: provisioning/custom_messages.py:70
+#: provisioning/custom_messages.py:78
 msgid "You are not able to change your username"
 msgstr "Non sei abilitato a modificare il tuo username"
 
-#: provisioning/custom_messages.py:71
+#: provisioning/custom_messages.py:79
 msgid "Contact the administrator"
 msgstr "Contatta l'amministratore"
 
-#: provisioning/custom_messages.py:73
+#: provisioning/custom_messages.py:81
 msgid "You have inserted a wrong actual username"
 msgstr "Hai inserito uno username non valido"
 
-#: provisioning/custom_messages.py:74
+#: provisioning/custom_messages.py:82
 msgid "Please, be careful"
 msgstr "Attenzione"
 
-#: provisioning/custom_messages.py:76
+#: provisioning/custom_messages.py:84
 msgid "You have already changed your username"
 msgstr "Hai già modificato il tuo username"
 
-#: provisioning/custom_messages.py:79
+#: provisioning/custom_messages.py:87
 msgid "You have choose a blacklisted or already used username"
 msgstr "Hai scelto uno username non valido"
 
-#: provisioning/custom_messages.py:82
+#: provisioning/custom_messages.py:90
 msgid "A confirmation email was sent"
 msgstr "Una email di conferma è stata inviata."
 
-#: provisioning/custom_messages.py:83
+#: provisioning/custom_messages.py:91
 msgid "You have {} minutes to confirm your request"
 msgstr "Hai {} minuti per confermare la tua richiesta"
 
-#: provisioning/custom_messages.py:84
+#: provisioning/custom_messages.py:92
 msgid ""
 "In the email message you'll find a special url (web link) that you will use "
 "to confirm your changes."
@@ -353,26 +371,26 @@ msgstr ""
 "Nel messaggio email troverai un weblink speciale che ti consentirà di "
 "confermare definitivamente le tue modifiche."
 
-#: provisioning/custom_messages.py:92
+#: provisioning/custom_messages.py:100
 msgid "Password succesfully changed"
 msgstr "La Password è stata modificata con successo"
 
-#: provisioning/custom_messages.py:93
+#: provisioning/custom_messages.py:101
 msgid "You're still logged in in your previous sessions."
 msgstr ""
 "Sei autenticato nella tua precedente sessione, se tu non avessi già "
 "effettuato l'autenticazione ti preghiamo di farla attraverso la pagina "
 "principale."
 
-#: provisioning/custom_messages.py:99
+#: provisioning/custom_messages.py:107
 msgid "You asked for a password reset"
 msgstr "Hai chiesto un rinnovo della tua password"
 
-#: provisioning/custom_messages.py:100
+#: provisioning/custom_messages.py:108
 msgid "If the data you have inserted are valid, an email was sent to you."
 msgstr "Se i dati da te inseriti risulteranno corretti riceverai una email."
 
-#: provisioning/custom_messages.py:102
+#: provisioning/custom_messages.py:110
 msgid ""
 "In the email message you'll find a special url (web link) that you will use "
 "to renew your password."
@@ -380,11 +398,11 @@ msgstr ""
 "Nella email che ti è giunta troverai uno weblink speciale che ti consentirà "
 "di rinnovare la tua password."
 
-#: provisioning/custom_messages.py:110
+#: provisioning/custom_messages.py:118
 msgid "username/email/token combination is wrong"
 msgstr "la combinazione username/email/token non è corretta"
 
-#: provisioning/custom_messages.py:111
+#: provisioning/custom_messages.py:119
 msgid ""
 "Please check the data you have inserted. If problem persists please contact "
 "our thecnical staff."
@@ -392,101 +410,108 @@ msgstr ""
 "Perfavore controllare nuovamente i dati da te inseriti. Se il problema "
 "dovesse persistere ti preghiamo di contattare il nostro staff tecnico."
 
-#: provisioning/custom_messages.py:120
+#: provisioning/custom_messages.py:128
 msgid ""
 "It seems that you tried to use a password that you already used in the past."
 msgstr ""
 "Sembra che tu abbia riutilizzato una password già utilizzata in passato."
 
-#: provisioning/custom_messages.py:122
+#: provisioning/custom_messages.py:130
 msgid "This is not permitted, please choose a real brand new password."
 msgstr ""
 "Questo non è consentito, perfavore utilizza una password che non hai mai "
 "utilizzato prima d'ora."
 
 #: provisioning/forms.py:16
-msgid ""
-"The secret must contains lowercase and uppercase characters,  number and at "
-"least one of these symbols: !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-msgstr ""
-"La password deve contenere caratteri maiuscoli e minuscoli, numeri ed almeno "
-"uno dei seguenti simboli:! % - _ + = [ ] { } : , . ? < > ( ); Esempio: Una"
-"\\_buonA/P4ssw0rd"
+#, fuzzy
+msgid "use lowercase and uppercase characters,  numbers and symbols"
+msgstr "usa caratteri minuscoli, maiuscoli, numeri e simboli"
 
-#: provisioning/forms.py:24 provisioning/forms.py:121
+#: provisioning/forms.py:22 provisioning/forms.py:139
 msgid "Username"
 msgstr ""
 
-#: provisioning/forms.py:26 provisioning/forms.py:72
+#: provisioning/forms.py:24 provisioning/forms.py:90
 msgid "Password"
 msgstr ""
 
-#: provisioning/forms.py:30
+#: provisioning/forms.py:28
 msgid "Your username"
 msgstr "Il tuo Username"
 
-#: provisioning/forms.py:34
+#: provisioning/forms.py:32
 msgid "Telephone number"
 msgstr "Il tuo numero di telefono"
 
-#: provisioning/forms.py:37
+#: provisioning/forms.py:35
 msgid "Your telephone number"
 msgstr "Il tuo numero di telefono"
 
-#: provisioning/forms.py:39
+#: provisioning/forms.py:37
 msgid "Telephone with prefix"
 msgstr "Numero di telefono con prefisso"
 
-#: provisioning/forms.py:44
+#: provisioning/forms.py:42
 msgid "name.surname@{} or other email used for registration. "
 msgstr ""
 "name.surname@{}, comunque l'email utilizzata in fase di registrazione. "
 
-#: provisioning/forms.py:48 registration/forms.py:65
+#: provisioning/forms.py:46 registration/forms.py:65
 msgid "email@domain.eu"
 msgstr ""
 
-#: provisioning/forms.py:65
+#: provisioning/forms.py:63
 msgid "Your username. Leave it blank to receive an email as reminder."
 msgstr "Il tuo username. Lascia il campo vuoto se non lo ricordi."
 
-#: provisioning/forms.py:79
+#: provisioning/forms.py:67 provisioning/forms.py:72 registration/forms.py:34
+#: registration/forms.py:39
+msgid "Tax Payer's Identification Number"
+msgstr "Codice Fiscale"
+
+#: provisioning/forms.py:81
+#, fuzzy
+#| msgid "Tax Payer's Identification Number"
+msgid "Insert your username or your Tax Payer's Identification Number"
+msgstr "Codice Fiscale"
+
+#: provisioning/forms.py:97
 msgid "Password verification"
 msgstr "Password verifica"
 
-#: provisioning/forms.py:85
+#: provisioning/forms.py:103
 msgid "The same password you typed before, for verification."
 msgstr "La stessa password che hai inserito prima come verifica."
 
-#: provisioning/forms.py:92
+#: provisioning/forms.py:110
 msgid "You must confirm your password"
 msgstr "Devi confermare la password"
 
-#: provisioning/forms.py:95
+#: provisioning/forms.py:113
 msgid "Your passwords do not match"
 msgstr "La password non coincide"
 
-#: provisioning/forms.py:110 provisioning/forms.py:116
+#: provisioning/forms.py:128 provisioning/forms.py:134
 msgid "Old Password"
 msgstr "Vecchia password"
 
-#: provisioning/forms.py:117
+#: provisioning/forms.py:135
 msgid "The password you used to login."
 msgstr "La password usata per il Login."
 
-#: provisioning/forms.py:122
+#: provisioning/forms.py:140
 msgid "Your desidered username, if available."
 msgstr "Scegli uno username, se disponbile"
 
-#: provisioning/forms.py:133
+#: provisioning/forms.py:151
 msgid "This username already exists, please use another one."
 msgstr "Questo username non è disponibile, scegline un altro perfavore."
 
-#: provisioning/forms.py:139
+#: provisioning/forms.py:157
 msgid "Not a valid Username, the accepted symbols are:_ - . @"
 msgstr "Username non valido, gli unici simboli consentiti sono:_ - . @"
 
-#: provisioning/forms.py:153
+#: provisioning/forms.py:171
 msgid ""
 "This email already exists, cannot create a new identity with an already used "
 "email!"
@@ -494,7 +519,7 @@ msgstr ""
 "Questa email già esiste, non puoi creare una nuova identità con una email "
 "già utilizzata da un altro utente!"
 
-#: provisioning/forms.py:161
+#: provisioning/forms.py:179
 msgid ""
 "Failed to manage your token, it could have been disabled or the email you "
 "typed was not linked to any valid registrations."
@@ -502,27 +527,27 @@ msgstr ""
 "Impossibile gestire questo token, potrebbe essere stato disabilitato oppure "
 "la email che hai inserito non è collegata a nessuna registrazione valida"
 
-#: provisioning/forms.py:187
+#: provisioning/forms.py:206
 msgid "Notify accesses via email"
 msgstr "Notifica gli accessi via email"
 
-#: provisioning/forms.py:193
+#: provisioning/forms.py:212
 msgid "Current Username"
 msgstr "Il tuo username"
 
-#: provisioning/forms.py:196
+#: provisioning/forms.py:215
 msgid "New Username"
 msgstr "Nuovo Username"
 
-#: provisioning/forms.py:199
+#: provisioning/forms.py:218
 msgid "Confirm your new Username"
 msgstr "Conferma il tuo username"
 
-#: provisioning/forms.py:208
+#: provisioning/forms.py:227
 msgid "You must re-type new username"
 msgstr "IDevi digitare un nuovo username"
 
-#: provisioning/forms.py:211
+#: provisioning/forms.py:230
 msgid "Your usernames do not match"
 msgstr "La password non coincide"
 
@@ -760,8 +785,8 @@ msgid "Please fill this form to create your brand new account."
 msgstr "Prego compila il form per creare il tuo nuovo account."
 
 #: provisioning/templates/account_create.html:22
-#: provisioning/templates/dashboard.html:106
-#: provisioning/templates/dashboard.html:155
+#: provisioning/templates/dashboard.html:107
+#: provisioning/templates/dashboard.html:156
 #: provisioning/templates/password_reset_token.html:21
 #: provisioning/templates/provisioning_change_username.html:24
 msgid "Save"
@@ -780,7 +805,7 @@ msgid "Modify"
 msgstr "Modifica"
 
 #: provisioning/templates/dashboard.html:20
-#: provisioning/templates/dashboard.html:117
+#: provisioning/templates/dashboard.html:118
 msgid "Attributes"
 msgstr "Attributi"
 
@@ -811,31 +836,39 @@ msgid "Here you can modify your profile"
 msgstr "Qui potrai modificare i dati relativi al tuo profilo"
 
 #: provisioning/templates/dashboard.html:52
-#: provisioning/templates/dashboard.html:152
+#: provisioning/templates/dashboard.html:153
 msgid "A confirmation email will be also sent."
 msgstr "Una email di conferma ti verrà inviata."
 
-#: provisioning/templates/dashboard.html:59
+#: provisioning/templates/dashboard.html:53
+msgid "Your Password will expire in"
+msgstr "La tua Password scadrà tra  "
+
+#: provisioning/templates/dashboard.html:53
+msgid "days"
+msgstr "giorni"
+
+#: provisioning/templates/dashboard.html:60
 msgid "Options"
 msgstr "Opzioni"
 
-#: provisioning/templates/dashboard.html:82
+#: provisioning/templates/dashboard.html:83
 msgid "Change your username"
 msgstr "Cambia il tuo username"
 
-#: provisioning/templates/dashboard.html:87
+#: provisioning/templates/dashboard.html:88
 msgid "One time only"
 msgstr "Usa e getta"
 
-#: provisioning/templates/dashboard.html:98
+#: provisioning/templates/dashboard.html:99
 msgid "Change your password"
 msgstr "Modifica la tua Password"
 
-#: provisioning/templates/dashboard.html:100
+#: provisioning/templates/dashboard.html:101
 msgid "Change"
 msgstr "Modifica"
 
-#: provisioning/templates/dashboard.html:120
+#: provisioning/templates/dashboard.html:121
 msgid ""
 "Your Research & Scholarship Account Attributes, according to eduPerson and "
 "SCHAC schemas. See  "
@@ -843,19 +876,19 @@ msgstr ""
 "I tuoi attributi utente nel formato standard per gli Istituti di Ricerca ed "
 "Educazione Superiore, consulta le "
 
-#: provisioning/templates/dashboard.html:122
+#: provisioning/templates/dashboard.html:123
 msgid "for further informations."
 msgstr "per ulteriori informazioni"
 
-#: provisioning/templates/dashboard.html:127
+#: provisioning/templates/dashboard.html:128
 msgid "Attribute name"
 msgstr "Nome attributo"
 
-#: provisioning/templates/dashboard.html:128
+#: provisioning/templates/dashboard.html:129
 msgid "Value"
 msgstr "Valore"
 
-#: provisioning/templates/dashboard.html:149
+#: provisioning/templates/dashboard.html:150
 msgid "Renew your Password"
 msgstr "Rinnova la tua Password"
 
@@ -883,17 +916,17 @@ msgstr "Qui potrai modificare i dati relativi al tuo profilo"
 msgid "Cancel and comeback"
 msgstr "Cancella e torna indietro"
 
-#: provisioning/views.py:307
+#: provisioning/views.py:268
+msgid "Error, {} tried to save data that violates a LADP constraint with : {}"
+msgstr ""
+
+#: provisioning/views.py:319
 msgid "No data edited"
 msgstr "Nessuna modifica è stata effettuata"
 
-#: provisioning/views.py:432
+#: provisioning/views.py:444
 msgid "Password changed"
 msgstr "Password Modificata"
-
-#: registration/forms.py:34 registration/forms.py:39
-msgid "Tax Payer's Identification Number"
-msgstr "Codice Fiscale"
 
 #: registration/forms.py:36
 msgid "National identification number"
@@ -1038,7 +1071,7 @@ msgid "{} {} [{}] have requested to be registered as a new user."
 msgstr ""
 
 #: registration/views.py:93
-msgid "EMail send error"
+msgid "Email send error"
 msgstr ""
 
 #: registration/views.py:94
@@ -1211,13 +1244,13 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: unical_template/templates/base.html:19
+#: unical_template/templates/base.html:23
 #: unical_template_old/templates/page.html:24
 msgid "Logout / Esci"
 msgstr ""
 
-#: unical_template/templates/base.html:25
-#: unical_template/templates/base.html:47
+#: unical_template/templates/base.html:29
+#: unical_template/templates/base.html:51
 #: unical_template/templates/home.html:14
 #: unical_template/templates/sezione_login.html:13
 #: unical_template_old/templates/base.html:44
@@ -1225,24 +1258,24 @@ msgstr ""
 msgid "Login"
 msgstr "Accedi"
 
-#: unical_template/templates/base.html:52
+#: unical_template/templates/base.html:56
 #: unical_template_old/templates/base.html:45
 msgid "Data protection"
 msgstr "Protezione dati"
 
-#: unical_template/templates/base.html:57
+#: unical_template/templates/base.html:61
 #: unical_template_old/templates/base.html:46
 #: unical_template_old/templates/sezione_funzionalita.html:8
 msgid "Features"
 msgstr "Funzionalità"
 
-#: unical_template/templates/base.html:62
+#: unical_template/templates/base.html:66
 #: unical_template_old/templates/base.html:47
 #: unical_template_old/templates/sezione_team.html:63
 msgid "Contacts"
 msgstr "Contatti"
 
-#: unical_template/templates/base.html:67
+#: unical_template/templates/base.html:71
 msgid "Forget your password?"
 msgstr "Password dimenticata"
 
@@ -1487,6 +1520,14 @@ msgstr ""
 #: unical_template_old/templates/sezione_team.html:114
 msgid "Data Protection Officer"
 msgstr "Responsabile protezione dei dati"
+
+#~ msgid ""
+#~ "The secret must contains lowercase and uppercase characters,  number and "
+#~ "at least one of these symbols: !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+#~ msgstr ""
+#~ "La password deve contenere caratteri maiuscoli e minuscoli, numeri ed "
+#~ "almeno uno dei seguenti simboli:! % - _ + = [ ] { } : , . ? < > ( ); "
+#~ "Esempio: Una\\_buonA/P4ssw0rd"
 
 #, fuzzy
 #~| msgid "Forget password?"
