@@ -50,3 +50,5 @@ git+https://github.com/arthurdejong/python-stdnum.git
 
 # deprovisioning
 django-q==1.2.1
+git+https://github.com/UniversitaDellaCalabria/uniApi-Esse3.git
+git+https://github.com/UniversitaDellaCalabria/uniApi-CSA.git
