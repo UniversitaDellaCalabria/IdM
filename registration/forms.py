@@ -39,11 +39,10 @@ class AskForm_1(forms.Form):
                                            'placeholder': _("Tax Payer's Identification Number")}))
     gender = forms.CharField(label=_('Gender'), initial='',
                                      widget=forms.Select(
-                                      choices=(('', '------'),
-                                               ('m', _('Male')),
-                                               ('f', _('Female')),
-                                               ('other', _('Other'))
-                                               )))
+                                      choices=(('0', _('Not know')),
+                                               ('1', _('Male')),
+                                               ('2', _('Female')),
+                                               ('9', _('Not specified')))))
     nation_of_birth = forms.CharField(label=_('Nation of Birth'), max_length=3, initial='IT',
                                       widget=forms.Select(
                                        choices=[(e.alpha_2, e.name) for e in pycountry.countries]))
@@ -70,6 +69,9 @@ class AskForm_1(forms.Form):
                                       widget=forms.TextInput(
                                        attrs={'class': _field_class,
                                               'placeholder': _('Telephone number with prefix')}))
+    def clean_tin(self):
+        return self.cleaned_data['tin'].lower()
+
     def clean_date_of_birth(self):
         date = self.cleaned_data['date_of_birth']
         if (timezone.localdate() - date) < timezone.timedelta(days=6205):

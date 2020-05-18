@@ -106,10 +106,10 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
     tin = models.CharField(help_text=_('Tax Payer\'s Number or UniqueID'),
                                    max_length=16, blank=False, null=True)
     gender = models.CharField(max_length=3, blank=True, null=True,
-                              choices=((0, _('Not know')),
-                                       (1, _('Male')),
-                                       (2, _('Female')),
-                                       (9, _('Not specified'))))
+                              choices=(('0', _('Not know')),
+                                       ('1', _('Male')),
+                                       ('2', _('Female')),
+                                       ('9', _('Not specified'))))
     date_of_birth = models.DateField(blank=False, null=True)
     place_of_birth = models.CharField(max_length=128,
                                       blank=False, null=True, help_text='')

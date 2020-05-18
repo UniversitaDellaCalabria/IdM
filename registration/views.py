@@ -132,7 +132,13 @@ def confirm(request, token):
 
     # TEST LDAP
     tin = LDAP_UNIQUEID_TMPL.format(data['tin'])
+    spltd_tin = tin.split(':')
+    tin2 = ':'.join((spltd_tin[0], spltd_tin[1], spltd_tin[2],
+                      spltd_tin[3].upper(), spltd_tin[4].upper(),
+                      spltd_tin[5]))
     lu = LdapAcademiaUser.objects.filter(Q(schacPersonalUniqueID=tin)|\
+                                         Q(schacPersonalUniqueID=tin2)|\
+                                         Q(schacPersonalUniqueID=tin.replace('it:cf', 'IT:CF'))|\
                                          Q(mail=data['mail']))
     if lu:
         logger.error('Registration: LDAP ACCOUNT - user already exists {}'.format(_msg))
@@ -161,8 +167,8 @@ def confirm(request, token):
         # create the identity
         data['document_front'] = form_document.cleaned_data['document_front']
         data['document_retro'] = form_document.cleaned_data['document_retro']
-        data.pop('_dyn')
-        data.pop('_hidden_dyn')
+        data.pop('_dyn', '')
+        data.pop('_hidden_dyn', '')
         # create an identity
         identity = Identity.objects.create(**data)
         # the redirect to password reset

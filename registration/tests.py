@@ -13,12 +13,12 @@ logger = logging.getLogger(__name__)
 _captcha = "VlGYR"
 DATA = dict(name = 'PeppeTest',
             surname = 'PeppeTest',
-            tin = 'PPPPPT80A01D086B',
-            gender = 'M',
+            tin = 'PPPPpt80a01D086b',
+            gender = '1',
             nation_of_birth = 'IT',
             place_of_birth = 'Cosenza',
             date_of_birth = '1980-01-01',
-            mail = 'peppelinux@yahoo.it',
+            mail = 'peplinux@yahoo.it',
             telephoneNumber = '2345678987654',
             _hidden_dyn = base64.b64encode(encrypt(_captcha)).decode(),
             _dyn = _captcha)
@@ -66,3 +66,4 @@ class RegistrationTestCase(TestCase):
                     document_retro = dr)
         req = c.post(url, data=data, follow=True)
         self.assertIs(req.status_code, 200)
+        logger.info('Registration completed!')

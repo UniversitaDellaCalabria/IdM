@@ -226,7 +226,6 @@ class ProvisioningTestCase(TestCase):
         lu = LdapAcademiaUser.objects.get(uid=_new_uid)
         assert _new_uid == user.username
         assert user.dn == lu.dn
-        assert _new_uid in lu.eduPersonPrincipalName
 
         # login
         lurl = reverse('provisioning:provisioning_login')

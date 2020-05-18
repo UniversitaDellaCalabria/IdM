@@ -36,9 +36,9 @@ objectclass: schacUserEntitlements
 {eduPersonScopedAffiliation}
 {eduPersonEntitlement}
 {schacHomeOrganization}
-schacHomeOrganizationType: urn:schac:homeOrganizationType:IT:educationInstit
+schacHomeOrganizationType: urn:schac:homeOrganizationType:it:educationInstit
  ution
-schacHomeOrganizationType: urn:schac:homeOrganizationType:IT:university
+schacHomeOrganizationType: urn:schac:homeOrganizationType:it:university
 """
 
 LDIF_STAFF_ATTR = """eduPersonEntitlement: urn:mace:terena.org:tcs:escience-user

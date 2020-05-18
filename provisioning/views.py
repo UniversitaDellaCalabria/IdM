@@ -76,43 +76,50 @@ def account_create(request, token_value):
                                            id_prov.identity.surname)),
                  'mail' : [form.cleaned_data['mail']],
                  'telephoneNumber' : [id_prov.identity.telephoneNumber,],
-                 'eduPersonPrincipalName': '@'.join((form.cleaned_data['username'],
-                                                     settings.LDAP_BASE_DOMAIN)),
                  'eduPersonAssurance': EDUPERSON_DEFAULT_ASSURANCE,
                  'schacGender' : id_prov.identity.gender,
                  'schacPlaceOfBirth' : ','.join((id_prov.identity.nation_of_birth,
                                                  id_prov.identity.place_of_birth)),
                  'schacDateOfBirth' : id_prov.identity.date_of_birth,
-                 'schacHomeOrganization' : settings.SCHAC_HOMEORGANIZATION_DEFAULT,
-                 'schacHomeOrganizationType': settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT}
+                 #  'schacHomeOrganization' : settings.SCHAC_HOMEORGANIZATION_DEFAULT,
+                 #  'schacHomeOrganizationType': settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT
+                 #  'eduPersonPrincipalName': '@'.join((form.cleaned_data['username'],
+                                                     #  settings.LDAP_BASE_DOMAIN)),
+                 }
 
-        ldap_user = LdapAcademiaUser.objects.create(**entry)
-        #ldap_user.userPassword = form.cleaned_data['password']
-        # ldap_user.set_password_custom(form.cleaned_data['password'])
+        ldap_user = LdapAcademiaUser(**entry)
         ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin,
                                             country_code=id_prov.identity.nation_of_birth)
-        #ldap_user.set_default_eppn()
-        #for homeorgtype in settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT:
-            #ldap_user.set_schacHomeOrganizationType(value=homeorgtype)
 
-        # AFFILIATIONS
-        ldap_user.eduPersonAffiliation = id_prov.identity.affiliation.split(',')
-        eduPersonScopedAffiliation = [aff+'@'+settings.SCHAC_HOMEORGANIZATION_DEFAULT
-                                      for aff in ldap_user.eduPersonAffiliation
-                                      if aff]
-        # additionals affiliations
+        # IDENTITY AFFILIATIONS
+        if id_prov.identity.affiliation:
+            ldap_user.eduPersonAffiliation = id_prov.identity.affiliation.split(',')
+            eduPersonScopedAffiliation = [aff+'@'+settings.SCHAC_HOMEORGANIZATION_DEFAULT
+                                          for aff in ldap_user.eduPersonAffiliation
+                                          if aff]
+        # IDENTITY additionals affiliations
         addaff = id_prov.identity.additionalaffiliation_set.all()
-        additional_affiliations = [aff.get_scoped()
-                                   for aff in addaff if aff]
-        eduPersonScopedAffiliation.extend(additional_affiliations)
-        ldap_user.eduPersonScopedAffiliation = eduPersonScopedAffiliation
+        if addaff:
+            additional_affiliations = [aff.get_scoped()
+                                       for aff in addaff if aff]
+            eduPersonScopedAffiliation.extend(additional_affiliations)
+            ldap_user.eduPersonScopedAffiliation = eduPersonScopedAffiliation
 
-        # additional personal unique codes from additionals affiliations
-        ldap_user.schacPersonalUniqueCode = [aff.get_urn() for aff in addaff]
-        ldap_user.set_default_schacExpiryDate()
+            # additional personal unique codes from additionals affiliations
+            ldap_user.schacPersonalUniqueCode = [aff.get_urn() for aff in addaff]
+            ldap_user.set_default_schacExpiryDate()
 
-        # previous set already saved ...
-        # ldap_user.save()
+        # save before change the password
+        try:
+            ldap_user.save()
+        except ldap.CONSTRAINT_VIOLATION as e:
+            logging.error('Account Creation Failed: User submitted a '
+                          'unique information already used by another account.')
+            _msg = {'title': _("Invalid Data"),
+                    'avviso': _("It seems that you are already registered"),
+                    'description': _('Please go in the Home Page and activate '
+                                'the "Forgot your Password" procedure')}
+            return render(request, 'custom_message.html', _msg, status=403)
 
         # altrimenti mi fallisce lo unit test!
         ldap_user.set_password(form.cleaned_data['password'])
@@ -124,6 +131,7 @@ def account_create(request, token_value):
         return render(request,
                       'custom_message.html',
                       ACCOUNT_SUCCESFULLY_CREATED)
+
 
 def home(request):
     """render the home page"""

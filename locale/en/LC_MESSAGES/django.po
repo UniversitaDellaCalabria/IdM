@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-17 19:57+0200\n"
+"POT-Creation-Date: 2020-05-19 00:14+0200\n"
 "PO-Revision-Date: 2020-05-15 20:20+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 msgid "Female"
 msgstr ""
 
-#: accounts/models.py:12 registration/forms.py:45
+#: accounts/models.py:12
 msgid "Other"
 msgstr ""
 
@@ -164,11 +164,11 @@ msgstr ""
 msgid "Tax Payer's Number or UniqueID"
 msgstr ""
 
-#: identity/models.py:109
+#: identity/models.py:109 registration/forms.py:42
 msgid "Not know"
 msgstr ""
 
-#: identity/models.py:112
+#: identity/models.py:112 registration/forms.py:45
 msgid "Not specified"
 msgstr ""
 
@@ -430,7 +430,7 @@ msgstr ""
 msgid "name.surname@{} or other email used for registration. "
 msgstr ""
 
-#: provisioning/forms.py:46 registration/forms.py:65
+#: provisioning/forms.py:46 registration/forms.py:64
 msgid "email@domain.eu"
 msgstr ""
 
@@ -475,47 +475,47 @@ msgstr ""
 msgid "Your desidered username, if available."
 msgstr ""
 
-#: provisioning/forms.py:151
+#: provisioning/forms.py:152
 msgid "This username already exists, please use another one."
 msgstr ""
 
-#: provisioning/forms.py:157
+#: provisioning/forms.py:158
 msgid "Not a valid Username, the accepted symbols are:_ - . @"
 msgstr ""
 
-#: provisioning/forms.py:171
+#: provisioning/forms.py:172
 msgid ""
 "This email already exists, cannot create a new identity with an already used "
 "email!"
 msgstr ""
 
-#: provisioning/forms.py:179
+#: provisioning/forms.py:180
 msgid ""
 "Failed to manage your token, it could have been disabled or the email you "
 "typed was not linked to any valid registrations."
 msgstr ""
 
-#: provisioning/forms.py:206
+#: provisioning/forms.py:207
 msgid "Notify accesses via email"
 msgstr ""
 
-#: provisioning/forms.py:212
+#: provisioning/forms.py:213
 msgid "Current Username"
 msgstr ""
 
-#: provisioning/forms.py:215
+#: provisioning/forms.py:216
 msgid "New Username"
 msgstr ""
 
-#: provisioning/forms.py:218
+#: provisioning/forms.py:219
 msgid "Confirm your new Username"
 msgstr ""
 
-#: provisioning/forms.py:227
+#: provisioning/forms.py:228
 msgid "You must re-type new username"
 msgstr ""
 
-#: provisioning/forms.py:230
+#: provisioning/forms.py:231
 msgid "Your usernames do not match"
 msgstr ""
 
@@ -686,20 +686,22 @@ msgid ""
 "click on \"Forgot your Password\" section, in https://{hostname}.\n"
 msgstr ""
 
-#: provisioning/templates/account_create.html:10
+#: provisioning/templates/account_create.html:14
 msgid "Welcome in"
 msgstr ""
 
-#: provisioning/templates/account_create.html:11
+#: provisioning/templates/account_create.html:15
 msgid "Please fill this form to create your brand new account."
 msgstr ""
 
-#: provisioning/templates/account_create.html:22
-#: provisioning/templates/dashboard.html:107
-#: provisioning/templates/dashboard.html:156
-#: provisioning/templates/password_reset_token.html:21
-#: provisioning/templates/provisioning_change_username.html:24
-msgid "Save"
+#: provisioning/templates/account_create.html:25
+#: registration/templates/ask.html:20 registration/templates/confirm.html:21
+msgid "Some Errors has occourred"
+msgstr ""
+
+#: provisioning/templates/account_create.html:47
+#: registration/templates/ask.html:76 registration/templates/confirm.html:56
+msgid "Submit"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:10
@@ -778,6 +780,13 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
+#: provisioning/templates/dashboard.html:107
+#: provisioning/templates/dashboard.html:156
+#: provisioning/templates/password_reset_token.html:21
+#: provisioning/templates/provisioning_change_username.html:24
+msgid "Save"
+msgstr ""
+
 #: provisioning/templates/dashboard.html:121
 msgid ""
 "Your Research & Scholarship Account Attributes, according to eduPerson and "
@@ -822,15 +831,29 @@ msgstr ""
 msgid "Cancel and comeback"
 msgstr ""
 
-#: provisioning/views.py:268
+#: provisioning/views.py:118 registration/views.py:140
+msgid "Invalid Data"
+msgstr ""
+
+#: provisioning/views.py:119 registration/views.py:141
+msgid "It seems that you are already registered"
+msgstr ""
+
+#: provisioning/views.py:120 registration/views.py:142
+msgid ""
+"Please go in the Home Page and activate the \"Forgot your Password\" "
+"procedure"
+msgstr ""
+
+#: provisioning/views.py:276
 msgid "Error, {} tried to save data that violates a LADP constraint with : {}"
 msgstr ""
 
-#: provisioning/views.py:319
+#: provisioning/views.py:327
 msgid "No data edited"
 msgstr ""
 
-#: provisioning/views.py:444
+#: provisioning/views.py:452
 msgid "Password changed"
 msgstr ""
 
@@ -838,59 +861,59 @@ msgstr ""
 msgid "National identification number"
 msgstr ""
 
-#: registration/forms.py:47
+#: registration/forms.py:46
 msgid "Nation of Birth"
 msgstr ""
 
-#: registration/forms.py:50 registration/forms.py:53
+#: registration/forms.py:49 registration/forms.py:52
 msgid "Place of Birth"
 msgstr ""
 
-#: registration/forms.py:58
+#: registration/forms.py:57
 msgid "Date of Birth"
 msgstr ""
 
-#: registration/forms.py:62
+#: registration/forms.py:61
 msgid "name.surname@your.mail.com"
 msgstr ""
 
-#: registration/forms.py:66
+#: registration/forms.py:65
 msgid "Mobile Phone"
 msgstr ""
 
-#: registration/forms.py:69
+#: registration/forms.py:68
 msgid "Mobile phone number"
 msgstr ""
 
-#: registration/forms.py:72
+#: registration/forms.py:71
 msgid "Telephone number with prefix"
 msgstr ""
 
-#: registration/forms.py:76
+#: registration/forms.py:75
 msgid "You must be of age"
 msgstr ""
 
-#: registration/forms.py:80
+#: registration/forms.py:79
 msgid "Identification Document Front side"
 msgstr ""
 
-#: registration/forms.py:81
+#: registration/forms.py:80
 msgid "Identification Document Back side"
 msgstr ""
 
-#: registration/forms.py:89
+#: registration/forms.py:88
 msgid "An Error occourred, please upload again your document"
 msgstr ""
 
-#: registration/forms.py:96
+#: registration/forms.py:95
 msgid "Only these format are permitted: '{}'"
 msgstr ""
 
-#: registration/forms.py:100
+#: registration/forms.py:99
 msgid "Maximum upload size is {}. {} is {}"
 msgstr ""
 
-#: registration/forms.py:106
+#: registration/forms.py:105
 msgid "Maximum filename length is {}"
 msgstr ""
 
@@ -922,20 +945,12 @@ msgid ""
 "Insert the requested informations, a confirmation email will be sent to you."
 msgstr ""
 
-#: registration/templates/ask.html:20 registration/templates/confirm.html:21
-msgid "Some Errors has occourred"
-msgstr ""
-
 #: registration/templates/ask.html:47 registration/templates/ask.html:56
 msgid "By submitting this form I declare that I have read the data ..."
 msgstr ""
 
 #: registration/templates/ask.html:50 registration/templates/ask.html:59
 msgid "I have read the ..."
-msgstr ""
-
-#: registration/templates/ask.html:76 registration/templates/confirm.html:56
-msgid "Submit"
 msgstr ""
 
 #: registration/templates/confirm.html:13
@@ -994,20 +1009,6 @@ msgstr ""
 msgid ""
 "Please go in the Home Page and activate the \"Forgot your Password\" "
 "procedure. If the problem persists please contact our technical assistance."
-msgstr ""
-
-#: registration/views.py:139
-msgid "Invalid Data"
-msgstr ""
-
-#: registration/views.py:140
-msgid "It seems that you are already registered"
-msgstr ""
-
-#: registration/views.py:141
-msgid ""
-"Please go in the Home Page and activate the \"Forgot your Password\" "
-"procedure"
 msgstr ""
 
 #: templates/admin/identity/change_form.html:18

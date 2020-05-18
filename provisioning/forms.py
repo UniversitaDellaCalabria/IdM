@@ -135,11 +135,12 @@ class PasswordChangeForm(PasswordForm):
                                    help_text=_("The password you used to login."))
 
 
-class AccountCreationForm(PasswordForm, IdentityTokenAskForm):
+class AccountCreationForm(PasswordForm, IdentityEmailForm):
     username = forms.CharField(label=_('Username'), max_length=64,
                                help_text=_("Your desidered username, if available."),
                                widget=_username_widget)
     token = forms.CharField(widget=forms.HiddenInput())
+    field_order = ['username', 'mail', 'password', 'password_verifica']
 
     def clean_username(self):
         """
