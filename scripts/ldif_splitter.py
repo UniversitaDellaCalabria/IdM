@@ -40,7 +40,9 @@ for i in range(len(blocks)):
 # test uniqueness
 # grep "mail:" ldap_importable.$SUFFIX.ldif.fixed |  uniq -d
 
-# for i in *ldif.fixed.* ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > $i.log 2>&1 &) ; done
+# for i in *ldif.{0,1,2,3,4,5,6,7,8,9} ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > $i.log 2>&1 &) ; done
 # ps ax | grep ldif.fixed | awk -F' ' {'print $1'} | xargs kill -TERM
+
+# grep "ldap_add:" *log
 
 # bash clean.sh
