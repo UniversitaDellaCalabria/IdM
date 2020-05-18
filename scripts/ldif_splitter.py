@@ -1,8 +1,9 @@
 import os
+import sys
 from subprocess import run, PIPE
 
 CHUNKS = 10
-FILE = 'ldap_importable.20200429.1818.ldif.fixed'
+FILE = sys.argv[1]
 
 fsize = os.path.getsize(FILE)
 first_block = int(fsize / CHUNKS)
