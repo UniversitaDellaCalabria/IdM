@@ -11,8 +11,8 @@ ldif_rec2.parse()
 
 LDAP_INTERESTING_VALUES = ('userPassword',
                            'sambaNTPassword',
-                           'schacPersonalUniqueCode',
-                           'schacPersonalUniqueID',
+                           #  'schacPersonalUniqueCode',
+                           #  'schacPersonalUniqueID',
                            'mail')
 
 LDAP_CHGADD_TMPL = """dn: {}
