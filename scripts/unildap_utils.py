@@ -153,14 +153,14 @@ def get_new_ldif(entry, mail=True, cf=True, code=True):
         if cf:
             l = []
             for pid in dentr['schacPersonalUniqueID']:
-                spl = pid.split(':')
-                l.append(spl[0],spl[1],spl[2],spl[3].lower(),spl[4].upper(),spl[5].lower())
+                spl = pid.decode().split(':')
+                l.append(':'.join((spl[0],spl[1],spl[2],spl[3].lower(),spl[4].upper(),spl[5].lower())).encode())
             dentr['schacPersonalUniqueID'] = l
 
     if dentr.get('schacHomeOrganizationType'):
         l = []
         for htype in dentr['schacHomeOrganizationType']:
-            l.append(htype.replace(':IT:', ':it:'))
+            l.append(htype.decode().replace(':IT:', ':it:').encode())
         dentr['schacHomeOrganizationType'] = l
     ### end FIX
 
