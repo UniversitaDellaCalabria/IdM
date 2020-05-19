@@ -11,6 +11,8 @@ ldif_rec2.parse()
 
 LDAP_INTERESTING_VALUES = ('userPassword',
                            'sambaNTPassword',
+                           'schacPersonalUniqueCode',
+                           'schacPersonalUniqueID',
                            'mail')
 
 LDAP_CHGADD_TMPL = """dn: {}
@@ -48,6 +50,7 @@ for entry in ldif2:
 
         new_entries.append((entry, new_ldif))
     else:
+        check = 0
         new_ldif = LDAP_CHG_TMPL.format(entry)
         for k in LDAP_INTERESTING_VALUES:
             if not ldif2[entry].get(k):
@@ -59,12 +62,12 @@ for entry in ldif2:
                 # replace
                 if ldif1[entry][k] != ldif2[entry][k]:
                     new_ldif += LDAP_CHG_REPL_TMPL.format(k, ''.join(['{}: {}\n'.format(k, i.decode())
-                                                                        for i in ldif2[entry][k]]))
+                                                                      for i in ldif2[entry][k]]))
                     check = 1
             else:
                 # add
                 new_ldif += LDAP_CHG_ADD_TMPL.format(k, ''.join(['{}: {}\n'.format(k, i.decode())
-                                                                   for i in ldif2[entry][k]]))
+                                                                 for i in ldif2[entry][k]]))
                 check = 1
         if check == 1:
             mod_entries.append((entry, new_ldif))
