@@ -73,6 +73,7 @@ for pe in typeorg:
 for pe in ids:
     if pe.schacPersonalUniqueID:
         l = []
+        if not pe.uid.isdigit(): continue
         #  print('{} uniqueID'.format(pe))
         for i in pe.schacPersonalUniqueID:
             if ':it:' in i: continue
@@ -88,7 +89,7 @@ for pe in ids:
             if other.uid == pe.uid: continue
             if pe.uid.isdigit():
                 print('Deleting {} schacPersonalUniqueID'.format(other))
-                other.schacPersonalUniqueID = []
+                other.schacPersonalUniqueID = None
                 other.save()
                 pe.save()
 
