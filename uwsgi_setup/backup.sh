@@ -11,6 +11,11 @@ PASSWORD=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(set
 USERNAME=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.DATABASES['default']['USER'])")
 DB=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.DATABASES['default']['NAME'])")
 
+LDAP_PASSWORD=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.DATABASES['ldap']['PASSWORD'])")
+LDAP_USERNAME=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.DATABASES['ldap']['USER'])")
+LDAP_BASE=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.LDAP_PEOPLE_DN)")
+
+
 BACKUP_DIR="/opt/dumps_$PROJ_NAME"
 BACKUP_DIR_LDIF=$BACKUP_DIR"/ldif"
 BACKUP_DIR_JSON=$BACKUP_DIR"/json"
@@ -19,7 +24,6 @@ BACKUP_DIR_MEDIA=$BACKUP_DIR"/media"
 FNAME="$PROJ_NAME.$(date +"%Y-%m-%d_%H%M%S")"
 
 # sudo apt install p7zip-full
-
 mkdir -p $BACKUP_DIR
 mkdir -p $BACKUP_DIR_LDIF
 mkdir -p $BACKUP_DIR_JSON
@@ -30,6 +34,9 @@ set -x
 set -e
 
 # LDIF
+ldapsearch -LLL -H ldap:/// -D "$LDAP_USERNAME" -w "$LDAP_PASSWORD" -b "$LDAP_BASE" + '*' | 7z a $BACKUP_DIR_LDIF/$FNAME.ldap_people.ldif.7z -si -p$PASSWORD
+
+# JSON LDAP
 $ENV_PATH/bin/python3 $PROJ_PATH/manage.py shell -c  '
 from django.conf import settings
 from ldap_peoples.models import *
@@ -38,7 +45,7 @@ settings.LDAP_SEARCH_LIMIT = None
 peoples = LdapAcademiaUser.objects.all()
 for pe in peoples:
     print(pe.json(), end="")
-' | 7z a $BACKUP_DIR_LDIF/$FNAME.ldif.7z -si -p$PASSWORD
+' | 7z a $BACKUP_DIR_JSON/$FNAME.ldap_people.json.7z -si -p$PASSWORD
 
 # JSON dump, encrypt and compress
 $ENV_PATH/bin/python3 $PROJ_PATH/manage.py dumpdata --exclude auth.permission --exclude contenttypes --exclude sessions --indent 2  | 7z a $BACKUP_DIR_JSON/$FNAME.json.7z -si -p$PASSWORD
