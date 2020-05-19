@@ -142,11 +142,27 @@ def get_new_ldif(entry, mail=True, cf=True, code=True):
         dentr['sambaSID'] = ['{}@studenti.unical.it'.format(
                                 dn[4:].partition(',')[0]
                                 ).encode()]
+    # FIX case
     if dentr.get('mail'):
         if mail:
             dentr['mail'] = [i.lower() for i in dentr['mail']]
         else:
             del(dentr['mail'])
+
+    if dentr.get('schacPersonalUniqueID'):
+        if cf:
+            l = []
+            for pid in dentr['schacPersonalUniqueID']:
+                spl = pid.split(':')
+                l.append(spl[0],spl[1],spl[2],spl[3].lower(),spl[4].upper(),spl[5].lower())
+            dentr['schacPersonalUniqueID'] = l
+
+    if dentr.get('schacHomeOrganizationType'):
+        l = []
+        for htype in dentr['schacHomeOrganizationType']:
+            l.append(htype.replace(':IT:', ':it:'))
+        dentr['schacHomeOrganizationType'] = l
+    ### end FIX
 
     for aff in dentr['eduPersonAffiliation']:
         scopaff = '{}@{}'.format(aff.decode(), SCHAC_HOMEORG)
@@ -166,7 +182,7 @@ def get_new_ldif(entry, mail=True, cf=True, code=True):
     if new_entry.get('sambaSID'):
         res += '{}\n'.format(new_entry['sambaSID'].lower())
     if code and new_entry.get('schacPersonalUniqueCode'):
-        res += '{}\n'.format(new_entry['schacPersonalUniqueCode'])
+        res += '{}\n'.format(new_entry['schacPersonalUniqueCode'].replace(':IT:', ':it:'))
     return res
 
 
@@ -225,7 +241,7 @@ for i in entries:
 
 EXCLUDED_DN.extend(invalid_uids)
 
-# those who have: schacpersonaluniqueid: urn:schac:personaluniqueid:it:cf:
+# those who have: schacpersonaluniqueid: urn:schac:personaluniqueid:it:CF:
 EXCLUDED_DN.extend(without_uniqueid)
 # import they as they are ...
 #EXCLUDED_DN.extend(without_eduroam)

@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 LDAP_UNIQUEID_TMPL = getattr(settings, 'LDAP_UNIQUEID_TMPL',
-                             'urn:schac:personalUniqueID:it:cf:{}')
+                             'urn:schac:personalUniqueID:it:CF:{}')
 
 
 def ask(request):
@@ -138,7 +138,6 @@ def confirm(request, token):
                       spltd_tin[5]))
     lu = LdapAcademiaUser.objects.filter(Q(schacPersonalUniqueID=tin)|\
                                          Q(schacPersonalUniqueID=tin2)|\
-                                         Q(schacPersonalUniqueID=tin.replace('it:cf', 'IT:CF'))|\
                                          Q(mail=data['mail']))
     if lu:
         logger.error('Registration: LDAP ACCOUNT - user already exists {}'.format(_msg))

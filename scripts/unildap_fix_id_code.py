@@ -23,14 +23,14 @@ for i in peoples:
     if not i.schacPersonalUniqueID or len(i.schacPersonalUniqueID[0]) < 42:
         if 'dipendente' in i.schacPersonalUniqueCode[0]:
             #  try:
-                #  i.schacPersonalUniqueID = ['urn:schac:personalUniqueID:it:cf:{}'.format(cf_dip[int(i.uid)])]
+                #  i.schacPersonalUniqueID = ['urn:schac:personalUniqueID:it:CF:{}'.format(cf_dip[int(i.uid)])]
                 #  i.save()
             #  except Exception as e:
                 #  print(e, i)
                 #  failed_cf_dip.append(i)
             nocf.append((i.uid, getattr(i, 'schacPersonalUniqueCode', []), i.schacPersonalUniqueID))
         elif 'studente' in i.schacPersonalUniqueCode[0]:
-            i.schacPersonalUniqueID = ['urn:schac:personalUniqueID:it:cf:{}'.format(i.uid)]
+            i.schacPersonalUniqueID = ['urn:schac:personalUniqueID:it:CF:{}'.format(i.uid)]
             i.save()
             continue
         else:
