@@ -230,7 +230,7 @@ def dashboard(request):
                                                   constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                                   ignore_format_field_name=True)
         d = {'form_delivery': dyn_form,
-             'form_password': PasswordChangeForm(),
+             'password_reset_form': PasswordChangeForm(),
              'form_profile': ProfileForm(initial={'access_notification': \
                                                   request.user.access_notification}),
              'lu': lu,
