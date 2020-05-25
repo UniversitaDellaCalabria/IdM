@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 00:14+0200\n"
+"POT-Creation-Date: 2020-05-25 17:08+0200\n"
 "PO-Revision-Date: 2020-05-15 20:20+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -748,7 +748,7 @@ msgid "Here you can modify your profile"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:52
-#: provisioning/templates/dashboard.html:153
+#: provisioning/templates/password_reset.html:10
 msgid "A confirmation email will be also sent."
 msgstr ""
 
@@ -781,7 +781,7 @@ msgid "Change"
 msgstr ""
 
 #: provisioning/templates/dashboard.html:107
-#: provisioning/templates/dashboard.html:156
+#: provisioning/templates/password_reset.html:13
 #: provisioning/templates/password_reset_token.html:21
 #: provisioning/templates/provisioning_change_username.html:24
 msgid "Save"
@@ -805,12 +805,12 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: provisioning/templates/dashboard.html:150
-msgid "Renew your Password"
-msgstr ""
-
 #: provisioning/templates/empty_dashboard.html:15
 msgid "No valid Digital Identity"
+msgstr ""
+
+#: provisioning/templates/password_reset.html:7
+msgid "Renew your Password"
 msgstr ""
 
 #: provisioning/templates/password_reset_token.html:18
@@ -831,29 +831,57 @@ msgstr ""
 msgid "Cancel and comeback"
 msgstr ""
 
-#: provisioning/views.py:118 registration/views.py:140
+#: provisioning/templates/provisioning_login.html:14
+#: unical_template_old/templates/sezione_login.html:8
+msgid "Accesso alla piattaforma"
+msgstr "LOGIN"
+
+#: provisioning/templates/provisioning_login.html:15
+#: unical_template_old/templates/sezione_login.html:9
+msgid ""
+"Utilizza lo username e la password della tua Identità Digitale di Ateneo."
+msgstr "Please use your Unical ID username and password"
+
+#: provisioning/templates/provisioning_login.html:21
+msgid "Forgot your Password"
+msgstr ""
+
+#: provisioning/templates/provisioning_login.html:22
+#: unical_template/templates/base.html:29
+#: unical_template/templates/base.html:51
+#: unical_template/templates/home.html:14
+#: unical_template_old/templates/base.html:44
+#: unical_template_old/templates/sezione_login.html:21
+msgid "Login"
+msgstr ""
+
+#: provisioning/views.py:118 registration/views.py:144
 msgid "Invalid Data"
 msgstr ""
 
-#: provisioning/views.py:119 registration/views.py:141
+#: provisioning/views.py:119 registration/views.py:145
 msgid "It seems that you are already registered"
 msgstr ""
 
-#: provisioning/views.py:120 registration/views.py:142
+#: provisioning/views.py:120 registration/views.py:146
 msgid ""
 "Please go in the Home Page and activate the \"Forgot your Password\" "
 "procedure"
 msgstr ""
 
-#: provisioning/views.py:276
+#: provisioning/views.py:175
+msgid "Invalid Username or Password"
+msgstr ""
+
+#: provisioning/views.py:281
 msgid "Error, {} tried to save data that violates a LADP constraint with : {}"
 msgstr ""
 
-#: provisioning/views.py:327
+#: provisioning/views.py:332
 msgid "No data edited"
 msgstr ""
 
-#: provisioning/views.py:452
+#: provisioning/views.py:457
 msgid "Password changed"
 msgstr ""
 
@@ -889,31 +917,31 @@ msgstr ""
 msgid "Telephone number with prefix"
 msgstr ""
 
-#: registration/forms.py:75
+#: registration/forms.py:78
 msgid "You must be of age"
 msgstr ""
 
-#: registration/forms.py:79
+#: registration/forms.py:82
 msgid "Identification Document Front side"
 msgstr ""
 
-#: registration/forms.py:80
+#: registration/forms.py:83
 msgid "Identification Document Back side"
 msgstr ""
 
-#: registration/forms.py:88
+#: registration/forms.py:91
 msgid "An Error occourred, please upload again your document"
 msgstr ""
 
-#: registration/forms.py:95
+#: registration/forms.py:98
 msgid "Only these format are permitted: '{}'"
 msgstr ""
 
-#: registration/forms.py:99
+#: registration/forms.py:102
 msgid "Maximum upload size is {}. {} is {}"
 msgstr ""
 
-#: registration/forms.py:105
+#: registration/forms.py:108
 msgid "Maximum filename length is {}"
 msgstr ""
 
@@ -1031,7 +1059,7 @@ msgstr ""
 
 #: templates/admin/identity/change_form.html:38
 #: templates/admin/ldap_peoples/change_form.html:38
-#: templates/admin/ldap_peoples/change_list.html:41
+#: templates/admin/ldap_peoples/change_list.html:42
 msgid "View on site"
 msgstr ""
 
@@ -1046,23 +1074,23 @@ msgid "Please correct the errors below."
 msgstr ""
 
 #: templates/admin/ldap_peoples/change_list.html:35
-#: templates/admin/ldap_peoples/change_list.html:55
+#: templates/admin/ldap_peoples/change_list.html:58
 msgid "Import Entries"
 msgstr ""
 
-#: templates/admin/ldap_peoples/change_list.html:49
+#: templates/admin/ldap_peoples/change_list.html:51
 msgid "Import form"
 msgstr ""
 
-#: templates/admin/ldap_peoples/change_list.html:58
+#: templates/admin/ldap_peoples/change_list.html:61
 msgid "File to import"
 msgstr ""
 
-#: templates/admin/ldap_peoples/change_list.html:62
+#: templates/admin/ldap_peoples/change_list.html:65
 msgid "file format"
 msgstr ""
 
-#: templates/admin/ldap_peoples/change_list.html:69
+#: templates/admin/ldap_peoples/change_list.html:72
 msgid "Import in LDAP"
 msgstr ""
 
@@ -1134,15 +1162,6 @@ msgstr ""
 #: unical_template/templates/base.html:23
 #: unical_template_old/templates/page.html:24
 msgid "Logout / Esci"
-msgstr ""
-
-#: unical_template/templates/base.html:29
-#: unical_template/templates/base.html:51
-#: unical_template/templates/home.html:14
-#: unical_template/templates/sezione_login.html:13
-#: unical_template_old/templates/base.html:44
-#: unical_template_old/templates/sezione_login.html:21
-msgid "Login"
 msgstr ""
 
 #: unical_template/templates/base.html:56
@@ -1243,17 +1262,6 @@ msgstr ""
 #: unical_template_old/templates/sezione_funzionalita.html:26
 msgid "Ricezione email di conferma ad operazione avvenuta."
 msgstr ""
-
-#: unical_template/templates/sezione_login.html:7
-#: unical_template_old/templates/sezione_login.html:8
-msgid "Accesso alla piattaforma"
-msgstr "LOGIN"
-
-#: unical_template/templates/sezione_login.html:8
-#: unical_template_old/templates/sezione_login.html:9
-msgid ""
-"Utilizza lo username e la password della tua Identità Digitale di Ateneo."
-msgstr "Please use your Unical ID username and password"
 
 #: unical_template/templates/sezione_protezione_dati.html:7
 #: unical_template_old/templates/base.html:97

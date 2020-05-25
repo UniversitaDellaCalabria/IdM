@@ -171,11 +171,10 @@ def provisioning_login(request):
                 return HttpResponseRedirect(request.POST.get('next'))
             return HttpResponseRedirect(reverse('provisioning:dashboard'))
         else:
-            # aggiungi form errors qui + messages
-            return render(request,
-                          'custom_message.html',
-                          ACCOUNT_NOT_EXISTENT,
-                           status=403)
+            messages.add_message(request, messages.ERROR,
+                                 _("Invalid Username or Password"))
+            return render(request, 'provisioning_login.html',
+                                   {'login_form': login_form})
     else:
         # login form if method == 'GET'
         d = {'login_form': IdentityLoginForm()}

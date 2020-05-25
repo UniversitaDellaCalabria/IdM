@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 00:14+0200\n"
-"PO-Revision-Date: 2020-05-19 00:14+0200\n"
+"POT-Creation-Date: 2020-05-25 17:08+0200\n"
+"PO-Revision-Date: 2020-05-25 17:09+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -302,9 +302,8 @@ msgid "Data succesfully changed"
 msgstr "I Dati sono stati modificati con successo"
 
 #: provisioning/custom_messages.py:61
-#, fuzzy
 msgid "Now you can come back to your Dashboard."
-msgstr "Torna alla Pagina Principale"
+msgstr "Adesso puoi tornare alla Pagina Principale"
 
 #: provisioning/custom_messages.py:66
 msgid "Error"
@@ -315,7 +314,6 @@ msgid "The data you have submitted cannot be saved."
 msgstr "I dati da te immessi non possono essere salvati"
 
 #: provisioning/custom_messages.py:70
-#, fuzzy
 msgid ""
 "A contraint violation has occourred. Probably the values you submitted are "
 "owned by another user"
@@ -423,7 +421,6 @@ msgstr ""
 "utilizzato prima d'ora."
 
 #: provisioning/forms.py:16
-#, fuzzy
 msgid "use lowercase and uppercase characters,  numbers and symbols"
 msgstr "usa caratteri minuscoli, maiuscoli, numeri e simboli"
 
@@ -470,8 +467,6 @@ msgid "Tax Payer's Identification Number"
 msgstr "Codice Fiscale"
 
 #: provisioning/forms.py:81
-#, fuzzy
-#| msgid "Tax Payer's Identification Number"
 msgid "Insert your username or your Tax Payer's Identification Number"
 msgstr "Codice Fiscale"
 
@@ -838,7 +833,7 @@ msgid "Here you can modify your profile"
 msgstr "Qui potrai modificare i dati relativi al tuo profilo"
 
 #: provisioning/templates/dashboard.html:52
-#: provisioning/templates/dashboard.html:153
+#: provisioning/templates/password_reset.html:10
 msgid "A confirmation email will be also sent."
 msgstr "Una email di conferma ti verrà inviata."
 
@@ -871,7 +866,7 @@ msgid "Change"
 msgstr "Modifica"
 
 #: provisioning/templates/dashboard.html:107
-#: provisioning/templates/dashboard.html:156
+#: provisioning/templates/password_reset.html:13
 #: provisioning/templates/password_reset_token.html:21
 #: provisioning/templates/provisioning_change_username.html:24
 msgid "Save"
@@ -897,13 +892,13 @@ msgstr "Nome attributo"
 msgid "Value"
 msgstr "Valore"
 
-#: provisioning/templates/dashboard.html:150
-msgid "Renew your Password"
-msgstr "Rinnova la tua Password"
-
 #: provisioning/templates/empty_dashboard.html:15
 msgid "No valid Digital Identity"
 msgstr "Nessuna Identità Digitale valida"
+
+#: provisioning/templates/password_reset.html:7
+msgid "Renew your Password"
+msgstr "Rinnova la tua Password"
 
 #: provisioning/templates/password_reset_token.html:18
 msgid ""
@@ -925,29 +920,57 @@ msgstr "Qui potrai modificare i dati relativi al tuo profilo"
 msgid "Cancel and comeback"
 msgstr "Cancella e torna indietro"
 
-#: provisioning/views.py:118 registration/views.py:140
+#: provisioning/templates/provisioning_login.html:14
+#: unical_template_old/templates/sezione_login.html:8
+msgid "Accesso alla piattaforma"
+msgstr ""
+
+#: provisioning/templates/provisioning_login.html:15
+#: unical_template_old/templates/sezione_login.html:9
+msgid ""
+"Utilizza lo username e la password della tua Identità Digitale di Ateneo."
+msgstr ""
+
+#: provisioning/templates/provisioning_login.html:21
+msgid "Forgot your Password"
+msgstr "Password dimenticata"
+
+#: provisioning/templates/provisioning_login.html:22
+#: unical_template/templates/base.html:29
+#: unical_template/templates/base.html:51
+#: unical_template/templates/home.html:14
+#: unical_template_old/templates/base.html:44
+#: unical_template_old/templates/sezione_login.html:21
+msgid "Login"
+msgstr "Accedi"
+
+#: provisioning/views.py:118 registration/views.py:144
 msgid "Invalid Data"
 msgstr "Dati non validi"
 
-#: provisioning/views.py:119 registration/views.py:141
+#: provisioning/views.py:119 registration/views.py:145
 msgid "It seems that you are already registered"
 msgstr "Risulta che tu ti sia già registrato in passato"
 
-#: provisioning/views.py:120 registration/views.py:142
+#: provisioning/views.py:120 registration/views.py:146
 msgid ""
 "Please go in the Home Page and activate the \"Forgot your Password\" "
 "procedure"
 msgstr "Perfavore vai nella Home Page e clicca su \"Password Dimenticata\" "
 
-#: provisioning/views.py:276
+#: provisioning/views.py:175
+msgid "Invalid Username or Password"
+msgstr "Username o Password errate"
+
+#: provisioning/views.py:281
 msgid "Error, {} tried to save data that violates a LADP constraint with : {}"
 msgstr ""
 
-#: provisioning/views.py:327
+#: provisioning/views.py:332
 msgid "No data edited"
 msgstr "Nessuna modifica è stata effettuata"
 
-#: provisioning/views.py:452
+#: provisioning/views.py:457
 msgid "Password changed"
 msgstr "Password Modificata"
 
@@ -983,31 +1006,31 @@ msgstr "Il tuo numero di telefono"
 msgid "Telephone number with prefix"
 msgstr "Numero di telefono con prefisso"
 
-#: registration/forms.py:75
+#: registration/forms.py:78
 msgid "You must be of age"
 msgstr "Devi essere maggiorenne"
 
-#: registration/forms.py:79
+#: registration/forms.py:82
 msgid "Identification Document Front side"
 msgstr "Documento di identità Fronte"
 
-#: registration/forms.py:80
+#: registration/forms.py:83
 msgid "Identification Document Back side"
 msgstr "Documento di identità Retro"
 
-#: registration/forms.py:88
+#: registration/forms.py:91
 msgid "An Error occourred, please upload again your document"
 msgstr "Un errore è stato riscontrato, pefavore ricaricare il tuo documento"
 
-#: registration/forms.py:95
+#: registration/forms.py:98
 msgid "Only these format are permitted: '{}'"
 msgstr "Solo questi formati di file sono consentiti: '{}'"
 
-#: registration/forms.py:99
+#: registration/forms.py:102
 msgid "Maximum upload size is {}. {} is {}"
 msgstr "La dimensione massima del file è: '{}'"
 
-#: registration/forms.py:105
+#: registration/forms.py:108
 msgid "Maximum filename length is {}"
 msgstr "La lunghezza massima del nome del file è: '{}'"
 
@@ -1144,7 +1167,7 @@ msgstr "Storico modifiche"
 
 #: templates/admin/identity/change_form.html:38
 #: templates/admin/ldap_peoples/change_form.html:38
-#: templates/admin/ldap_peoples/change_list.html:41
+#: templates/admin/ldap_peoples/change_list.html:42
 msgid "View on site"
 msgstr "Vedi sul sito"
 
@@ -1159,23 +1182,23 @@ msgid "Please correct the errors below."
 msgstr "Per favore correggi i seguenti errori."
 
 #: templates/admin/ldap_peoples/change_list.html:35
-#: templates/admin/ldap_peoples/change_list.html:55
+#: templates/admin/ldap_peoples/change_list.html:58
 msgid "Import Entries"
 msgstr "Importa"
 
-#: templates/admin/ldap_peoples/change_list.html:49
+#: templates/admin/ldap_peoples/change_list.html:51
 msgid "Import form"
 msgstr "Import file"
 
-#: templates/admin/ldap_peoples/change_list.html:58
+#: templates/admin/ldap_peoples/change_list.html:61
 msgid "File to import"
 msgstr ""
 
-#: templates/admin/ldap_peoples/change_list.html:62
+#: templates/admin/ldap_peoples/change_list.html:65
 msgid "file format"
 msgstr "formato file"
 
-#: templates/admin/ldap_peoples/change_list.html:69
+#: templates/admin/ldap_peoples/change_list.html:72
 msgid "Import in LDAP"
 msgstr "Importa il LDAP"
 
@@ -1250,15 +1273,6 @@ msgstr ""
 #: unical_template_old/templates/page.html:24
 msgid "Logout / Esci"
 msgstr ""
-
-#: unical_template/templates/base.html:29
-#: unical_template/templates/base.html:51
-#: unical_template/templates/home.html:14
-#: unical_template/templates/sezione_login.html:13
-#: unical_template_old/templates/base.html:44
-#: unical_template_old/templates/sezione_login.html:21
-msgid "Login"
-msgstr "Accedi"
 
 #: unical_template/templates/base.html:56
 #: unical_template_old/templates/base.html:45
@@ -1359,17 +1373,6 @@ msgstr ""
 #: unical_template/templates/sezione_funzionalita.html:60
 #: unical_template_old/templates/sezione_funzionalita.html:26
 msgid "Ricezione email di conferma ad operazione avvenuta."
-msgstr ""
-
-#: unical_template/templates/sezione_login.html:7
-#: unical_template_old/templates/sezione_login.html:8
-msgid "Accesso alla piattaforma"
-msgstr ""
-
-#: unical_template/templates/sezione_login.html:8
-#: unical_template_old/templates/sezione_login.html:9
-msgid ""
-"Utilizza lo username e la password della tua Identità Digitale di Ateneo."
 msgstr ""
 
 #: unical_template/templates/sezione_protezione_dati.html:7
