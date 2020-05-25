@@ -51,3 +51,15 @@ FROM V_IE_RU_PERSONALE_CESSATO@LNK_CSA a
 ) WHERE
 MATRICOLA IN (...);
 """
+
+# on ADD ldif we have to clean the old one
+# cat idm_diff.25mag11.30.ldif | grep "schacPersonalUniqueID:" | awk -F "schacPersonalUniqueID: " {'print $1'} 
+
+for i in cfs:
+    lu = peoples.filter(schacPersonalUniqueID=i).first()
+    if lu:
+        print(lu)
+        lu.schacPersonalUniqueID = None
+        lu.mail = None
+        lu.save()
+
