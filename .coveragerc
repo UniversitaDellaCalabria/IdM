@@ -20,7 +20,9 @@ omit =
     *site-packages/ldapdb*
     *site-packages/pySSHA*
     *site-packages/asgiref*
+    *django-form-builder*
     *django-ldapdb*
+    *django-ldap-academia-ou-manager*
     */distutils/*
     tests/*
     */apps/*
@@ -28,3 +30,4 @@ omit =
     */src/*
     manage.py
     */settingslocal.py
+    *.env*
