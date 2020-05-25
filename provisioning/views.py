@@ -139,7 +139,7 @@ def home(request):
         # return HttpResponseRedirect(reverse(settings.LOGIN_REDIRECT_URL))
         return HttpResponseRedirect(reverse('provisioning:dashboard'))
     # peers = AllowedImportPeer.objects.all()
-    d = {'login_form': IdentityLoginForm(),
+    d = {#'login_form': IdentityLoginForm(),
          'password_reset_form' : PasswordAskResetForm()}
     return render(request, 'home.html', d)
 
@@ -511,8 +511,12 @@ def change_password(request):
     return redirect('provisioning:dashboard')
 
 
-@require_http_methods(["POST"])
 def reset_password_ask(request):
+    if request.method == 'GET':
+        d = {'login_form': IdentityLoginForm(),
+             'password_reset_form' : PasswordAskResetForm()}
+        return render(request, 'password_reset_page.html', d)
+
     # we do not check if data are valid to avoid any vulnerability reconnaissance
     form = IdentityTokenAskForm(request.POST)
     if not form.is_valid():
