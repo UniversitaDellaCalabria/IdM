@@ -33,7 +33,6 @@ for pe in failed:
             #  pe.save()
         #  except:
             #  other = LdapAcademiaUser.objects.get(schacPersonalUniqueCode=l[0])
-            import pdb; pdb.set_trace()
             #  failed2.append(pe)
     if pe.schacHomeOrganizationType:
         print('{} HomeOrgType'.format(pe))

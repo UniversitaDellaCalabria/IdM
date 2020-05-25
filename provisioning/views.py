@@ -525,10 +525,10 @@ def reset_password_ask(request):
                                           form.cleaned_data['tin'])
     if username:
         lu = LdapAcademiaUser.objects.filter(uid=username,
-                                             mail__icontains=mail).first()
+                                             mail__contains=mail).first()
     else:
         lu = LdapAcademiaUser.objects.filter(schacPersonalUniqueID__icontains=schacPersonalUniqueID,
-                                             mail__icontains=mail).first()
+                                             mail__contains=mail).first()
     # is user exists run the game
     if lu:
         if not lu.is_renewable():
@@ -578,7 +578,7 @@ def reset_password_token(request, token_value):
         username = form.cleaned_data['username']
         mail = form.cleaned_data['mail']
         lu = LdapAcademiaUser.objects.filter(uid=username,
-                                             mail__icontains=mail).first()
+                                             mail__contains=mail).first()
         if lu and not lu.is_renewable():
             return render(request,
                           'custom_message.html',
