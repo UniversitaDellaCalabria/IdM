@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-25 17:08+0200\n"
+"POT-Creation-Date: 2020-05-25 17:15+0200\n"
 "PO-Revision-Date: 2020-05-15 20:20+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -846,6 +846,18 @@ msgstr "Please use your Unical ID username and password"
 msgid "Forgot your Password"
 msgstr ""
 
+#: provisioning/templates/provisioning_login.html:21
+msgid "Click"
+msgstr ""
+
+#: provisioning/templates/provisioning_login.html:21
+msgid "here"
+msgstr ""
+
+#: provisioning/templates/provisioning_login.html:21
+msgid "to reset"
+msgstr ""
+
 #: provisioning/templates/provisioning_login.html:22
 #: unical_template/templates/base.html:29
 #: unical_template/templates/base.html:51
@@ -873,15 +885,15 @@ msgstr ""
 msgid "Invalid Username or Password"
 msgstr ""
 
-#: provisioning/views.py:281
+#: provisioning/views.py:275
 msgid "Error, {} tried to save data that violates a LADP constraint with : {}"
 msgstr ""
 
-#: provisioning/views.py:332
+#: provisioning/views.py:326
 msgid "No data edited"
 msgstr ""
 
-#: provisioning/views.py:457
+#: provisioning/views.py:451
 msgid "Password changed"
 msgstr ""
 

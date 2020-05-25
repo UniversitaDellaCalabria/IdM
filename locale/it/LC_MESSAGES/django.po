@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-25 17:08+0200\n"
-"PO-Revision-Date: 2020-05-25 17:09+0200\n"
+"POT-Creation-Date: 2020-05-25 17:15+0200\n"
+"PO-Revision-Date: 2020-05-25 17:17+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -830,7 +830,7 @@ msgstr "Benvenuto "
 
 #: provisioning/templates/dashboard.html:52
 msgid "Here you can modify your profile"
-msgstr "Qui potrai modificare i dati relativi al tuo profilo"
+msgstr "Qui potrai modificare i dati relativi al tuo profilo\\"
 
 #: provisioning/templates/dashboard.html:52
 #: provisioning/templates/password_reset.html:10
@@ -935,6 +935,18 @@ msgstr ""
 msgid "Forgot your Password"
 msgstr "Password dimenticata"
 
+#: provisioning/templates/provisioning_login.html:21
+msgid "Click"
+msgstr ""
+
+#: provisioning/templates/provisioning_login.html:21
+msgid "here"
+msgstr "qui"
+
+#: provisioning/templates/provisioning_login.html:21
+msgid "to reset"
+msgstr "per cambiarla"
+
 #: provisioning/templates/provisioning_login.html:22
 #: unical_template/templates/base.html:29
 #: unical_template/templates/base.html:51
@@ -962,15 +974,15 @@ msgstr "Perfavore vai nella Home Page e clicca su \"Password Dimenticata\" "
 msgid "Invalid Username or Password"
 msgstr "Username o Password errate"
 
-#: provisioning/views.py:281
+#: provisioning/views.py:275
 msgid "Error, {} tried to save data that violates a LADP constraint with : {}"
 msgstr ""
 
-#: provisioning/views.py:332
+#: provisioning/views.py:326
 msgid "No data edited"
 msgstr "Nessuna modifica è stata effettuata"
 
-#: provisioning/views.py:457
+#: provisioning/views.py:451
 msgid "Password changed"
 msgstr "Password Modificata"
 

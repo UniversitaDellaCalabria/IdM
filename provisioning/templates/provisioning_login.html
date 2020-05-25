@@ -18,7 +18,7 @@
                 <form method="post" action="{% url 'provisioning:provisioning_login' %}" class="needs-validation" novalidate>
                     {% include "form_body.html" with form=login_form %}
 
-                    <p>{% trans "Forgot your Password" %}? Click <a class="text-danger" href="{% url 'provisioning:reset_password_ask' %}"><u>here</u></a> to reset.</p>
+                    <p>{% trans "Forgot your Password" %}? {% trans "Click" %} <a class="text-danger" href="{% url 'provisioning:reset_password_ask' %}"><u>{% trans "here" %}</u></a> {% trans "to reset" %}.</p>
                     <input type="submit" class="btn btn-secondary" value="{% trans 'Login' %}">
                     <input type="hidden" name="next" value="{{ request.GET.next }}" />
                     <div id="simple-msg"></div>
