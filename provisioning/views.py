@@ -298,7 +298,7 @@ def change_data(request, token_value=None):
             id_prov.mark_as_used()
         except ldap.CONSTRAINT_VIOLATION:
             logger.error(_('Error, {} tried to save data that violates a '
-                           'LADP constraint with : {}').format(lu, json.dumps(data)))
+                           'LDAP constraint with : {}').format(lu, json.dumps(data)))
             return render(request,
                           'custom_message.html',
                           DATA_NOT_CHANGED, status=403)

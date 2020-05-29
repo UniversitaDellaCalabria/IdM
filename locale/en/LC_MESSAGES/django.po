@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-25 17:15+0200\n"
+"POT-Creation-Date: 2020-05-29 21:57+0200\n"
 "PO-Revision-Date: 2020-05-15 20:20+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,12 +95,10 @@ msgid "Json attributes"
 msgstr ""
 
 #: identity/models.py:26 unical_template/models.py:31
-#: unical_template_old/models.py:31
 msgid "created"
 msgstr ""
 
 #: identity/models.py:27 unical_template/models.py:32
-#: unical_template_old/models.py:32
 msgid "modified"
 msgstr ""
 
@@ -402,120 +400,136 @@ msgstr ""
 msgid "use lowercase and uppercase characters,  numbers and symbols"
 msgstr ""
 
-#: provisioning/forms.py:22 provisioning/forms.py:139
+#: provisioning/forms.py:22 provisioning/forms.py:140 provisioning/forms.py:193
 msgid "Username"
 msgstr ""
 
-#: provisioning/forms.py:24 provisioning/forms.py:90
+#: provisioning/forms.py:24 provisioning/forms.py:91
 msgid "Password"
 msgstr ""
 
-#: provisioning/forms.py:28
+#: provisioning/forms.py:29
 msgid "Your username"
 msgstr ""
 
-#: provisioning/forms.py:32
+#: provisioning/forms.py:33
 msgid "Telephone number"
 msgstr ""
 
-#: provisioning/forms.py:35
+#: provisioning/forms.py:36
 msgid "Your telephone number"
 msgstr ""
 
-#: provisioning/forms.py:37
+#: provisioning/forms.py:38
 msgid "Telephone with prefix"
 msgstr ""
 
-#: provisioning/forms.py:42
+#: provisioning/forms.py:43
 msgid "name.surname@{} or other email used for registration. "
 msgstr ""
 
-#: provisioning/forms.py:46 registration/forms.py:64
+#: provisioning/forms.py:47 registration/forms.py:64
 msgid "email@domain.eu"
 msgstr ""
 
-#: provisioning/forms.py:63
+#: provisioning/forms.py:64
 msgid "Your username. Leave it blank to receive an email as reminder."
 msgstr ""
 
-#: provisioning/forms.py:67 provisioning/forms.py:72 registration/forms.py:34
+#: provisioning/forms.py:68 provisioning/forms.py:73 registration/forms.py:34
 #: registration/forms.py:39
 msgid "Tax Payer's Identification Number"
 msgstr ""
 
-#: provisioning/forms.py:81
+#: provisioning/forms.py:82
 msgid "Insert your username or your Tax Payer's Identification Number"
 msgstr ""
 
-#: provisioning/forms.py:97
+#: provisioning/forms.py:98
 msgid "Password verification"
 msgstr ""
 
-#: provisioning/forms.py:103
+#: provisioning/forms.py:104
 msgid "The same password you typed before, for verification."
 msgstr ""
 
-#: provisioning/forms.py:110
+#: provisioning/forms.py:111
 msgid "You must confirm your password"
 msgstr ""
 
-#: provisioning/forms.py:113
+#: provisioning/forms.py:114
 msgid "Your passwords do not match"
 msgstr ""
 
-#: provisioning/forms.py:128 provisioning/forms.py:134
+#: provisioning/forms.py:129 provisioning/forms.py:135
 msgid "Old Password"
 msgstr ""
 
-#: provisioning/forms.py:135
+#: provisioning/forms.py:136
 msgid "The password you used to login."
 msgstr ""
 
-#: provisioning/forms.py:140
+#: provisioning/forms.py:141
 msgid "Your desidered username, if available."
 msgstr ""
 
-#: provisioning/forms.py:152
+#: provisioning/forms.py:153
 msgid "This username already exists, please use another one."
 msgstr ""
 
-#: provisioning/forms.py:158
-msgid "Not a valid Username, the accepted symbols are:_ - . @"
+#: provisioning/forms.py:159
+msgid "Not a valid Username, the accepted symbols are:_ - ."
 msgstr ""
 
-#: provisioning/forms.py:172
+#: provisioning/forms.py:173
 msgid ""
 "This email already exists, cannot create a new identity with an already used "
 "email!"
 msgstr ""
 
-#: provisioning/forms.py:180
+#: provisioning/forms.py:181
 msgid ""
 "Failed to manage your token, it could have been disabled or the email you "
 "typed was not linked to any valid registrations."
 msgstr ""
 
+#: provisioning/forms.py:194
+msgid "How your username will be"
+msgstr ""
+
+#: provisioning/forms.py:196
+msgid "Username suffix"
+msgstr ""
+
+#: provisioning/forms.py:197
+msgid "Customizable part of your username. Es: '-campus', '88', '.highed'"
+msgstr ""
+
 #: provisioning/forms.py:207
-msgid "Notify accesses via email"
-msgstr ""
-
-#: provisioning/forms.py:213
-msgid "Current Username"
-msgstr ""
-
-#: provisioning/forms.py:216
-msgid "New Username"
-msgstr ""
-
-#: provisioning/forms.py:219
-msgid "Confirm your new Username"
-msgstr ""
-
-#: provisioning/forms.py:228
-msgid "You must re-type new username"
+msgid "This username doesn't match the predefined prefix."
 msgstr ""
 
 #: provisioning/forms.py:231
+msgid "Notify accesses via email"
+msgstr ""
+
+#: provisioning/forms.py:237
+msgid "Current Username"
+msgstr ""
+
+#: provisioning/forms.py:240
+msgid "New Username"
+msgstr ""
+
+#: provisioning/forms.py:243
+msgid "Confirm your new Username"
+msgstr ""
+
+#: provisioning/forms.py:252
+msgid "You must re-type new username"
+msgstr ""
+
+#: provisioning/forms.py:255
 msgid "Your usernames do not match"
 msgstr ""
 
@@ -583,7 +597,7 @@ msgstr ""
 msgid "Unical ID - Token for your Account"
 msgstr ""
 
-#: provisioning/settings.py:11
+#: provisioning/settings.py:14
 #, python-brace-format
 msgid ""
 "Dear {user} (your username),\n"
@@ -591,14 +605,14 @@ msgid ""
 "Please do not reply to this email.\n"
 msgstr ""
 
-#: provisioning/settings.py:16
+#: provisioning/settings.py:19
 msgid ""
 "\n"
 "If you're experiencing in problems please contact our technical staff.\n"
 "Best regards\n"
 msgstr ""
 
-#: provisioning/settings.py:21
+#: provisioning/settings.py:24
 #, python-brace-format
 msgid ""
 "\n"
@@ -610,7 +624,7 @@ msgid ""
 "If the Token is expired you should ask for a new one.\n"
 msgstr ""
 
-#: provisioning/settings.py:30
+#: provisioning/settings.py:33
 #, python-brace-format
 msgid ""
 "\n"
@@ -625,11 +639,11 @@ msgid ""
 "password\" in the {hostname} main page.\n"
 msgstr ""
 
-#: provisioning/settings.py:40
+#: provisioning/settings.py:43
 msgid "Confirmation token: You requested to change your data"
 msgstr ""
 
-#: provisioning/settings.py:42
+#: provisioning/settings.py:45
 #, python-brace-format
 msgid ""
 "\n"
@@ -644,7 +658,7 @@ msgid ""
 "This reset token will be valid until: {valid_until}.\n"
 msgstr ""
 
-#: provisioning/settings.py:58
+#: provisioning/settings.py:61
 #, python-brace-format
 msgid ""
 "\n"
@@ -657,7 +671,7 @@ msgid ""
 "Regards\n"
 msgstr ""
 
-#: provisioning/settings.py:68
+#: provisioning/settings.py:71
 #, python-brace-format
 msgid ""
 "Dear {user} (your username),\n"
@@ -674,11 +688,11 @@ msgid ""
 "Password\".\n"
 msgstr ""
 
-#: provisioning/settings.py:81
+#: provisioning/settings.py:84
 msgid "Unical ID - Password expiration"
 msgstr ""
 
-#: provisioning/settings.py:83
+#: provisioning/settings.py:86
 #, python-brace-format
 msgid ""
 "Your password will expire in date: {datetime}.\n"
@@ -686,20 +700,20 @@ msgid ""
 "click on \"Forgot your Password\" section, in https://{hostname}.\n"
 msgstr ""
 
-#: provisioning/templates/account_create.html:14
+#: provisioning/templates/account_create.html:21
 msgid "Welcome in"
 msgstr ""
 
-#: provisioning/templates/account_create.html:15
+#: provisioning/templates/account_create.html:22
 msgid "Please fill this form to create your brand new account."
 msgstr ""
 
-#: provisioning/templates/account_create.html:25
+#: provisioning/templates/account_create.html:32
 #: registration/templates/ask.html:20 registration/templates/confirm.html:21
 msgid "Some Errors has occourred"
 msgstr ""
 
-#: provisioning/templates/account_create.html:47
+#: provisioning/templates/account_create.html:56
 #: registration/templates/ask.html:76 registration/templates/confirm.html:56
 msgid "Submit"
 msgstr ""
@@ -708,7 +722,6 @@ msgstr ""
 #: provisioning/templates/password_reset_token.html:7
 #: unical_template/templates/confirmation_email.html:13
 #: unical_template/templates/custom_message.html:21
-#: unical_template_old/templates/custom_message.html:28
 msgid "Main page"
 msgstr ""
 
@@ -727,7 +740,6 @@ msgstr ""
 
 #: provisioning/templates/dashboard.html:31
 #: unical_template/templates/page.html:15
-#: unical_template_old/templates/page.html:20
 msgid "Admin"
 msgstr ""
 
@@ -832,15 +844,12 @@ msgid "Cancel and comeback"
 msgstr ""
 
 #: provisioning/templates/provisioning_login.html:14
-#: unical_template_old/templates/sezione_login.html:8
-msgid "Accesso alla piattaforma"
-msgstr "LOGIN"
+msgid "Join in"
+msgstr ""
 
 #: provisioning/templates/provisioning_login.html:15
-#: unical_template_old/templates/sezione_login.html:9
-msgid ""
-"Utilizza lo username e la password della tua Identità Digitale di Ateneo."
-msgstr "Please use your Unical ID username and password"
+msgid "Use your Unical ID Username and Password."
+msgstr ""
 
 #: provisioning/templates/provisioning_login.html:21
 msgid "Forgot your Password"
@@ -862,38 +871,48 @@ msgstr ""
 #: unical_template/templates/base.html:29
 #: unical_template/templates/base.html:51
 #: unical_template/templates/home.html:14
-#: unical_template_old/templates/base.html:44
-#: unical_template_old/templates/sezione_login.html:21
 msgid "Login"
 msgstr ""
 
-#: provisioning/views.py:118 registration/views.py:144
+#: provisioning/views.py:134 registration/views.py:144
 msgid "Invalid Data"
 msgstr ""
 
-#: provisioning/views.py:119 registration/views.py:145
+#: provisioning/views.py:135 registration/views.py:145
 msgid "It seems that you are already registered"
 msgstr ""
 
-#: provisioning/views.py:120 registration/views.py:146
+#: provisioning/views.py:136 registration/views.py:146
 msgid ""
 "Please go in the Home Page and activate the \"Forgot your Password\" "
 "procedure"
 msgstr ""
 
-#: provisioning/views.py:175
+#: provisioning/views.py:140
+msgid "Something goes wrong with the account creation"
+msgstr ""
+
+#: provisioning/views.py:147
+msgid "The data you have submitted produced a validation error."
+msgstr ""
+
+#: provisioning/views.py:148
+msgid "An email was sent to the technical staff"
+msgstr ""
+
+#: provisioning/views.py:200
 msgid "Invalid Username or Password"
 msgstr ""
 
-#: provisioning/views.py:275
-msgid "Error, {} tried to save data that violates a LADP constraint with : {}"
+#: provisioning/views.py:300
+msgid "Error, {} tried to save data that violates a LDAP constraint with : {}"
 msgstr ""
 
-#: provisioning/views.py:326
+#: provisioning/views.py:351
 msgid "No data edited"
 msgstr ""
 
-#: provisioning/views.py:451
+#: provisioning/views.py:476
 msgid "Password changed"
 msgstr ""
 
@@ -1054,7 +1073,6 @@ msgstr ""
 #: templates/admin/identity/change_form.html:18
 #: templates/admin/ldap_peoples/change_form.html:18
 #: unical_template/templates/admin/base.html:57
-#: unical_template_old/templates/admin/base.html:57
 msgid "Home"
 msgstr ""
 
@@ -1106,11 +1124,11 @@ msgstr ""
 msgid "Import in LDAP"
 msgstr ""
 
-#: unical_template/breadcrumbs.py:27 unical_template_old/breadcrumbs.py:27
+#: unical_template/breadcrumbs.py:27
 msgid "Pagina principale"
 msgstr ""
 
-#: unical_template/decorators.py:13 unical_template_old/decorators.py:13
+#: unical_template/decorators.py:13
 msgid "Questo servizio è in Manutenzione, le attività riprenderanno presto."
 msgstr ""
 
@@ -1137,59 +1155,46 @@ msgid ""
 msgstr ""
 
 #: unical_template/templates/admin/base.html:31
-#: unical_template_old/templates/admin/base.html:31
 msgid "Welcome,"
 msgstr ""
 
 #: unical_template/templates/admin/base.html:36
-#: unical_template_old/templates/admin/base.html:36
 msgid "View site"
 msgstr ""
 
 #: unical_template/templates/admin/base.html:41
-#: unical_template_old/templates/admin/base.html:41
 msgid "Documentation"
 msgstr ""
 
 #: unical_template/templates/admin/base.html:45
-#: unical_template_old/templates/admin/base.html:45
 msgid "Change password"
 msgstr ""
 
 #: unical_template/templates/admin/base.html:47
-#: unical_template_old/templates/admin/base.html:47
 msgid "Log out"
 msgstr ""
 
 #: unical_template/templates/admin/base_site.html:3
-#: unical_template_old/templates/admin/base_site.html:3
 msgid "Django site admin"
 msgstr ""
 
 #: unical_template/templates/admin/base_site.html:6
-#: unical_template_old/templates/admin/base_site.html:6
 msgid "Django administration"
 msgstr ""
 
 #: unical_template/templates/base.html:23
-#: unical_template_old/templates/page.html:24
 msgid "Logout / Esci"
 msgstr ""
 
 #: unical_template/templates/base.html:56
-#: unical_template_old/templates/base.html:45
 msgid "Data protection"
 msgstr ""
 
 #: unical_template/templates/base.html:61
-#: unical_template_old/templates/base.html:46
-#: unical_template_old/templates/sezione_funzionalita.html:8
 msgid "Features"
 msgstr ""
 
 #: unical_template/templates/base.html:66
-#: unical_template_old/templates/base.html:47
-#: unical_template_old/templates/sezione_team.html:63
 msgid "Contacts"
 msgstr "Contact us"
 
@@ -1206,7 +1211,6 @@ msgid "A Confirmation EMail was just sent to you"
 msgstr ""
 
 #: unical_template/templates/custom_message.html:17
-#: unical_template_old/templates/custom_message.html:21
 msgid "Back"
 msgstr ""
 
@@ -1233,7 +1237,6 @@ msgid ""
 msgstr ""
 
 #: unical_template/templates/page.html:9
-#: unical_template_old/templates/page.html:18
 msgid "Home page"
 msgstr ""
 
@@ -1242,46 +1245,38 @@ msgid "Funzionalità"
 msgstr "Features"
 
 #: unical_template/templates/sezione_funzionalita.html:17
-#: unical_template_old/templates/sezione_funzionalita.html:13
 msgid "Gestione Credenziali"
 msgstr "Credentials Management"
 
 #: unical_template/templates/sezione_funzionalita.html:20
-#: unical_template_old/templates/sezione_funzionalita.html:14
 msgid ""
 "Sistema integrato per la gestione e il monitoraggio dello stato delle tue "
 "credenziali."
 msgstr ""
 
 #: unical_template/templates/sezione_funzionalita.html:37
-#: unical_template_old/templates/sezione_funzionalita.html:19
 msgid "Modifica i tuoi dati"
 msgstr "Change your data"
 
 #: unical_template/templates/sezione_funzionalita.html:40
-#: unical_template_old/templates/sezione_funzionalita.html:20
 msgid ""
 "E-mail personale e numero telefonico possono essere modificati in piena "
 "autonomia."
 msgstr ""
 
 #: unical_template/templates/sezione_funzionalita.html:57
-#: unical_template_old/templates/sezione_funzionalita.html:25
 msgid "Notifiche"
 msgstr ""
 
 #: unical_template/templates/sezione_funzionalita.html:60
-#: unical_template_old/templates/sezione_funzionalita.html:26
 msgid "Ricezione email di conferma ad operazione avvenuta."
 msgstr ""
 
 #: unical_template/templates/sezione_protezione_dati.html:7
-#: unical_template_old/templates/base.html:97
 msgid "Personal data protection"
 msgstr ""
 
 #: unical_template/templates/sezione_protezione_dati.html:18
-#: unical_template_old/templates/sezione_protezione_dati.html:19
 msgid ""
 "Dal 25 maggio 2018 è pienamente operativo il Regolamento (UE) 2016/679 del "
 "Parlamento europeo e del Consiglio del 27 aprile 2016, Regolamento Generale "
@@ -1289,24 +1284,20 @@ msgid ""
 msgstr ""
 
 #: unical_template/templates/sezione_protezione_dati.html:24
-#: unical_template_old/templates/sezione_protezione_dati.html:21
 msgid ""
 "Per maggiori informazioni e aggiornamenti su la Protezione dei dati e la "
 "Privacy all'interno di Unical consulta la "
 msgstr ""
 
 #: unical_template/templates/sezione_protezione_dati.html:25
-#: unical_template_old/templates/sezione_protezione_dati.html:21
 msgid "sezione dedicata nel portale di Ateneo"
 msgstr ""
 
 #: unical_template/templates/sezione_recupero_credenziali.html:6
-#: unical_template_old/templates/sezione_recupero_credenziali.html:7
 msgid "Retrieve your credentials"
 msgstr "Renew your Password"
 
 #: unical_template/templates/sezione_recupero_credenziali.html:10
-#: unical_template_old/templates/sezione_recupero_credenziali.html:8
 msgid ""
 "Utilizza lo username e il tuo recapito email, precedentemente registrato in "
 "Unical ID, per ottenere un accesso temporaneo per la modifica della tua "
@@ -1316,7 +1307,6 @@ msgstr ""
 "ID, to gain a temporary access to change your password "
 
 #: unical_template/templates/sezione_recupero_credenziali.html:14
-#: unical_template_old/templates/sezione_recupero_credenziali.html:15
 msgid "Send request"
 msgstr ""
 
@@ -1325,12 +1315,10 @@ msgid "Contatti"
 msgstr "Contact us"
 
 #: unical_template/templates/sezione_team.html:14
-#: unical_template_old/templates/sezione_team.html:68
 msgid "Ufficio immatricolazioni"
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:15
-#: unical_template_old/templates/sezione_team.html:69
 msgid "Studenti in ingresso"
 msgstr ""
 
@@ -1338,27 +1326,20 @@ msgstr ""
 #: unical_template/templates/sezione_team.html:61
 #: unical_template/templates/sezione_team.html:99
 #: unical_template/templates/sezione_team.html:138
-#: unical_template_old/templates/sezione_team.html:70
-#: unical_template_old/templates/sezione_team.html:85
-#: unical_template_old/templates/sezione_team.html:100
-#: unical_template_old/templates/sezione_team.html:115
 msgid ""
 "Definere cosa fa la struttura, a chi si rivolge e a cosa serve in relazione "
 "dell'IDM."
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:54
-#: unical_template_old/templates/sezione_team.html:83
 msgid "ICT Center"
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:55
-#: unical_template_old/templates/sezione_team.html:84
 msgid "Help-desk"
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:93
-#: unical_template_old/templates/sezione_team.html:98
 msgid "Access for guests"
 msgstr ""
 
@@ -1367,66 +1348,30 @@ msgid "Temporary Wifi accesses"
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:132
-#: unical_template_old/templates/sezione_team.html:113
 msgid "RPD"
 msgstr ""
 
 #: unical_template/templates/sezione_team.html:133
-#: unical_template_old/templates/sezione_team.html:45
 msgid "Data protection officer"
 msgstr ""
 
-#: unical_template_old/templates/base.html:15
-#: unical_template_old/templates/base.html:60
-msgid "APP_NAME"
-msgstr "Unical IDM"
+#~ msgid "Accesso alla piattaforma"
+#~ msgstr "LOGIN"
 
-#: unical_template_old/templates/base.html:48
-msgid "Forget password?"
-msgstr ""
+#~ msgid ""
+#~ "Utilizza lo username e la password della tua Identità Digitale di Ateneo."
+#~ msgstr "Please use your Unical ID username and password"
 
-#: unical_template_old/templates/base.html:52
-msgid "Menu"
-msgstr ""
+#~ msgid "APP_NAME"
+#~ msgstr "Unical IDM"
 
-#: unical_template_old/templates/base.html:61
-msgid ""
-"Piattaforma per la gestione delle credenziali di accesso ai servizi Unical."
-msgstr "Identity Management System"
+#~ msgid ""
+#~ "Piattaforma per la gestione delle credenziali di accesso ai servizi "
+#~ "Unical."
+#~ msgstr "Identity Management System"
 
-#: unical_template_old/templates/base.html:62
-#: unical_template_old/templates/page.html:16
-msgid "Accedi"
-msgstr "Enter"
-
-#: unical_template_old/templates/base.html:86
-msgid "Holder of the treatment"
-msgstr ""
-
-#: unical_template_old/templates/base.html:93
-msgid "Other resources"
-msgstr ""
-
-#: unical_template_old/templates/base.html:96
-#: unical_template_old/templates/sezione_team.html:18
-msgid "University ICT Center"
-msgstr ""
-
-#: unical_template_old/templates/sezione_protezione_dati.html:8
-msgid "Personal Data Protection"
-msgstr ""
-
-#: unical_template_old/templates/sezione_team.html:5
-msgid "Residential Center"
-msgstr ""
-
-#: unical_template_old/templates/sezione_team.html:99
-msgid "Temporary access to the campus"
-msgstr ""
-
-#: unical_template_old/templates/sezione_team.html:114
-msgid "Data Protection Officer"
-msgstr ""
+#~ msgid "Accedi"
+#~ msgstr "Enter"
 
 #~ msgid "Altre risorse"
 #~ msgstr "Other resources"
