@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-25 17:15+0200\n"
-"PO-Revision-Date: 2020-05-25 17:17+0200\n"
+"PO-Revision-Date: 2020-05-29 10:16+0200\n"
 "Last-Translator: wert <wert@portatile-lenovo-cla>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -303,7 +303,7 @@ msgstr "I Dati sono stati modificati con successo"
 
 #: provisioning/custom_messages.py:61
 msgid "Now you can come back to your Dashboard."
-msgstr "Adesso puoi tornare alla Pagina Principale"
+msgstr "Adesso puoi tornare alla Pagina Principale."
 
 #: provisioning/custom_messages.py:66
 msgid "Error"
@@ -311,7 +311,7 @@ msgstr "Errore"
 
 #: provisioning/custom_messages.py:67
 msgid "The data you have submitted cannot be saved."
-msgstr "I dati da te immessi non possono essere salvati"
+msgstr "I dati da te immessi non possono essere salvati."
 
 #: provisioning/custom_messages.py:70
 msgid ""
@@ -355,7 +355,7 @@ msgstr "Hai scelto uno username non valido"
 
 #: provisioning/custom_messages.py:90
 msgid "A confirmation email was sent"
-msgstr "Una email di conferma è stata inviata."
+msgstr "Una email di conferma è stata inviata"
 
 #: provisioning/custom_messages.py:91
 msgid "You have {} minutes to confirm your request"
@@ -496,7 +496,7 @@ msgstr "La password usata per il Login."
 
 #: provisioning/forms.py:140
 msgid "Your desidered username, if available."
-msgstr "Scegli uno username, se disponbile"
+msgstr "Scegli uno username, se disponbile."
 
 #: provisioning/forms.py:152
 msgid "This username already exists, please use another one."
@@ -520,7 +520,7 @@ msgid ""
 "typed was not linked to any valid registrations."
 msgstr ""
 "Impossibile gestire questo token, potrebbe essere stato disabilitato oppure "
-"la email che hai inserito non è collegata a nessuna registrazione valida"
+"la email che hai inserito non è collegata a nessuna registrazione valida."
 
 #: provisioning/forms.py:207
 msgid "Notify accesses via email"
@@ -564,7 +564,7 @@ msgstr "Token per la creazione di una nuova Identità"
 
 #: provisioning/models.py:222
 msgid "username choosen by user"
-msgstr "Username scelto dall'utente"
+msgstr "username scelto dall'utente"
 
 #: provisioning/models.py:228
 msgid "Identity Creation"
@@ -751,10 +751,10 @@ msgstr ""
 "E questo Indirizzo IP:\n"
 "{ipaddress}\n"
 "\n"
-"Se non ti risulta che sia stato tu ad effettuare l'accesso e pensi che "
-"qualcuno possa averti rubato le credenziali, per favore accedi alla sezione "
-"\"Password dimenticata?\" \n"
-"di https://{hostname} per rinnovare la tua password.\n"
+"Se non risulta che sia stato tu ad effettuare l'accesso e pensi che qualcuno "
+"possa averti rubato le credenziali, per favore accedi alla sezione "
+"\"Password dimenticata\"  di https://{hostname} per rinnovare la tua "
+"password.\n"
 
 #: provisioning/settings.py:81
 msgid "Unical ID - Password expiration"
@@ -830,7 +830,7 @@ msgstr "Benvenuto "
 
 #: provisioning/templates/dashboard.html:52
 msgid "Here you can modify your profile"
-msgstr "Qui potrai modificare i dati relativi al tuo profilo\\"
+msgstr "Qui potrai modificare i dati relativi al tuo profilo"
 
 #: provisioning/templates/dashboard.html:52
 #: provisioning/templates/password_reset.html:10
@@ -839,7 +839,7 @@ msgstr "Una email di conferma ti verrà inviata."
 
 #: provisioning/templates/dashboard.html:53
 msgid "Your Password will expire in"
-msgstr "La tua Password scadrà tra  "
+msgstr "La tua Password scadrà tra "
 
 #: provisioning/templates/dashboard.html:53
 msgid "days"
@@ -882,7 +882,7 @@ msgstr ""
 
 #: provisioning/templates/dashboard.html:123
 msgid "for further informations."
-msgstr "per ulteriori informazioni"
+msgstr "per ulteriori informazioni."
 
 #: provisioning/templates/dashboard.html:128
 msgid "Attribute name"
@@ -968,7 +968,7 @@ msgstr "Risulta che tu ti sia già registrato in passato"
 msgid ""
 "Please go in the Home Page and activate the \"Forgot your Password\" "
 "procedure"
-msgstr "Perfavore vai nella Home Page e clicca su \"Password Dimenticata\" "
+msgstr "Perfavore vai nella Home Page e clicca su \"Password Dimenticata\""
 
 #: provisioning/views.py:175
 msgid "Invalid Username or Password"
@@ -1084,7 +1084,7 @@ msgid ""
 "Insert the requested informations, a confirmation email will be sent to you."
 msgstr ""
 "Perfavore inserisci le informazioni richieste, una email di conferma ti "
-"verrà recapitata "
+"verrà recapitata ."
 
 #: registration/templates/ask.html:47 registration/templates/ask.html:56
 msgid "By submitting this form I declare that I have read the data ..."
@@ -1100,7 +1100,7 @@ msgstr "Conferma il tuo account Unical ID"
 
 #: registration/templates/confirm.html:15
 msgid "Review your data and upload your identity document."
-msgstr "Controlla i dati immessi e carica il tuo documento di identità"
+msgstr "Controlla i dati immessi e carica il tuo documento di identità."
 
 #: registration/templates/confirm.html:44
 msgid "Please upload an IMAGE scan of your Identification Document (Not PDF)."
@@ -1130,7 +1130,7 @@ msgstr "E' stato incorso un problema nell'invio della email"
 
 #: registration/views.py:96
 msgid "Please try later."
-msgstr "Perfavore prova più tardi"
+msgstr "Perfavore prova più tardi."
 
 #: registration/views.py:107
 msgid "Invalid Token"
@@ -1157,7 +1157,7 @@ msgid ""
 msgstr ""
 "Perfavore vai nella Home Page e attiva la procedura \"Password dimenticata"
 "\". Se il problema dovesse persistere preghiamo di contattare la nostra "
-"assistenza tecnica"
+"assistenza tecnica."
 
 #: templates/admin/identity/change_form.html:18
 #: templates/admin/ldap_peoples/change_form.html:18
@@ -1244,12 +1244,12 @@ msgid ""
 "technical staff."
 msgstr ""
 "Ci scusiamo per l'inconveniente, una notifica dell'accaduto è stata inviata "
-"al nostro staff tecnico"
+"al nostro staff tecnico."
 
 #: unical_template/templates/admin/base.html:31
 #: unical_template_old/templates/admin/base.html:31
 msgid "Welcome,"
-msgstr "Benvenuto"
+msgstr "Benvenuto,"
 
 #: unical_template/templates/admin/base.html:36
 #: unical_template_old/templates/admin/base.html:36
@@ -1342,7 +1342,7 @@ msgid ""
 "We apologize for the temporary inconvenience, we will soon start working "
 "again."
 msgstr ""
-"Ci scusiamo per l'inconveniente, il servizio riprenderà presto a funzionare"
+"Ci scusiamo per l'inconveniente, il servizio riprenderà presto a funzionare."
 
 #: unical_template/templates/page.html:9
 #: unical_template_old/templates/page.html:18
