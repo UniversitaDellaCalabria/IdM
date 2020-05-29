@@ -5,6 +5,13 @@
 
 {% block extra_head %}
     {{ block.super }}
+    <script>
+        var prefix = "{{ form.username.value }}";
+        function update_username() {
+            var suffix = document.getElementById('id_username_suffix').value;
+            document.getElementById('id_username').value = prefix+suffix;
+            }
+    </script>
 {% endblock %}
 
 {% block container_content %}
@@ -40,9 +47,11 @@
                     <div class="bootstrap-select-wrapper form-group">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                         {{ field }}
+                        <small class="form-text text-muted text-left">{{ field.help_text }}</small>
                         <span>{{ field.errors }}</span>
                     </div>
                 {% endfor %}
+
             </div>
           <input type="submit" class="btn btn-secondary btn-block" value="{% trans 'Submit' %}">
           <div id="simple-msg"></div>
@@ -51,3 +60,11 @@
 </section>
 <!-- contact section -->
 {% endblock container_content %}
+
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+        document.addEventListener("load", update_username());
+    </script>
+{% endblock %}

@@ -8,6 +8,9 @@ CHANGE_CONFIRMATION_EXPIRATION_MINUTES = 30
 EXPIRATION_NOTIFICATION_DAYS_BEFORE = 30
 IDENTITY_TOKEN_MSG_SUBJECT = _('Unical ID - Token for your Account')
 
+ACCOUNT_CREATE_USERNAME_PRESET = ('name', 'surname')
+ACCOUNT_CREATE_USERNAME_PRESET_SEP = '.'
+
 IDENTITY_MSG_HEADER = _("""Dear {user} (your username),
 This message was sent to you by https://{hostname}, your IDentity Manager.
 Please do not reply to this email.

@@ -23,6 +23,7 @@ _username_widget = forms.TextInput(attrs={'class': _field_class,
 _password_widget = forms.PasswordInput(attrs={'class': _field_class,
                                               'placeholder': _('Password')+' ...'})
 
+
 class IdentityUsernameForm(forms.Form):
     username = forms.CharField(label="", max_length=64,
                                help_text=_("Your username"),
@@ -153,11 +154,11 @@ class AccountCreationForm(PasswordForm, IdentityEmailForm):
                                                     "please use another one.")])
             return self._errors
         # check valid username
-        check = re.match('[a-z\.\-0-9\@\_]*', username, re.I)
+        check = re.match('[a-z\.\-0-9\_]*', username, re.I)
         if not check or (username != check.group()):
             self._errors["username"] = ErrorList([_("Not a valid Username, "
                                                     "the accepted symbols are:"
-                                                    "_ - . @")])
+                                                    "_ - .")])
             return self._errors
         return username
 
@@ -183,6 +184,29 @@ class AccountCreationForm(PasswordForm, IdentityEmailForm):
                                                  "linked to any valid registrations.")])
             return self._errors
         return email
+
+    def username_preset_validator(self, preset):
+        return True
+
+
+class AccountCreationPresettedForm(AccountCreationForm):
+    username = forms.CharField(label=_('Username'), max_length=64,
+                               help_text=_("How your username will be"),
+                               widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    username_suffix = forms.CharField(label=_('Username suffix'), max_length=64,
+                                      help_text=_("Customizable part of your username. "
+                                                  "Es: '-campus', '88', '.highed'"),
+                                      widget=forms.TextInput(attrs={'onchange':'update_username()',
+                                                                    'oninput':'update_username()'}))
+    field_order = ['username', 'username_suffix', 'mail', 'password', 'password_verifica']
+
+    def username_preset_validator(self, preset):
+        if preset in self.data.get('username'):
+            return True
+        else:
+            self.add_error('username', _("This username doesn't match the "
+                                         "predefined prefix."))
+            return False
 
 
 class PasswordAskResetForm(IdentityTokenAskForm):

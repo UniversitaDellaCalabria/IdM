@@ -75,8 +75,8 @@ USERNAME_SUCCESSIFULLY_CHANGED = {'title': DATA_CHANGED_TITLE,
                                   'avviso': _('Your username has been successfully changed'),
                                   'description': _('Please login with your new username')}
 CANNOT_CHANGE_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
-                         'avviso': _('You are not able to change your username'),
-                         'description': _('Contact the administrator')}
+                          'avviso': _('You are not able to change your username'),
+                          'description': _('Contact the administrator')}
 NOT_YOUR_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                      'avviso': _('You have inserted a wrong actual username'),
                      'description': _('Please, be careful')}

@@ -57,6 +57,9 @@ class ProvisioningTestCase(TestCase):
 
     def test_entire_provisioning(self):
         """test identity account provisioning"""
+        # disable username with prefix constraint
+        settings.ACCOUNT_CREATE_USERNAME_PRESET = None
+
         d = LdapAcademiaUser.objects.filter(uid__contains='unittest_john1298731289371283123-kgkgk')
         if d and _PURGE_LDAP_TEST_USER:
             d.delete()

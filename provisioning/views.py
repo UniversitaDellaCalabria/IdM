@@ -2,13 +2,15 @@ import copy
 import json
 import logging
 import ldap
+import random
+import string
 
 from collections import OrderedDict
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
+from django.core.mail import send_mail, mail_managers
 from django_form_builder.models import SavedFormContent
 from django_form_builder.utils import get_labeled_errors
 from django.http import (HttpResponse,
@@ -36,35 +38,49 @@ from ldap_peoples.models import LdapAcademiaUser
 logger = logging.getLogger(__name__)
 EDUPERSON_DEFAULT_ASSURANCE = getattr(settings, 'EDUPERSON_DEFAULT_ASSURANCE',
                                       'https://refeds.org/assurance/IAP/medium')
-SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE = getattr(settings, 'SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE',
-                                                         'urn:schac:personalUniqueID:it:CF:')
+SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE = \
+    getattr(settings, 'SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE',
+            'urn:schac:personalUniqueID:it:CF:')
+
 
 def account_create(request, token_value):
     id_prov = get_object_or_404(IdentityProvisioning, token=token_value)
     if not id_prov.token_valid():
-        return render(request,
-                      'custom_message.html',
-                      INVALID_TOKEN_DISPLAY,
-                      status=403)
+        return render(request, 'custom_message.html',
+                      INVALID_TOKEN_DISPLAY, status=403)
     d = {'APP_NAME': settings.APP_NAME}
 
+    # USERNAME PRESETS
+    if getattr(settings, 'ACCOUNT_CREATE_USERNAME_PRESET', None):
+        account_creation_form = AccountCreationPresettedForm
+        elements = [getattr(id_prov.identity, i).lower().replace(' ', '')
+                    for i in settings.ACCOUNT_CREATE_USERNAME_PRESET]
+        username_preset = settings.ACCOUNT_CREATE_USERNAME_PRESET_SEP.join(elements)
+        initial={'token': token_value,
+                 'username': username_preset,
+                 'username_suffix': '-'+''.join(random.choice(string.ascii_lowercase)
+                                                              for x in range(4))}
+    else:
+        username_preset = ''
+        initial={'token': token_value}
+        account_creation_form = AccountCreationForm
+
     if request.method == 'GET':
-        form = AccountCreationForm(initial={'token': token_value})
+        form = account_creation_form(initial=initial)
         d['form'] = form
         return render(request, 'account_create.html', d)
     elif request.method == 'POST':
         data = request.POST.copy()
         data['token'] = token_value
-        form = AccountCreationForm(data)
+        form = account_creation_form(data)
         d['form'] = form
-
-        if not form.is_valid():
+        if not all((form.username_preset_validator(username_preset),
+                    form.is_valid())):
             return render(request, 'account_create.html', d)
 
         if data['token'] != id_prov.token or \
            data['mail'] != id_prov.identity.mail:
-               return render(request,
-                             'custom_message.html',
+               return render(request, 'custom_message.html',
                              INVALID_DATA_DISPLAY, status=403)
 
         # TODO, gestire title (multivalued) LDAP qui!
@@ -120,6 +136,17 @@ def account_create(request, token_value):
                     'description': _('Please go in the Home Page and activate '
                                 'the "Forgot your Password" procedure')}
             return render(request, 'custom_message.html', _msg, status=403)
+        except Exception as e:
+            error_mail_obj = _('Something goes wrong with the account creation')
+            error_mail_body = 'Account Creation FAILED for {}: {}.\n Data: {}\n Identity: {}'\
+                                .format(ldap_user.dn, e,
+                                        ldap_user.__dict__, id_prov.identity.__dict__)
+            logger.error(error_mail_body)
+            mail_managers(error_mail_obj, error_mail_body)
+            _msg = {'title': error_mail_obj,
+                    'avviso': _('The data you have submitted produced a validation error.'),
+                    'description': _('An email was sent to the technical staff')}
+            return render(request, 'custom_message.html', _msg, status=403)
 
         # altrimenti mi fallisce lo unit test!
         ldap_user.set_password(form.cleaned_data['password'])
@@ -127,6 +154,7 @@ def account_create(request, token_value):
         id_prov.mark_as_used()
         id_prov.identity.activation_date = timezone.localtime()
         id_prov.identity.save()
+
         logger.info('Account created {}'.format(ldap_user.dn))
         return render(request,
                       'custom_message.html',
@@ -136,11 +164,8 @@ def account_create(request, token_value):
 def home(request):
     """render the home page"""
     if request.user.is_authenticated:
-        # return HttpResponseRedirect(reverse(settings.LOGIN_REDIRECT_URL))
         return HttpResponseRedirect(reverse('provisioning:dashboard'))
-    # peers = AllowedImportPeer.objects.all()
-    d = {#'login_form': IdentityLoginForm(),
-         'password_reset_form' : PasswordAskResetForm()}
+    d = {'password_reset_form' : PasswordAskResetForm()}
     return render(request, 'home.html', d)
 
 
