@@ -14,7 +14,6 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 from django_form_builder.enc import encrypt, decrypt
 from django_form_builder.forms import BaseDynamicForm
-from django_form_builder.models import DynamicFieldMap
 
 from identity.models import Identity
 from ldap_peoples.models import LdapAcademiaUser
@@ -36,19 +35,17 @@ LDAP_UNIQUEID_TMPL = getattr(settings, 'LDAP_UNIQUEID_TMPL',
 
 def ask(request):
     cdict = copy.copy(settings.REGISTRATION_CAPTCHA_FORM)
-    cdict['CaPTCHA'][1]['lang'] = translation.get_language()
 
     if request.method == 'GET':
-        form_captcha = DynamicFieldMap.get_form(BaseDynamicForm,
-                                                constructor_dict=cdict)
+        form_captcha = BaseDynamicForm.get_form(constructor_dict=cdict,
+                                                custom_params={'lang': translation.get_language()})
         d = dict(form = AskForm_1(),
                  form_captcha = form_captcha)
 
         return render(request, 'ask.html', d)
     else:
         form = AskForm_1(request.POST)
-        form_captcha = DynamicFieldMap.get_form(BaseDynamicForm,
-                                                constructor_dict=cdict,
+        form_captcha = BaseDynamicForm.get_form(constructor_dict=cdict,
                                                 data = request.POST)
 
         if not (form.is_valid() and form_captcha.is_valid()):

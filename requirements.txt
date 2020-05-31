@@ -20,7 +20,7 @@ django-unical-bootstrap-italia
 
 #Django form builder
 #git+https://github.com/UniversitaDellaCalabria/django-form-builder.git
-django-form-builder==0.9.16
+django-form-builder==0.9.18
 
 # ldap storage
 # apt install libsasl2-dev python3-dev libldap2-dev libssl-dev

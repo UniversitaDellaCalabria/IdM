@@ -54,9 +54,6 @@ def change_user_username(user, lu, new_username):
 
 
 def get_ldapuser_attrs_from_formbuilder_conf(lu):
-    # delivery_dict = {'mail': lu.mail[0]}
-    # if lu.telephoneNumber:
-        # delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
     if not lu: return {}
     if not hasattr(settings, 'DJANGO_FORM_BUILDER_FIELDS'): return {}
     delivery_dict = {}
