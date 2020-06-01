@@ -311,3 +311,5 @@ DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
                                           'required': True,
                                           'help_text': ''}, '')),
  ])
+
+CAPTCHA_EXPIRATION_TIME = '45000' # milliseconds

@@ -113,8 +113,8 @@ def confirm(request, token):
         form.fields[k].widget.attrs['disabled'] = True
 
     # check if identity was already created, if yes drive the user to the provisioning token
-    identity = Identity.objects.filter(Q(tin=data['tin'])|\
-                                       Q(mail=data['mail']))
+    identity = Identity.objects.filter(Q(tin__iexact=data['tin'])|\
+                                       Q(mail__iexact=data['mail']))
 
     # TEST RDBMS REGISTRATION IDENTITY
     _msg = ', '.join(('{}:{}'.format(k,v) for k,v in data.items()))
