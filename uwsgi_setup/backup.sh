@@ -13,7 +13,8 @@ DB=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.
 
 LDAP_PASSWORD=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.DATABASES['ldap']['PASSWORD'])")
 LDAP_USERNAME=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.DATABASES['ldap']['USER'])")
-LDAP_BASE=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.LDAP_PEOPLE_DN)")
+#LDAP_BASE=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.LDAP_PEOPLE_DN)")
+LDAP_BASE=$($ENV_PATH/bin/python3 -c "from django.conf import settings; print(settings.LDAP_BASEDN)")
 
 
 BACKUP_DIR="/opt/dumps_$PROJ_NAME"
