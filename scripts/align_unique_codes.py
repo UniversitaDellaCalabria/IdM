@@ -8,7 +8,7 @@ for pe in failed:
         #  print('{} uniqueID'.format(pe))
         #  for i in pe.schacPersonalUniqueID:
             #  spl = i.split(':')
-            #  n = ':'.join((spl[0], spl[1], spl[2], spl[3].lower(), spl[4].upper(), spl[5].lower()))
+            #  n = ':'.join((spl[0], spl[1], spl[2], spl[3].lower(), spl[4].upper(), spl[5].upper()))
             #  l.append(n)
         #  if pe.schacPersonalUniqueID != l:
             #  pe.schacPersonalUniqueID = l
@@ -77,7 +77,7 @@ for pe in ids:
         for i in pe.schacPersonalUniqueID:
             if ':it:' in i: continue
             spl = i.split(':')
-            n = ':'.join((spl[0], spl[1], spl[2], spl[3].lower(), spl[4].upper(), spl[5].lower()))
+            n = ':'.join((spl[0], spl[1], spl[2], spl[3].lower(), spl[4].upper(), spl[5].upper()))
             l.append(n)
         if pe.schacPersonalUniqueID != l:
             pe.schacPersonalUniqueID = l

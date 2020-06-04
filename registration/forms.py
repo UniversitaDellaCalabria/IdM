@@ -70,7 +70,7 @@ class AskForm_1(forms.Form):
                                        attrs={'class': _field_class,
                                               'placeholder': _('Telephone number with prefix')}))
     def clean_tin(self):
-        return self.cleaned_data['tin'].lower()
+        return self.cleaned_data['tin'].upper()
 
     def clean_date_of_birth(self):
         date = self.cleaned_data['date_of_birth']

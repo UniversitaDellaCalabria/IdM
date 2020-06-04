@@ -154,7 +154,7 @@ def get_new_ldif(entry, mail=True, cf=True, code=True):
             l = []
             for pid in dentr['schacPersonalUniqueID']:
                 spl = pid.decode().split(':')
-                l.append(':'.join((spl[0],spl[1],spl[2],spl[3].lower(),spl[4].upper(),spl[5].lower())).encode())
+                l.append(':'.join((spl[0],spl[1],spl[2],spl[3].lower(),spl[4].upper(),spl[5].upper())).encode())
             dentr['schacPersonalUniqueID'] = l
 
     if dentr.get('schacHomeOrganizationType'):
