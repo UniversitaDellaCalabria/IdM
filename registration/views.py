@@ -67,10 +67,11 @@ def ask(request):
         serialized_dict = serialize_dict(form.cleaned_data)
 
         token = create_registration_token(serialized_dict)
-        _msg = _('{} {} [{}] have requested to be registered as a new user.')
+        _msg = _('{} {} [{}] [{}] have requested to be registered as a new user.')
         logger.info(_msg.format(form.cleaned_data['name'],
                                 form.cleaned_data['surname'],
-                                form.cleaned_data['mail'],))
+                                form.cleaned_data['mail'],
+                                form.cleaned_data['tin']))
         request_fqdn = build_registration_token_url(request, token)
 
         mail_body = dict(name = '{} {}'.format(form.cleaned_data['name'],
