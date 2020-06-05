@@ -193,12 +193,6 @@ class AccountCreationPresettedForm(AccountCreationForm):
     username = forms.CharField(label=_('Username'), max_length=64,
                                help_text=_("How your username will be"),
                                widget=forms.TextInput(attrs={'readonly':'readonly'}))
-    username_suffix = forms.CharField(label=_('Username suffix'), max_length=64,
-                                      help_text=_("Customizable part of your username. "
-                                                  "Es: '-campus', '88', '.highed'"),
-                                      widget=forms.TextInput(attrs={'onchange':'update_username()',
-                                                                    'oninput':'update_username()'}))
-    field_order = ['username', 'username_suffix', 'mail', 'password', 'password_verifica']
 
     def username_preset_validator(self, preset):
         if preset in self.data.get('username'):
@@ -207,6 +201,20 @@ class AccountCreationPresettedForm(AccountCreationForm):
             self.add_error('username', _("This username doesn't match the "
                                          "predefined prefix."))
             return False
+
+
+class AccountCreationSelectableUsernameForm(AccountCreationForm):
+    username = forms.ChoiceField(choices=[], label=_('Username'),
+                                 help_text=_("Select which username you want to use"))
+
+
+class AccountCreationPresettedSuffixedForm(AccountCreationPresettedForm):
+    username_suffix = forms.CharField(label=_('Username suffix'), max_length=64,
+                                      help_text=_("Customizable part of your username. "
+                                                  "Es: '-campus', '88', '.highed'"),
+                                      widget=forms.TextInput(attrs={'onchange':'update_username()',
+                                                                    'oninput':'update_username()'}))
+    field_order = ['username', 'username_suffix', 'mail', 'password', 'password_verifica']
 
 
 class PasswordAskResetForm(IdentityTokenAskForm):

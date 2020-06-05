@@ -21,6 +21,7 @@ from django.http import (HttpResponse,
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
+from django.utils.module_loading import import_string
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
@@ -52,27 +53,41 @@ def account_create(request, token_value):
 
     # USERNAME PRESETS
     if getattr(settings, 'ACCOUNT_CREATE_USERNAME_PRESET', None):
-        account_creation_form = AccountCreationPresettedForm
         elements = [getattr(id_prov.identity, i).lower().replace(' ', '')
                     for i in settings.ACCOUNT_CREATE_USERNAME_PRESET]
         username_preset = settings.ACCOUNT_CREATE_USERNAME_PRESET_SEP.join(elements)
-        initial={'token': token_value,
-                 'username': username_preset,
-                 'username_suffix': '-'+''.join(random.choice(string.ascii_lowercase)
-                                                              for x in range(4))}
+        initial={'token': token_value, 'username': username_preset}
+        #  import pdb; pdb.set_trace()
+        if getattr(settings, 'ACCOUNT_CREATE_USERNAME_SUFFIX', False):
+            if getattr(settings, 'ACCOUNT_CREATE_USERNAME_SUFFIX_CUSTOMIZABLE', False):
+                account_creation_form = AccountCreationPresettedSuffixedForm
+                initial['username_suffix'] =  '-'+''.join(random.choice(string.ascii_lowercase)
+                                                          for x in range(4))
+                form = account_creation_form(initial=initial)
+            else:
+                account_creation_form = AccountCreationSelectableUsernameForm
+                get_available_ldap_usernames_name = getattr(settings,
+                                                           'ACCOUNT_CREATE_USERNAME_CREATION_FUNC',
+                                                           'get_available_ldap_usernames')
+                get_available_ldap_usernames = import_string(get_available_ldap_usernames_name)
+                usernames = get_available_ldap_usernames(elements)
+                initial['username'] = usernames
+                form = account_creation_form(initial=initial)
+                form.fields['username'].choices = ((i,i) for i in usernames)
     else:
         username_preset = ''
         initial={'token': token_value}
         account_creation_form = AccountCreationForm
+        form = account_creation_form(initial=initial)
 
     if request.method == 'GET':
-        form = account_creation_form(initial=initial)
         d['form'] = form
         return render(request, 'account_create.html', d)
+
     elif request.method == 'POST':
         data = request.POST.copy()
         data['token'] = token_value
-        form = account_creation_form(data)
+        form = AccountCreationForm(data)
         d['form'] = form
         if not all((form.username_preset_validator(username_preset),
                     form.is_valid())):
