@@ -42,9 +42,6 @@ pycountry
 # SQL Alchemy
 #sqlalchemy
 
-# tests
-BeautifulSoup4
-
 # validazione CF
 git+https://github.com/arthurdejong/python-stdnum.git
 
