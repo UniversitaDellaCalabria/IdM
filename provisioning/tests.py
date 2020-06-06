@@ -266,15 +266,17 @@ class ProvisioningTestCase(TestCase):
         settings.ACCOUNT_CREATE_USERNAME_SUFFIX_CUSTOMIZABLE = False
 
         already_used = []
+        availables = []
         n_tests = 7
         name_sn = _test_guy['name'], _test_guy['surname']
         for i in get_available_ldap_usernames(name_sn)[:n_tests]:
 
             for au in already_used:
                 availables = get_available_ldap_usernames(name_sn)[:n_tests]
-                print('Available usernames: {}'.format(', '.join(availables)))
                 self.assertFalse(i not in availables)
+            print('Available usernames: {}'.format(', '.join(availables)))
 
+            # creating that one
             LdapAcademiaUser.objects.create(uid=i,
                                             givenName=name_sn[0],
                                             sn=name_sn[1],
