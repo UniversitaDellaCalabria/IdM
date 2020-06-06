@@ -13,7 +13,8 @@ from ldap_peoples.models import LdapAcademiaUser
 
 from .custom_messages import *
 from .models import *
-from .utils import get_date_from_string
+from .utils import (get_date_from_string,
+                    get_available_ldap_usernames)
 
 
 def randomString(stringLength=10):
@@ -34,7 +35,7 @@ matricola_dipendente = '982388{}'.format(randomString())
 additional_affiliations = []
 _test_guy = {'tin': 'abcdef{}'.format(randomString()),
              'surname': 'posto',
-             'name': 'pasqualino',
+             'name': 'pasqualino antani',
              'mail': '{}@yahoo.it'.format(_uid),
              'date_of_birth': get_date_from_string('16/05/1986'),
              'place_of_birth': 'Cosenza',
@@ -245,8 +246,70 @@ class ProvisioningTestCase(TestCase):
         lu.uid=_uid
         lu.save()
 
+    def test_presetted_usernames_custom_sufx_fails(self):
+        settings.ACCOUNT_CREATE_USERNAME_SUFFIX = True
+        settings.ACCOUNT_CREATE_USERNAME_SUFFIX_CUSTOMIZABLE = True
+        IdentityProvisioning.objects.filter(identity=self.identity).delete()
+        provisioning = IdentityProvisioning.objects.create(identity=self.identity)
+        # provisioning test
+        token_url = provisioning.get_activation_url()
+        c = Client()
+        req = c.post(token_url, {'username': 'maradona',
+                                 'password': _passwd,
+                                 'password_verifica': _passwd,
+                                 'mail': 'that'+_test_guy['mail']},
+                    HTTP_ACCEPT_LANGUAGE='en')
+        self.assertTrue('not valid' in req.content.decode())
+
+    def test_presetted_usernames(self):
+        settings.ACCOUNT_CREATE_USERNAME_SUFFIX = True
+        settings.ACCOUNT_CREATE_USERNAME_SUFFIX_CUSTOMIZABLE = False
+
+        already_used = []
+        n_tests = 7
+        name_sn = _test_guy['name'], _test_guy['surname']
+        for i in get_available_ldap_usernames(name_sn)[:n_tests]:
+
+            for au in already_used:
+                availables = get_available_ldap_usernames(name_sn)[:n_tests]
+                print('Available usernames: {}'.format(', '.join(availables)))
+                self.assertFalse(i not in availables)
+
+            LdapAcademiaUser.objects.create(uid=i,
+                                            givenName=name_sn[0],
+                                            sn=name_sn[1],
+                                            cn=' '.join(name_sn)
+                                            )
+            print('Created: {} LDAP account'.format(i))
+
+            IdentityProvisioning.objects.filter(identity=self.identity).delete()
+            provisioning = IdentityProvisioning.objects.create(identity=self.identity)
+
+            # provisioning test
+            token_url = provisioning.get_activation_url()
+            c = Client()
+            req = c.post(token_url, {'username': i,
+                                     'password': _passwd,
+                                     'password_verifica': _passwd,
+                                     'mail': randomString()+_test_guy['mail']},
+                         HTTP_ACCEPT_LANGUAGE='en')
+
+            self.assertTrue('not valid' not in req.content.decode())
+
+            for au in already_used:
+                self.assertFalse('"{}"'.format(au) in req.content.decode())
+
+            already_used.append(i)
+
+        # purge it all
+        LdapAcademiaUser.objects.filter(uid__in=already_used).delete()
+
     def tearDown(self):
         """cleanup"""
         d = LdapAcademiaUser.objects.filter(uid=_uid).first()
         if _PURGE_LDAP_TEST_USER and d:
             d.delete()
+            for i in get_available_ldap_usernames(_test_guy['name'],
+                                                  _test_guy['surname'])[:9]:
+                d = LdapAcademiaUser.objects.filter(uid=i).first()
+                if d: d.delete()

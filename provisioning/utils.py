@@ -70,7 +70,7 @@ def get_ldapuser_attrs_from_formbuilder_conf(lu):
 def get_available_ldap_usernames(elements, sep=None):
     sep = sep or getattr(settings,
                          'ACCOUNT_CREATE_USERNAME_PRESET_SEP', '.')
-    preset = sep.join(elements)
+    preset = sep.join((str(i).lower().replace(' ', '') for i in elements))
     spl_preset = preset.split(sep)
     common_choices = set()
     num_seq = (1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 15, 27)
@@ -86,8 +86,11 @@ def get_available_ldap_usernames(elements, sep=None):
         for e in tuple(common_choices):
             choices.append('{}{}'.format(e, i))
     ldap_db = connections['ldap']
-    ldap_filter = '(&(uid={}*)(objectClass=person))'.format(preset)
+    ldap_filter = '(|{})'.format(''.join(['(uid={})'.format(i)
+                                          for i in choices]))
+
     result = ldap_db.search_s(settings.LDAP_BASEDN, 2,
                               filterstr=ldap_filter, limit=None)
-    lus = [i[1]['uid'][0] for i in result]
-    return [i for i in choices if i not in lus]
+    lus = [i[1]['uid'][0].decode() for i in result]
+    availables = [i for i in choices if i not in lus]
+    return availables

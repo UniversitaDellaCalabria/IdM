@@ -186,15 +186,7 @@ class AccountCreationForm(PasswordForm, IdentityEmailForm):
         return email
 
     def username_preset_validator(self, preset):
-        return True
-
-
-class AccountCreationPresettedForm(AccountCreationForm):
-    username = forms.CharField(label=_('Username'), max_length=64,
-                               help_text=_("How your username will be"),
-                               widget=forms.TextInput(attrs={'readonly':'readonly'}))
-
-    def username_preset_validator(self, preset):
+        if not preset: return True
         if preset in self.data.get('username'):
             return True
         else:
@@ -203,7 +195,13 @@ class AccountCreationPresettedForm(AccountCreationForm):
             return False
 
 
-class AccountCreationSelectableUsernameForm(AccountCreationForm):
+class AccountCreationPresettedForm(AccountCreationForm):
+    username = forms.CharField(label=_('Username'), max_length=64,
+                               help_text=_("How your username will be"),
+                               widget=forms.TextInput(attrs={'readonly':'readonly'}))
+
+
+class AccountCreationSelectableUsernameForm(AccountCreationPresettedForm):
     username = forms.ChoiceField(choices=[], label=_('Username'),
                                  help_text=_("Select which username you want to use"))
 

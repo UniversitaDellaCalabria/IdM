@@ -52,6 +52,7 @@ def account_create(request, token_value):
     d = {'APP_NAME': settings.APP_NAME}
 
     # USERNAME PRESETS
+    username_preset = ''
     if getattr(settings, 'ACCOUNT_CREATE_USERNAME_PRESET', None):
         elements = [getattr(id_prov.identity, i).lower().replace(' ', '')
                     for i in settings.ACCOUNT_CREATE_USERNAME_PRESET]
@@ -75,7 +76,6 @@ def account_create(request, token_value):
                 form = account_creation_form(initial=initial)
                 form.fields['username'].choices = ((i,i) for i in usernames)
     else:
-        username_preset = ''
         initial={'token': token_value}
         account_creation_form = AccountCreationForm
         form = account_creation_form(initial=initial)
@@ -89,6 +89,7 @@ def account_create(request, token_value):
         data['token'] = token_value
         form = AccountCreationForm(data)
         d['form'] = form
+
         if not all((form.username_preset_validator(username_preset),
                     form.is_valid())):
             return render(request, 'account_create.html', d)
