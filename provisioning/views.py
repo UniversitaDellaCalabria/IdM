@@ -121,7 +121,7 @@ def account_create(request, token_value):
 
         ldap_user = LdapAcademiaUser(**entry)
         ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin,
-                                            country_code=id_prov.identity.nation_of_birth)
+                                            country_code=id_prov.identity.nation_of_birth.lower())
 
         # IDENTITY AFFILIATIONS
         if id_prov.identity.affiliation:
@@ -565,8 +565,8 @@ def reset_password_ask(request):
                       INVALID_DATA_DISPLAY, status=403)
     username = form.cleaned_data['username']
     mail = form.cleaned_data['mail']
-    schacPersonalUniqueID = '*:{}'.format(SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE,
-                                          form.cleaned_data['tin'])
+    schacPersonalUniqueID = '{}:{}'.format(SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE,
+                                           form.cleaned_data['tin'])
     if username:
         lu = LdapAcademiaUser.objects.filter(uid=username,
                                              mail__contains=mail).first()

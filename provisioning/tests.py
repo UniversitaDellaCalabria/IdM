@@ -107,6 +107,28 @@ class ProvisioningTestCase(TestCase):
                                 'password': _passwd})
         self.assertEqual(request.status_code, 302)
 
+    def test_c_password_reset(self):
+        """test a password change with confirmation"""
+        c = Client()
+        lurl = reverse('provisioning:reset_password_ask')
+        request = c.post(lurl, {'tin': _test_guy['tin'],
+                                'mail': _test_guy['mail']},
+                         follow=True,
+                         HTTP_ACCEPT_LANGUAGE='en')
+        self.assertEqual(request.status_code, 200)
+        token = IdentityLdapPasswordReset.objects.last().token
+        lurl = reverse('provisioning:reset_password_token', kwargs={'token_value': str(token)})
+        request = c.get(lurl, follow=True,
+                        HTTP_ACCEPT_LANGUAGE='en')
+        self.assertTrue('renew your password' in request.content.decode())
+
+        d = {'username': _uid,
+             'mail': _test_guy['mail'],
+             'password': _passwd+_passwd,
+             'password_verifica': _passwd+_passwd}
+        request = c.post(lurl, d, follow=True, HTTP_ACCEPT_LANGUAGE='en')
+        self.assertTrue('Password succesfully changed' in request.content.decode())
+
     def test_c_password_change(self):
         """test a password change with confirmation"""
         c = Client()
