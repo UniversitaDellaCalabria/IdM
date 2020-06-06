@@ -571,7 +571,7 @@ def reset_password_ask(request):
         lu = LdapAcademiaUser.objects.filter(uid=username,
                                              mail__contains=mail).first()
     else:
-        lu = LdapAcademiaUser.objects.filter(schacPersonalUniqueID__icontains=schacPersonalUniqueID,
+        lu = LdapAcademiaUser.objects.filter(schacPersonalUniqueID__contains=schacPersonalUniqueID,
                                              mail__contains=mail).first()
     # is user exists run the game
     if lu:
