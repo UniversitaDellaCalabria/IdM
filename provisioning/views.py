@@ -566,7 +566,7 @@ def reset_password_ask(request):
     username = form.cleaned_data['username']
     mail = form.cleaned_data['mail']
     schacPersonalUniqueID = '{}:{}'.format(SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE,
-                                           form.cleaned_data['tin'])
+                                           form.cleaned_data['tin'].upper())
     if username:
         lu = LdapAcademiaUser.objects.filter(uid=username,
                                              mail__contains=mail).first()
