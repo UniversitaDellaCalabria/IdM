@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
@@ -24,7 +24,7 @@ class User(AbstractUser):
                               max_length=12, blank=True, null=True)
     place_of_birth = models.CharField(_('Place of birth'),
                                       max_length=30, blank=True, null=True)
-    
+
     birth_date = models.DateField(_('Date of birth'), null=True, blank=True)
     access_notification = models.BooleanField(_('Send Email notification accesses'),
                                               default=True,
