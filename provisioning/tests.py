@@ -115,9 +115,12 @@ class ProvisioningTestCase(TestCase):
                                 'mail': _test_guy['mail']},
                          follow=True,
                          HTTP_ACCEPT_LANGUAGE='en')
+        self.assertTrue('You asked for a password reset' in request.content.decode())
         self.assertEqual(request.status_code, 200)
-        token = IdentityLdapPasswordReset.objects.last().token
-        lurl = reverse('provisioning:reset_password_token', kwargs={'token_value': str(token)})
+        token = IdentityLdapPasswordReset.objects.last()
+        self.assertTrue(token)
+
+        lurl = reverse('provisioning:reset_password_token', kwargs={'token_value': str(token.token)})
         request = c.get(lurl, follow=True,
                         HTTP_ACCEPT_LANGUAGE='en')
         self.assertTrue('renew your password' in request.content.decode())
@@ -291,8 +294,8 @@ class ProvisioningTestCase(TestCase):
         availables = []
         n_tests = 7
         name_sn = _test_guy['name'], _test_guy['surname']
-        for i in get_available_ldap_usernames(name_sn)[:n_tests]:
 
+        for i in get_available_ldap_usernames(name_sn)[:n_tests]:
             for au in already_used:
                 availables = get_available_ldap_usernames(name_sn)[:n_tests]
                 self.assertFalse(i not in availables)

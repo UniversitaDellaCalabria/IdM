@@ -4,6 +4,7 @@ from django import forms
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.utils.translation import ugettext_lazy as _
 
@@ -148,7 +149,9 @@ class AccountCreationForm(PasswordForm, IdentityEmailForm):
         control if a username already exists
         """
         username = self.data.get('username')
-        user = LdapAcademiaUser.objects.filter(uid=username)
+        user = LdapAcademiaUser.objects.filter(uid=username) or \
+               ChangedUsername.objects.filter(Q(new_username=username)|
+                                              Q(old_username=username))
         if user:
             self._errors["username"] = ErrorList([_("This username already exists, "
                                                     "please use another one.")])

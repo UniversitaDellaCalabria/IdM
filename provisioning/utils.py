@@ -76,8 +76,8 @@ def get_available_ldap_usernames(elements, sep=None):
     num_seq = (1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 15, 27)
     if len(spl_preset) > 1:
         for i in num_seq:
-            common_choices.add(sep.join((spl_preset[0][:i],
-                                         spl_preset[1])))
+            new_username = sep.join((spl_preset[0][:i], spl_preset[1]))
+            common_choices.add(new_username)
     # angelo: sn must be always present in the username
     #  for i in num_seq:
         #  common_choices.add(preset[:i])

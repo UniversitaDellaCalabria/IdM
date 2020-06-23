@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, mail_managers
+from django.db.models import Q
 from django_form_builder.models import SavedFormContent
 from django_form_builder.utils import get_labeled_errors
 from django.http import (HttpResponse,
@@ -71,7 +72,9 @@ def account_create(request, token_value):
                                                            'ACCOUNT_CREATE_USERNAME_CREATION_FUNC',
                                                            'get_available_ldap_usernames')
                 get_available_ldap_usernames = import_string(get_available_ldap_usernames_name)
-                usernames = get_available_ldap_usernames(elements)
+                usernames = [i for i in get_available_ldap_usernames(elements)
+                             if not ChangedUsername.objects.filter(Q(new_username=i)|
+                                                                   Q(old_username=i))]
                 initial['username'] = usernames
                 form = account_creation_form(initial=initial)
                 form.fields['username'].choices = ((i,i) for i in usernames)
@@ -120,7 +123,7 @@ def account_create(request, token_value):
                  }
 
         ldap_user = LdapAcademiaUser(**entry)
-        ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin,
+        ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin.upper(),
                                             country_code=id_prov.identity.nation_of_birth.lower())
 
         # IDENTITY AFFILIATIONS
@@ -399,7 +402,8 @@ def change_username(request, token_value=None):
     _err_msg = None
     if not request.user.change_username:
         _err_msg = CANNOT_CHANGE_USERNAME
-    elif ChangedUsername.objects.filter(new_username=request.user.username):
+    elif ChangedUsername.objects.filter(Q(new_username=request.user.username)|
+                                        Q(old_username=request.user.username)):
         _err_msg = ALREADY_CHANGED_USERNAME
     if _err_msg:
         return render(request, 'custom_message.html', _err_msg, status=403)
