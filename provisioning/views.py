@@ -39,7 +39,7 @@ from ldap_peoples.models import LdapAcademiaUser
 
 logger = logging.getLogger(__name__)
 EDUPERSON_DEFAULT_ASSURANCE = getattr(settings, 'EDUPERSON_DEFAULT_ASSURANCE',
-                                      'https://refeds.org/assurance/IAP/medium')
+                                      'https://refeds.org/assurance/IAP/low')
 SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE = \
     getattr(settings, 'SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE',
             'urn:schac:personalUniqueID:it:CF:')
