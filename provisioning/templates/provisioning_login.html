@@ -8,5 +8,23 @@
 {% endblock %}
 
 {% block container_content %}
-    {% include "sezione_login.html" %}
+<!-- contact section -->
+<section id="login" class="section text-center">
+    <div class="container">
+        <h2>{% trans "Join in" %}</h2>
+        <p class="mb-5">{% trans "Use your Unical ID Username and Password." %}</p>
+        <div class="row text-center">
+            <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
+                <form method="post" action="{% url 'provisioning:provisioning_login' %}" class="needs-validation" novalidate>
+                    {% include "form_body.html" with form=login_form %}
+
+                    <p>{% trans "Forgot your Password" %}? {% trans "Click" %} <a class="text-danger" href="{% url 'provisioning:reset_password_ask' %}"><u>{% trans "here" %}</u></a> {% trans "to reset" %}.</p>
+                    <input type="submit" class="btn btn-secondary" value="{% trans 'Login' %}">
+                    <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                    <div id="simple-msg"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock container_content %}

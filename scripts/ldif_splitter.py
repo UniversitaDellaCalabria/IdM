@@ -1,17 +1,18 @@
 import os
+import sys
 from subprocess import run, PIPE
 
 CHUNKS = 10
-FILE = 'ldap_importable.20200429.1818.ldif.fixed'
+FILE = sys.argv[1]
 
 fsize = os.path.getsize(FILE)
 first_block = int(fsize / CHUNKS)
 
 f = open(FILE, 'r')
-entries = f.read().split('\n\n') 
+entries = f.read().split('\n\n')
 f.close()
 
-nblocks = round(len(entries) / CHUNKS) 
+nblocks = round(len(entries) / CHUNKS)
 blocks = []
 block = []
 cnt = 0
@@ -29,16 +30,20 @@ for i in range(len(blocks)):
     f.close()
 
 # do a dump
-# ldapsearch -LLL -Y EXTERNAL -H ldapi:// -b "ou=people,dc=unical,dc=it"  > ldap_dump.$(date +%Y%m%d.%H%M).ldif
+# export SUFFIX = $(date +%Y%m%d.%H%M)
+# ldapsearch -LLL -Y EXTERNAL -H ldapi:// -b "ou=people,dc=unical,dc=it"  > ldap_dump.$SUFFIX.ldif
 
-# run unildap_utils.py
+# run unildap_utils.py ldap_dump.$SUFFIX.ldif
 
 # do things
-# sed -e 's\ou=personale,\\g' -e 's\ou=studenti,\\g' -e 's\ou=People,\ou=people,\g' ldap_importable.20200428.1550.ldif  > ldap_importable.20200427.1754.ldif.fixed
+# sed -e 's\ou=personale,\\g' -e 's\ou=studenti,\\g' -e 's\ou=People,\ou=people,\g' ldap_importable.$SUFFIX.ldif > ldap_importable.$SUFFIX.ldif.fixed
 
 # test uniqueness
-# grep "mail:" ldap_importable.20200429.1714.ldif.fixed |  uniq -d
+# grep "mail:" ldap_importable.$SUFFIX.ldif.fixed |  uniq -d
 
-# for i in *ldif.fixed.* ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > $i.log 2>&1 &) ; done
+# for i in *ldif.{0,1,2,3,4,5,6,7,8,9} ; do (ldapadd -Y EXTERNAL -H ldapi:/// -c -f $i > $i.log 2>&1 &) ; done
 # ps ax | grep ldif.fixed | awk -F' ' {'print $1'} | xargs kill -TERM
 
+# grep "ldap_add:" *log
+
+# bash clean.sh

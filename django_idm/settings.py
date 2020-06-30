@@ -178,3 +178,5 @@ CUSTOM_WIDGETS = {
     # 'CustomSelectBoxField': 'django.forms.widgets.Select',
     # 'CustomRadioBoxField': 'django.forms.widgets.RadioSelect',
 }
+
+from . settingslocal_overload import *

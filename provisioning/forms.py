@@ -4,6 +4,7 @@ from django import forms
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.utils.translation import ugettext_lazy as _
 
@@ -13,10 +14,8 @@ from ldap_peoples.forms import (LdapMultiValuedForm,
 from .models import *
 
 
-_passwd_msg = _('The secret must contains lowercase'
-                ' and uppercase characters, '
-                ' number and at least one of these symbols:'
-                ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')
+_passwd_msg = _('use lowercase and uppercase characters, '
+                ' numbers and symbols')
 
 _regexp_pt = r'[A-Za-z0-9!"#$%&\'()*+,-./:;<=>?@\[\\\]^_`{|}~]*'
 _field_class = "col-xs-12 col-sm-12 col-md-12 col-lg-12"
@@ -25,13 +24,14 @@ _username_widget = forms.TextInput(attrs={'class': _field_class,
 _password_widget = forms.PasswordInput(attrs={'class': _field_class,
                                               'placeholder': _('Password')+' ...'})
 
+
 class IdentityUsernameForm(forms.Form):
     username = forms.CharField(label="", max_length=64,
                                help_text=_("Your username"),
                                widget=_username_widget)
 
 class TelephoneForm(forms.Form):
-    telephoneNumber = forms.CharField(label=_("Telefono"),
+    telephoneNumber = forms.CharField(label=_("Telephone number"),
                                       min_length=8,
                                       max_length=64,
                                       help_text=_("Your telephone number"),
@@ -66,6 +66,26 @@ class IdentityTokenAskForm(IdentityEmailForm):
                                        "Leave it blank to receive an "
                                        "email as reminder."),
                            widget=_username_widget)
+    tin = forms.CharField(label=_("Tax Payer's Identification Number"),
+                                  required=False,
+                                  max_length=64,
+                                  widget=forms.TextInput
+                                   (attrs={'class': _field_class,
+                                           'placeholder': _("Tax Payer's Identification Number")}))
+
+    def clean(self, *args, **kwargs):
+        super().__init__(self, *args, *kwargs)
+        username = self.cleaned_data.get('username')
+        tin = self.cleaned_data.get('tin')
+        if not username and not tin:
+            if not self._errors:
+                self._errors = dict()
+            _msg = _("Insert your username or your "
+                     "Tax Payer's Identification Number")
+            self._errors["username"] = ErrorList([_msg])
+            self._errors["tin"] = ErrorList([_msg])
+            return self._errors
+        return self.cleaned_data
 
 
 class PasswordForm(forms.Form):
@@ -117,28 +137,31 @@ class PasswordChangeForm(PasswordForm):
                                    help_text=_("The password you used to login."))
 
 
-class AccountCreationForm(PasswordForm, IdentityTokenAskForm):
+class AccountCreationForm(PasswordForm, IdentityEmailForm):
     username = forms.CharField(label=_('Username'), max_length=64,
                                help_text=_("Your desidered username, if available."),
                                widget=_username_widget)
     token = forms.CharField(widget=forms.HiddenInput())
+    field_order = ['username', 'mail', 'password', 'password_verifica']
 
     def clean_username(self):
         """
         control if a username already exists
         """
         username = self.data.get('username')
-        user = LdapAcademiaUser.objects.filter(uid=username)
+        user = LdapAcademiaUser.objects.filter(uid=username) or \
+               ChangedUsername.objects.filter(Q(new_username=username)|
+                                              Q(old_username=username))
         if user:
             self._errors["username"] = ErrorList([_("This username already exists, "
                                                     "please use another one.")])
             return self._errors
         # check valid username
-        check = re.match('[a-z\.\-0-9\@\_]*', username, re.I)
+        check = re.match('[a-z\.\-0-9\_]*', username, re.I)
         if not check or (username != check.group()):
             self._errors["username"] = ErrorList([_("Not a valid Username, "
                                                     "the accepted symbols are:"
-                                                    "_ - . @")])
+                                                    "_ - .")])
             return self._errors
         return username
 
@@ -165,9 +188,39 @@ class AccountCreationForm(PasswordForm, IdentityTokenAskForm):
             return self._errors
         return email
 
+    def username_preset_validator(self, preset):
+        if not preset: return True
+        if preset in self.data.get('username'):
+            return True
+        else:
+            self.add_error('username', _("This username doesn't match the "
+                                         "predefined prefix."))
+            return False
+
+
+class AccountCreationPresettedForm(AccountCreationForm):
+    username = forms.CharField(label=_('Username'), max_length=64,
+                               help_text=_("How your username will be"),
+                               widget=forms.TextInput(attrs={'readonly':'readonly'}))
+
+
+class AccountCreationSelectableUsernameForm(AccountCreationPresettedForm):
+    username = forms.ChoiceField(choices=[], label=_('Username'),
+                                 help_text=_("Select which username you want to use"))
+
+
+class AccountCreationPresettedSuffixedForm(AccountCreationPresettedForm):
+    username_suffix = forms.CharField(label=_('Username suffix'), max_length=64,
+                                      help_text=_("Customizable part of your username. "
+                                                  "Es: '-campus', '88', '.highed'"),
+                                      widget=forms.TextInput(attrs={'onchange':'update_username()',
+                                                                    'oninput':'update_username()'}))
+    field_order = ['username', 'username_suffix', 'mail', 'password', 'password_verifica']
+
 
 class PasswordAskResetForm(IdentityTokenAskForm):
     pass
+
 
 
 class PasswordResetForm(PasswordForm, IdentityEmailForm):#, IdentityTokenAskForm):

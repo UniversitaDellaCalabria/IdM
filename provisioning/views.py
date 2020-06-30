@@ -2,13 +2,16 @@ import copy
 import json
 import logging
 import ldap
+import random
+import string
 
 from collections import OrderedDict
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
+from django.core.mail import send_mail, mail_managers
+from django.db.models import Q
 from django_form_builder.models import SavedFormContent
 from django_form_builder.utils import get_labeled_errors
 from django.http import (HttpResponse,
@@ -19,6 +22,7 @@ from django.http import (HttpResponse,
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
+from django.utils.module_loading import import_string
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
@@ -35,35 +39,67 @@ from ldap_peoples.models import LdapAcademiaUser
 
 logger = logging.getLogger(__name__)
 EDUPERSON_DEFAULT_ASSURANCE = getattr(settings, 'EDUPERSON_DEFAULT_ASSURANCE',
-                                      'https://refeds.org/assurance/IAP/medium')
+                                      'https://refeds.org/assurance/IAP/low')
+SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE = \
+    getattr(settings, 'SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE',
+            'urn:schac:personalUniqueID:it:CF:')
 
 
 def account_create(request, token_value):
     id_prov = get_object_or_404(IdentityProvisioning, token=token_value)
     if not id_prov.token_valid():
-        return render(request,
-                      'custom_message.html',
-                      INVALID_TOKEN_DISPLAY,
-                      status=403)
+        return render(request, 'custom_message.html',
+                      INVALID_TOKEN_DISPLAY, status=403)
     d = {'APP_NAME': settings.APP_NAME}
 
+    # USERNAME PRESETS
+    username_preset = ''
+    if getattr(settings, 'ACCOUNT_CREATE_USERNAME_PRESET', None):
+        elements = [getattr(id_prov.identity, i).lower().replace(' ', '')
+                    for i in settings.ACCOUNT_CREATE_USERNAME_PRESET]
+        username_preset = settings.ACCOUNT_CREATE_USERNAME_PRESET_SEP.join(elements)
+        initial={'token': token_value, 'username': username_preset}
+        #  import pdb; pdb.set_trace()
+        if getattr(settings, 'ACCOUNT_CREATE_USERNAME_SUFFIX', False):
+            if getattr(settings, 'ACCOUNT_CREATE_USERNAME_SUFFIX_CUSTOMIZABLE', False):
+                account_creation_form = AccountCreationPresettedSuffixedForm
+                initial['username_suffix'] =  '-'+''.join(random.choice(string.ascii_lowercase)
+                                                          for x in range(4))
+                form = account_creation_form(initial=initial)
+            else:
+                account_creation_form = AccountCreationSelectableUsernameForm
+                get_available_ldap_usernames_name = getattr(settings,
+                                                           'ACCOUNT_CREATE_USERNAME_CREATION_FUNC',
+                                                           'get_available_ldap_usernames')
+                get_available_ldap_usernames = import_string(get_available_ldap_usernames_name)
+                usernames = [i for i in get_available_ldap_usernames(elements)
+                             if not ChangedUsername.objects.filter(Q(new_username=i)|
+                                                                   Q(old_username=i))]
+                initial['username'] = usernames
+                form = account_creation_form(initial=initial)
+                form.fields['username'].choices = ((i,i) for i in usernames)
+    else:
+        initial={'token': token_value}
+        account_creation_form = AccountCreationForm
+        form = account_creation_form(initial=initial)
+
     if request.method == 'GET':
-        form = AccountCreationForm(initial={'token': token_value})
         d['form'] = form
         return render(request, 'account_create.html', d)
+
     elif request.method == 'POST':
         data = request.POST.copy()
         data['token'] = token_value
         form = AccountCreationForm(data)
         d['form'] = form
 
-        if not form.is_valid():
+        if not all((form.username_preset_validator(username_preset),
+                    form.is_valid())):
             return render(request, 'account_create.html', d)
 
         if data['token'] != id_prov.token or \
            data['mail'] != id_prov.identity.mail:
-               return render(request,
-                             'custom_message.html',
+               return render(request, 'custom_message.html',
                              INVALID_DATA_DISPLAY, status=403)
 
         # TODO, gestire title (multivalued) LDAP qui!
@@ -75,63 +111,80 @@ def account_create(request, token_value):
                                            id_prov.identity.surname)),
                  'mail' : [form.cleaned_data['mail']],
                  'telephoneNumber' : [id_prov.identity.telephoneNumber,],
-                 'eduPersonPrincipalName': '@'.join((form.cleaned_data['username'],
-                                                     settings.LDAP_BASE_DOMAIN)),
-                 'eduPersonAssurance': EDUPERSON_DEFAULT_ASSURANCE, 
+                 'eduPersonAssurance': EDUPERSON_DEFAULT_ASSURANCE,
                  'schacGender' : id_prov.identity.gender,
                  'schacPlaceOfBirth' : ','.join((id_prov.identity.nation_of_birth,
                                                  id_prov.identity.place_of_birth)),
                  'schacDateOfBirth' : id_prov.identity.date_of_birth,
-                 'schacHomeOrganization' : settings.SCHAC_HOMEORGANIZATION_DEFAULT,
-                 'schacHomeOrganizationType': settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT}
+                 #  'schacHomeOrganization' : settings.SCHAC_HOMEORGANIZATION_DEFAULT,
+                 #  'schacHomeOrganizationType': settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT
+                 #  'eduPersonPrincipalName': '@'.join((form.cleaned_data['username'],
+                                                     #  settings.LDAP_BASE_DOMAIN)),
+                 }
 
-        ldap_user = LdapAcademiaUser.objects.create(**entry)
-        #ldap_user.userPassword = form.cleaned_data['password']
-        # ldap_user.set_password_custom(form.cleaned_data['password'])
-        ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin,
-                                            country_code=id_prov.identity.nation_of_birth)
-        #ldap_user.set_default_eppn()
-        #for homeorgtype in settings.SCHAC_HOMEORGANIZATIONTYPE_DEFAULT:
-            #ldap_user.set_schacHomeOrganizationType(value=homeorgtype)
+        ldap_user = LdapAcademiaUser(**entry)
+        ldap_user.set_schacPersonalUniqueID(value=id_prov.identity.tin.upper(),
+                                            country_code=id_prov.identity.nation_of_birth.lower())
 
-        # AFFILIATIONS
-        ldap_user.eduPersonAffiliation = id_prov.identity.affiliation.split(',')
-        eduPersonScopedAffiliation = [aff+'@'+settings.SCHAC_HOMEORGANIZATION_DEFAULT
-                                      for aff in ldap_user.eduPersonAffiliation]
-        # additionals
-
-        # additionals affiliations
+        # IDENTITY AFFILIATIONS
+        if id_prov.identity.affiliation:
+            ldap_user.eduPersonAffiliation = id_prov.identity.affiliation.split(',')
+            eduPersonScopedAffiliation = [aff+'@'+settings.SCHAC_HOMEORGANIZATION_DEFAULT
+                                          for aff in ldap_user.eduPersonAffiliation
+                                          if aff]
+        # IDENTITY additionals affiliations
         addaff = id_prov.identity.additionalaffiliation_set.all()
-        additional_affiliations = [aff.get_scoped() for aff in addaff]
-        eduPersonScopedAffiliation.extend(additional_affiliations)
-        ldap_user.eduPersonScopedAffiliation = eduPersonScopedAffiliation
+        if addaff:
+            additional_affiliations = [aff.get_scoped()
+                                       for aff in addaff if aff]
+            eduPersonScopedAffiliation.extend(additional_affiliations)
+            ldap_user.eduPersonScopedAffiliation = eduPersonScopedAffiliation
 
-        # additional personal unique codes from additionals affiliations
-        ldap_user.schacPersonalUniqueCode = [aff.get_urn() for aff in addaff]
-        ldap_user.reset_schacExpiryDate()
+            # additional personal unique codes from additionals affiliations
+            ldap_user.schacPersonalUniqueCode = [aff.get_urn() for aff in addaff]
+            ldap_user.set_default_schacExpiryDate()
 
-        # previous set already saved ...
-        # ldap_user.save()
-        
+        # save before change the password
+        try:
+            ldap_user.save()
+        except ldap.CONSTRAINT_VIOLATION as e:
+            logging.error('Account Creation Failed: User submitted a '
+                          'unique information already used by another account.')
+            _msg = {'title': _("Invalid Data"),
+                    'avviso': _("It seems that you are already registered"),
+                    'description': _('Please go in the Home Page and activate '
+                                'the "Forgot your Password" procedure')}
+            return render(request, 'custom_message.html', _msg, status=403)
+        except Exception as e:
+            error_mail_obj = _('Something goes wrong with the account creation')
+            error_mail_body = 'Account Creation FAILED for {}: {}.\n Data: {}\n Identity: {}'\
+                                .format(ldap_user.dn, e,
+                                        ldap_user.__dict__, id_prov.identity.__dict__)
+            logger.error(error_mail_body)
+            mail_managers(error_mail_obj, error_mail_body)
+            _msg = {'title': error_mail_obj,
+                    'avviso': _('The data you have submitted produced a validation error.'),
+                    'description': _('An email was sent to the technical staff')}
+            return render(request, 'custom_message.html', _msg, status=403)
+
         # altrimenti mi fallisce lo unit test!
         ldap_user.set_password(form.cleaned_data['password'])
 
         id_prov.mark_as_used()
         id_prov.identity.activation_date = timezone.localtime()
         id_prov.identity.save()
+
         logger.info('Account created {}'.format(ldap_user.dn))
         return render(request,
                       'custom_message.html',
                       ACCOUNT_SUCCESFULLY_CREATED)
 
+
 def home(request):
     """render the home page"""
     if request.user.is_authenticated:
-        # return HttpResponseRedirect(reverse(settings.LOGIN_REDIRECT_URL))
         return HttpResponseRedirect(reverse('provisioning:dashboard'))
-    # peers = AllowedImportPeer.objects.all()
-    d = {'login_form': IdentityLoginForm(),
-         'password_reset_form' : PasswordAskResetForm()}
+    d = {'password_reset_form' : PasswordAskResetForm()}
     return render(request, 'home.html', d)
 
 
@@ -162,11 +215,10 @@ def provisioning_login(request):
                 return HttpResponseRedirect(request.POST.get('next'))
             return HttpResponseRedirect(reverse('provisioning:dashboard'))
         else:
-            # aggiungi form errors qui + messages
-            return render(request,
-                          'custom_message.html',
-                          ACCOUNT_NOT_EXISTENT,
-                           status=403)
+            messages.add_message(request, messages.ERROR,
+                                 _("Invalid Username or Password"))
+            return render(request, 'provisioning_login.html',
+                                   {'login_form': login_form})
     else:
         # login form if method == 'GET'
         d = {'login_form': IdentityLoginForm()}
@@ -214,16 +266,20 @@ def dashboard(request):
                           USER_DEFINITION_ERROR,
                           status=403)
 
+        if not lu.schacExpiryDate:
+            lu.set_default_schacExpiryDate()
+
         delivery_dict = get_ldapuser_attrs_from_formbuilder_conf(lu)
         dyn_form = SavedFormContent.compiled_form(data_source=json.dumps(delivery_dict),
                                                   constructor_dict=settings.DJANGO_FORM_BUILDER_FIELDS,
                                                   ignore_format_field_name=True)
         d = {'form_delivery': dyn_form,
-             'form_password': PasswordChangeForm(),
+             'password_reset_form': PasswordChangeForm(),
              'form_profile': ProfileForm(initial={'access_notification': \
                                                   request.user.access_notification}),
              'lu': lu,
-             'attrs': get_ldapuser_aai_html_attrs(lu)}
+             'attrs': get_ldapuser_aai_html_attrs(lu),
+             'expiration_days': (lu.schacExpiryDate - timezone.localtime()).days}
         return render(request, 'dashboard.html', d)
     return render(request, 'empty_dashboard.html')
 
@@ -256,8 +312,15 @@ def change_data(request, token_value=None):
                     attr.append(data[i])
             else:
                 setattr(lu, i, data[i])
-        lu.save()
-        id_prov.mark_as_used()
+        try:
+            lu.save()
+            id_prov.mark_as_used()
+        except ldap.CONSTRAINT_VIOLATION:
+            logger.error(_('Error, {} tried to save data that violates a '
+                           'LDAP constraint with : {}').format(lu, json.dumps(data)))
+            return render(request,
+                          'custom_message.html',
+                          DATA_NOT_CHANGED, status=403)
 
         return render(request,
                       'custom_message.html',
@@ -339,7 +402,8 @@ def change_username(request, token_value=None):
     _err_msg = None
     if not request.user.change_username:
         _err_msg = CANNOT_CHANGE_USERNAME
-    elif ChangedUsername.objects.filter(new_username=request.user.username):
+    elif ChangedUsername.objects.filter(Q(new_username=request.user.username)|
+                                        Q(old_username=request.user.username)):
         _err_msg = ALREADY_CHANGED_USERNAME
     if _err_msg:
         return render(request, 'custom_message.html', _err_msg, status=403)
@@ -484,15 +548,19 @@ def change_password(request):
         return render(request,
                       'custom_message.html',
                       INVALID_DATA_DISPLAY, status=403)
-    lu.reset_schacExpiryDate()
+    lu.set_default_schacExpiryDate()
     send_email_password_changed(lu, request)
     messages.add_message(request, messages.SUCCESS,
                          settings.MESSAGES_ALERT_TEMPLATE.format(**PASSWORD_CHANGED))
     return redirect('provisioning:dashboard')
 
 
-@require_http_methods(["POST"])
 def reset_password_ask(request):
+    if request.method == 'GET':
+        d = {'login_form': IdentityLoginForm(),
+             'password_reset_form' : PasswordAskResetForm()}
+        return render(request, 'password_reset_page.html', d)
+
     # we do not check if data are valid to avoid any vulnerability reconnaissance
     form = IdentityTokenAskForm(request.POST)
     if not form.is_valid():
@@ -501,11 +569,14 @@ def reset_password_ask(request):
                       INVALID_DATA_DISPLAY, status=403)
     username = form.cleaned_data['username']
     mail = form.cleaned_data['mail']
+    schacPersonalUniqueID = '{}:{}'.format(SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE,
+                                           form.cleaned_data['tin'].upper())
     if username:
         lu = LdapAcademiaUser.objects.filter(uid=username,
-                                             mail__icontains=mail).first()
+                                             mail__contains=mail).first()
     else:
-        lu = LdapAcademiaUser.objects.filter(mail__icontains=mail).first()
+        lu = LdapAcademiaUser.objects.filter(schacPersonalUniqueID__contains=schacPersonalUniqueID,
+                                             mail__contains=mail).first()
     # is user exists run the game
     if lu:
         if not lu.is_renewable():
@@ -524,7 +595,7 @@ def reset_password_ask(request):
         # send email and update token status
         id_pwd_reset.send_email(ldap_user=lu,
                                 lang=request.LANGUAGE_CODE)
-        logger.info('{} asked for a Password reset'.format(lu.uid))
+        logger.info('Password Reset Ask for {}'.format(lu.uid))
     messages.add_message(request, messages.SUCCESS,
                          settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**PASSWORD_ASK_RESET))
     return redirect('provisioning:home')
@@ -555,7 +626,7 @@ def reset_password_token(request, token_value):
         username = form.cleaned_data['username']
         mail = form.cleaned_data['mail']
         lu = LdapAcademiaUser.objects.filter(uid=username,
-                                             mail__icontains=mail).first()
+                                             mail__contains=mail).first()
         if lu and not lu.is_renewable():
             return render(request,
                           'custom_message.html',
@@ -578,7 +649,7 @@ def reset_password_token(request, token_value):
         send_email_password_changed(lu, request)
         id_prov.mark_as_used()
         lu.enable()
-        lu.reset_schacExpiryDate()
+        lu.set_default_schacExpiryDate()
         logger.info('{} changed his Password with a Token'.format(lu.uid))
 
         return render(request,

@@ -1,3 +1,4 @@
+import copy
 import datetime
 import json
 import logging
@@ -9,10 +10,10 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 from django_form_builder.enc import encrypt, decrypt
 from django_form_builder.forms import BaseDynamicForm
-from django_form_builder.models import DynamicFieldMap
 
 from identity.models import Identity
 from ldap_peoples.models import LdapAcademiaUser
@@ -29,22 +30,22 @@ logger = logging.getLogger(__name__)
 
 
 LDAP_UNIQUEID_TMPL = getattr(settings, 'LDAP_UNIQUEID_TMPL',
-                             'urn:schac:personalUniqueID:it:cf:{}')
+                             'urn:schac:personalUniqueID:it:CF:{}')
 
 
 def ask(request):
-    if request.method == 'GET':
-        form_captcha = DynamicFieldMap.get_form(BaseDynamicForm,
-                                                constructor_dict=settings.REGISTRATION_CAPTCHA_FORM)
+    cdict = copy.copy(settings.REGISTRATION_CAPTCHA_FORM)
 
+    if request.method == 'GET':
+        form_captcha = BaseDynamicForm.get_form(constructor_dict=cdict,
+                                                custom_params={'lang': translation.get_language()})
         d = dict(form = AskForm_1(),
                  form_captcha = form_captcha)
 
         return render(request, 'ask.html', d)
     else:
         form = AskForm_1(request.POST)
-        form_captcha = DynamicFieldMap.get_form(BaseDynamicForm,
-                                                constructor_dict=settings.REGISTRATION_CAPTCHA_FORM,
+        form_captcha = BaseDynamicForm.get_form(constructor_dict=cdict,
                                                 data = request.POST)
 
         if not (form.is_valid() and form_captcha.is_valid()):
@@ -60,33 +61,34 @@ def ask(request):
                           'custom_message.html',
                           dict(title = _('TIN code validation failed'),
                                avviso = _('It have been occurred an error validating your TIN'),
-                               description = _('')), status=403)
-            
+                               description = ''), status=403)
+
         # it seems quite good, check its delivery address
         serialized_dict = serialize_dict(form.cleaned_data)
 
         token = create_registration_token(serialized_dict)
-        _msg = _('{} {} [{}] have requested to be registered as a new user.')
+        _msg = _('{} {} [{}] [{}] have requested to be registered as a new user.')
         logger.info(_msg.format(form.cleaned_data['name'],
                                 form.cleaned_data['surname'],
-                                form.cleaned_data['mail'],))
+                                form.cleaned_data['mail'],
+                                form.cleaned_data['tin']))
         request_fqdn = build_registration_token_url(request, token)
 
         mail_body = dict(name = '{} {}'.format(form.cleaned_data['name'],
                                                form.cleaned_data['surname']),
                          url = request_fqdn)
-        
+
         mail_sent = send_mail(settings.REGISTRATION_ASK_OBJ,
                               settings.REGISTRATION_ASK_BODY.format(**mail_body),
                               settings.DEFAULT_FROM_EMAIL,
                               [form.cleaned_data['mail']], # it's a list :)
                               fail_silently=True)
         if not mail_sent:
-            logger.error('Email to {} cannot be send.'.format(cleaned_data['mail']))
-            
+            logger.error('Email to {} cannot be send.'.format(form.cleaned_data['mail']))
+
             return render(request,
                           'custom_message.html',
-                          dict(title = _('EMail send error'),
+                          dict(title = _('Email send error'),
                                avviso = _('It have been occurred an Error '
                                           'sending the confirmation email to you'),
                                description = _('Please try later.')), status=403)
@@ -112,9 +114,9 @@ def confirm(request, token):
         form.fields[k].widget.attrs['disabled'] = True
 
     # check if identity was already created, if yes drive the user to the provisioning token
-    identity = Identity.objects.filter(Q(tin=data['tin'])|\
-                                       Q(mail=data['mail']))
-    
+    identity = Identity.objects.filter(Q(tin__iexact=data['tin'])|\
+                                       Q(mail__iexact=data['mail']))
+
     # TEST RDBMS REGISTRATION IDENTITY
     _msg = ', '.join(('{}:{}'.format(k,v) for k,v in data.items()))
     if identity:
@@ -126,9 +128,14 @@ def confirm(request, token):
                                  'If the problem persists please contact our technical assistance.')}
         return render(request, 'custom_message.html', _msg, status=403)
 
-    # TEST LDAP 
+    # TEST LDAP
     tin = LDAP_UNIQUEID_TMPL.format(data['tin'])
+    spltd_tin = tin.split(':')
+    tin2 = ':'.join((spltd_tin[0], spltd_tin[1], spltd_tin[2],
+                      spltd_tin[3].upper(), spltd_tin[4].upper(),
+                      spltd_tin[5]))
     lu = LdapAcademiaUser.objects.filter(Q(schacPersonalUniqueID=tin)|\
+                                         Q(schacPersonalUniqueID=tin2)|\
                                          Q(mail=data['mail']))
     if lu:
         logger.error('Registration: LDAP ACCOUNT - user already exists {}'.format(_msg))
@@ -157,8 +164,8 @@ def confirm(request, token):
         # create the identity
         data['document_front'] = form_document.cleaned_data['document_front']
         data['document_retro'] = form_document.cleaned_data['document_retro']
-        data.pop('_dyn')
-        data.pop('_hidden_dyn')
+        data.pop('_dyn', '')
+        data.pop('_hidden_dyn', '')
         # create an identity
         identity = Identity.objects.create(**data)
         # the redirect to password reset

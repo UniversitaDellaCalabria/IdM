@@ -63,15 +63,23 @@ DATA_CHANGED = {'title': DATA_CHANGED_TITLE,
                 'avviso': DATA_CHANGED_MSG,
                 'description': ""}
 
+DATA_NOT_CHANGED_TITLE = _("Error")
+DATA_NOT_CHANGED_MSG = _("The data you have submitted cannot be saved.")
+DATA_NOT_CHANGED = {'title': DATA_NOT_CHANGED_TITLE,
+                    'avviso': DATA_NOT_CHANGED_MSG,
+                    'description': _("A contraint violation has occourred."
+                                     " Probably the values you submitted are"
+                                     " owned by another user")}
+
 USERNAME_SUCCESSIFULLY_CHANGED = {'title': DATA_CHANGED_TITLE,
                                   'avviso': _('Your username has been successfully changed'),
                                   'description': _('Please login with your new username')}
 CANNOT_CHANGE_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
-                         'avviso': _('You are not able to change your username'),
-                         'description': _('Contact the administrator')}
+                          'avviso': _('You are not able to change your username'),
+                          'description': _('Contact the administrator')}
 NOT_YOUR_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                      'avviso': _('You have inserted a wrong actual username'),
-                     'description': _('Please, be carefoul')}
+                     'description': _('Please, be careful')}
 ALREADY_CHANGED_USERNAME = {'title': INVALID_OPERATION_DISPLAY_TITLE,
                             'avviso': _('You have already changed your username'),
                             'description': 'This is a one time operation'}

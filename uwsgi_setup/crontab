@@ -1,0 +1,5 @@
+0 4 * * * username find /opt/dumps_identita_unical -type f -mtime +30 -exec rm -f {} \;
+0 1 * * * username bash /opt/identita_unical/uwsgi_setup/backup.sh
+
+# replica gdrive
+#0 50 * * * username rsync -avu --delete /opt/dumps_identita_unical /media/gdrive/ICT_backups/that.unical.it/

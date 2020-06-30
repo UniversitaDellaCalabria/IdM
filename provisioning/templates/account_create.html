@@ -3,26 +3,68 @@
 {% load i18n %}
 {% load static %}
 
+{% block extra_head %}
+    {{ block.super }}
+    <script>
+        var prefix = "{{ form.username.value }}";
+        function update_username() {
+            var suffix = document.getElementById('id_username_suffix').value;
+            document.getElementById('id_username').value = prefix+suffix;
+            }
+    </script>
+{% endblock %}
+
 {% block container_content %}
 <!-- contact section -->
-<section id="login" class="section intro">
+<section class="section text-center">
     <div class="container">
-        <h5>{% trans "Welcome in" %} {{ APP_NAME|default_if_none:"Unical ID" }}</h5>
-        <p>{% trans "Please fill this form to create your brand new account." %}</p>
-        <div id="message">
-        {% for msg in messages %}
-            <li>{{ msg }}</li>
-        {% endfor %}
-        </div>
-        <form method="post" action="#" name="cform" class="idm_form">
+        <h1>{% trans "Welcome in" %} {{ APP_NAME|default_if_none:"Unical ID" }}</h1>
+        <p class="mb-5">{% trans "Please fill this form to create your brand new account." %}</p>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1">
+                <div id="message">
+                {% for msg in messages %}
+                    <li>{{ msg }}</li>
+                {% endfor %}
+                </div>
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <p>{% trans "Some Errors has occourred" %}</p>
+                      {% for k,v in form.errors.items %}
+                          <span class="text-align: left;"><b>{{ k }}</b>:</span>
+                              {% for error in v %}
+                                <span class="errorlist">{{ error|escape }}</span>
+                              {% endfor %}
+                      {% endfor %}
+                    </div>
+                    <br>
+                {% endif %}
+
+        <form method="post" class="needs-validation">
           {% csrf_token %}
-          <table >
-            {{ form }}
-          </table>
-          <input type="submit" id="submit_login" name="send" class="submitBnt btn btn-large" value="{% trans 'Save' %}">
+            <div class="form-group">
+                {% for field in form.visible_fields %}
+                    <div class="bootstrap-select-wrapper form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        <small class="form-text text-muted text-left">{{ field.help_text }}</small>
+                        <span>{{ field.errors }}</span>
+                    </div>
+                {% endfor %}
+
+            </div>
+          <input type="submit" class="btn btn-secondary btn-block" value="{% trans 'Submit' %}">
           <div id="simple-msg"></div>
         </form>
     </div>
 </section>
 <!-- contact section -->
 {% endblock container_content %}
+
+
+{% block footer %}
+    {{ block.super }}
+    <script>
+        document.addEventListener("load", update_username());
+    </script>
+{% endblock %}

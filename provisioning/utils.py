@@ -1,7 +1,9 @@
 import datetime
+import random
 
 from django.apps import apps
 from django.conf import settings
+from django.db import connections
 from django.utils import translation, timezone
 
 
@@ -54,9 +56,6 @@ def change_user_username(user, lu, new_username):
 
 
 def get_ldapuser_attrs_from_formbuilder_conf(lu):
-    # delivery_dict = {'mail': lu.mail[0]}
-    # if lu.telephoneNumber:
-        # delivery_dict['telephoneNumber'] = lu.telephoneNumber[0]
     if not lu: return {}
     if not hasattr(settings, 'DJANGO_FORM_BUILDER_FIELDS'): return {}
     delivery_dict = {}
@@ -66,3 +65,32 @@ def get_ldapuser_attrs_from_formbuilder_conf(lu):
             if not attr: continue
             delivery_dict[field_name] = attr[0] if isinstance(attr, list) else attr
     return delivery_dict
+
+
+def get_available_ldap_usernames(elements, sep=None):
+    sep = sep or getattr(settings,
+                         'ACCOUNT_CREATE_USERNAME_PRESET_SEP', '.')
+    preset = sep.join((str(i).lower().replace(' ', '') for i in elements))
+    spl_preset = preset.split(sep)
+    common_choices = set()
+    num_seq = (1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 15, 27)
+    if len(spl_preset) > 1:
+        for i in num_seq:
+            new_username = sep.join((spl_preset[0][:i], spl_preset[1]))
+            common_choices.add(new_username)
+    # angelo: sn must be always present in the username
+    #  for i in num_seq:
+        #  common_choices.add(preset[:i])
+    choices = list(common_choices)
+    for i in range(0, 999):
+        for e in tuple(common_choices):
+            choices.append('{}{}'.format(e, i))
+    ldap_db = connections['ldap']
+    ldap_filter = '(|{})'.format(''.join(['(uid={})'.format(i)
+                                          for i in choices]))
+
+    result = ldap_db.search_s(settings.LDAP_BASEDN, 2,
+                              filterstr=ldap_filter, limit=None)
+    lus = [i[1]['uid'][0].decode() for i in result]
+    availables = [i for i in choices if i not in lus]
+    return availables

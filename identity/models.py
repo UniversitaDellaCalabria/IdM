@@ -6,7 +6,7 @@ from django.db import models
 from django.conf import settings
 
 from model_utils.fields import AutoCreatedField, AutoLastModifiedField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from ldap_peoples.idem_affiliation_mapping import (IDEM_AFFILIATION_MAP,
                                                    DEFAULT_AFFILIATION)
@@ -39,10 +39,11 @@ class IdentityGenericManyToOne(models.Model):
 
 class IdentityExtendendStatus(models.Model):
     TIPO_CHOICES = (
+                    ('web','web'),
                     ('de-visu','de-visu'),
                     ('SPID', 'SPID'),
-                    ('Esse3', 'Esse3'),
-                    ('CSA','CSA'),
+                    #  ('Esse3', 'Esse3'),
+                    #  ('CSA','CSA'),
                     ('import', _('Import')),
                     )
     flusso = models.CharField(_('Flow'),max_length=135, blank=False,
@@ -65,12 +66,11 @@ class IdentityExtendendStatus(models.Model):
         abstract = True
 
 
-# TODO tradurre fields
 class AbstractIdentityAddress(models.Model):
     address = models.CharField(_('Address'),max_length=150, blank=True, null=True)
     locality_name = models.CharField(_('Locality'),max_length=135, blank=True, null=True)
     state = models.CharField(_('Region'), max_length=60, blank=True, null=True)
-    postal_code    = models.CharField(_('Cap'),max_length=60, blank=True, null=True)
+    postal_code    = models.CharField(_('Postal code'),max_length=60, blank=True, null=True)
     country_name = models.CharField(max_length=128, blank=True, null=True,
                                     help_text=_('Country'))
     note = models.TextField(max_length=768, blank=True, null=True)
@@ -106,10 +106,10 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
     tin = models.CharField(help_text=_('Tax Payer\'s Number or UniqueID'),
                                    max_length=16, blank=False, null=True)
     gender = models.CharField(max_length=3, blank=True, null=True,
-                              choices=((0, _('Not know')),
-                                       (1, _('Male')),
-                                       (2, _('Female')),
-                                       (9, _('Not specified'))))
+                              choices=(('0', _('Not know')),
+                                       ('1', _('Male')),
+                                       ('2', _('Female')),
+                                       ('9', _('Not specified'))))
     date_of_birth = models.DateField(blank=False, null=True)
     place_of_birth = models.CharField(max_length=128,
                                       blank=False, null=True, help_text='')
@@ -123,7 +123,7 @@ class Identity(IdentityExtendendStatus, TimeStampedModel):
                                    help_text=_(("Affiliation")),
                                    choices=[(','.join(v), k)
                                             for k,v in IDEM_AFFILIATION_MAP.items()],
-                                   default=','.join(tuple(DEFAULT_AFFILIATION.values())[0])
+                                   #default=','.join(tuple(DEFAULT_AFFILIATION.values())[0])
                                    )
     description = models.TextField(max_length=1024, blank=True, null=True)
 

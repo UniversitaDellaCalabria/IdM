@@ -20,9 +20,8 @@ ALLOWED_HOSTS = [HOSTNAME,
                  'ldap.testunical.it',
                  'localhost']
 
+IDM_USERNAME_EDITABLE = False
 LOGIN_REDIRECT_URL = '/dashboard'
-
-PROVISONING_REQUEST_ID_APPNAME = 'request_identity'
 
 # Application definition
 INSTALLED_APPS = [
@@ -37,21 +36,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_admin_multiple_choice_list_filter',
-
+    'django_form_builder',
     'unical_template',
     'sass_processor',
     'bootstrap_italia_template',
     'django_unical_bootstrap_italia',
-    'django_form_builder',
-    
+
     'rangefilter',
     'ldapdb',
     'ldap_peoples',
     'identity',
-    'provisioning',
 
-    'cineca_repl',
-    #PROVISONING_REQUEST_ID_APPNAME,
+    'provisioning',
+    'registration',
+    'deprovisioning',
+    'django_q',
+    #'cineca_repl'
 ]
 
 if 'saml2_sp' in INSTALLED_APPS or \
@@ -75,7 +75,26 @@ else:
                             # 'django_idm.auth.SessionUniqueBackend',
                           ]
     LOGIN_URLNAME = 'provisioning:provisioning_login'
-    LOGIN_URL = '/local/login'
+    LOGIN_URL = '/local/login/'
+
+if 'django_q' in INSTALLED_APPS:
+   # settings.py example
+    Q_CLUSTER = {
+    'name': 'deprovisioning',
+    'workers': 2,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': False,
+    'save_limit': 1000,
+    'queue_limit': 2000,
+    'cpu_affinity': 1,
+    'label': 'Deprovisioning Workers',
+    'orm': 'default'
+    #'redis': {
+    #    'host': '127.0.0.1',
+    #    'port': 6379,
+    #    'db': 0, }
+   }
 
 if DEBUG:
     SESSION_COOKIE_SECURE = False
@@ -89,6 +108,10 @@ else:
 # The maximum number of parameters that may be received via GET or POST before a
 # SuspiciousOperation (TooManyFields) is raised. You can set this to None to disable the check.
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 100
+
+# CaPTCHA encryption parameters
+CAPTCHA_SECRET = b'your_secret'
+CAPTCHA_SALT = b'your_salt'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -266,7 +289,6 @@ LOGGING = {
 NOSE_ARGS = ['--nocapture',
              '--nologcapture',]
 
-
 DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
      ('mail', ('CustomEmailField', {'label': 'Email',
                                     'required': True,
@@ -281,3 +303,5 @@ DJANGO_FORM_BUILDER_FIELDS = OrderedDict([
                                           'required': True,
                                           'help_text': ''}, '')),
  ])
+
+CAPTCHA_EXPIRATION_TIME = '45000' # milliseconds

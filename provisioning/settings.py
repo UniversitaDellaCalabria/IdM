@@ -8,6 +8,13 @@ CHANGE_CONFIRMATION_EXPIRATION_MINUTES = 30
 EXPIRATION_NOTIFICATION_DAYS_BEFORE = 30
 IDENTITY_TOKEN_MSG_SUBJECT = _('Unical ID - Token for your Account')
 
+# if enabled they produce a username prefix like name.surname
+ACCOUNT_CREATE_USERNAME_PRESET = ('name', 'surname')
+ACCOUNT_CREATE_USERNAME_PRESET_SEP = '.'
+ACCOUNT_CREATE_USERNAME_SUFFIX = True
+ACCOUNT_CREATE_USERNAME_SUFFIX_CUSTOMIZABLE = True
+ACCOUNT_CREATE_USERNAME_CREATION_FUNC = 'provisioning.utils.get_first_available_ldap_username'
+
 IDENTITY_MSG_HEADER = _("""Dear {user} (your username),
 This message was sent to you by https://{hostname}, your IDentity Manager.
 Please do not reply to this email.
