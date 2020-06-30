@@ -22,7 +22,6 @@ from django.http import (HttpResponse,
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from django.utils.module_loading import import_string
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
@@ -31,6 +30,7 @@ from . decorators import *
 from . forms import *
 from . models import *
 from . utils import (change_user_username,
+                     get_available_usernames,
                      get_ldapuser_attrs_from_formbuilder_conf,
                      translate_to)
 
@@ -63,11 +63,8 @@ def account_create(request, token_value):
                 form = account_creation_form(initial=initial)
             else:
                 account_creation_form = AccountCreationSelectableUsernameForm
-                get_available_ldap_usernames_name = settings.ACCOUNT_CREATE_USERNAME_CREATION_FUNC
-                get_available_ldap_usernames = import_string(get_available_ldap_usernames_name)
-
                 # filter out blacklisted and already used in the past usernames
-                usernames = [i for i in get_available_ldap_usernames(elements)
+                usernames = [i for i in get_available_usernames(elements)
                              if not ChangedUsername.objects.filter(Q(new_username=i)|
                                                                    Q(old_username=i))]
                 initial['username'] = usernames
@@ -447,14 +444,14 @@ def change_username(request, token_value=None):
             if not user_username_match or not lu_uid_match:
                 _err_msg = settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**NOT_YOUR_USERNAME)
             # If user has already changed
-            elif ChangedUsername.objects.filter(new_username=lu.uid):
+            if ChangedUsername.objects.filter(new_username=lu.uid):
                 _err_msg = settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**ALREADY_CHANGED_USERNAME)
             # If new username is in blacklist
-            elif ChangedUsername.objects.filter(old_username=new_username):
-                _err_msg = settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**USERNAME_IN_BLACKLIST)
             # If username exists in Django users
-            elif get_user_model().objects.filter(username=new_username):
+            if ChangedUsername.objects.filter(old_username=new_username) or \
+               get_user_model().objects.filter(username=new_username):
                 _err_msg = settings.MESSAGES_ALERT_TEMPLATE_DESC.format(**USERNAME_IN_BLACKLIST)
+
             if _err_msg:
                 messages.add_message(request, messages.ERROR, _err_msg)
                 return redirect('provisioning:change_username')

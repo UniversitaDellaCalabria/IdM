@@ -4,7 +4,9 @@ import random
 from django.apps import apps
 from django.conf import settings
 from django.db import connections
+from django.db.models import Q
 from django.utils import translation, timezone
+from django.utils.module_loading import import_string
 
 
 def get_default_translations(message, sep='\n'):
@@ -67,13 +69,22 @@ def get_ldapuser_attrs_from_formbuilder_conf(lu):
     return delivery_dict
 
 
+def get_available_usernames(elements, sep=None):
+    ChangedUsername = import_string('provisioning.models.ChangedUsername')
+    usernames = import_string(settings.ACCOUNT_CREATE_USERNAME_CREATION_FUNC)(elements, sep)
+    blacklisted = [i.old_username
+                  for i in ChangedUsername.objects.filter(old_username__in=usernames)]
+    #return usernames
+    return [i for i in usernames if i not in blacklisted]
+
+
 def get_available_ldap_usernames(elements, sep=None):
     sep = sep or getattr(settings,
                          'ACCOUNT_CREATE_USERNAME_PRESET_SEP', '.')
     preset = sep.join((str(i).lower().replace(' ', '') for i in elements))
     spl_preset = preset.split(sep)
     common_choices = set()
-    num_seq = (1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 15, 27)
+    num_seq = (1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27)
     if len(spl_preset) > 1:
         for i in num_seq:
             new_username = sep.join((spl_preset[0][:i], spl_preset[1]))

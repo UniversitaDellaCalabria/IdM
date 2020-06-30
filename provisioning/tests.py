@@ -14,7 +14,7 @@ from ldap_peoples.models import LdapAcademiaUser
 from .custom_messages import *
 from .models import *
 from .utils import (get_date_from_string,
-                    get_available_ldap_usernames)
+                    get_available_usernames)
 
 
 def randomString(stringLength=10):
@@ -294,9 +294,13 @@ class ProvisioningTestCase(TestCase):
         n_tests = 7
         name_sn = _test_guy['name'], _test_guy['surname']
 
-        for i in get_available_ldap_usernames(name_sn)[:n_tests]:
+        # blacklist some
+        ChangedUsername.objects.create(old_username= '.'.join((name_sn[0][0],
+                                                               name_sn[1])))
+        
+        for i in get_available_usernames(name_sn)[:n_tests]:
             for au in already_used:
-                availables = get_available_ldap_usernames(name_sn)[:n_tests]
+                availables = get_available_usernames(name_sn)[:n_tests]
                 self.assertFalse(i not in availables)
             print('Available usernames: {}'.format(', '.join(availables)))
 
@@ -304,8 +308,7 @@ class ProvisioningTestCase(TestCase):
             LdapAcademiaUser.objects.create(uid=i,
                                             givenName=name_sn[0],
                                             sn=name_sn[1],
-                                            cn=' '.join(name_sn)
-                                            )
+                                            cn=' '.join(name_sn))
             print('Created: {} LDAP account'.format(i))
 
             IdentityProvisioning.objects.filter(identity=self.identity).delete()
@@ -330,12 +333,13 @@ class ProvisioningTestCase(TestCase):
         # purge it all
         LdapAcademiaUser.objects.filter(uid__in=already_used).delete()
 
+
     def tearDown(self):
         """cleanup"""
         d = LdapAcademiaUser.objects.filter(uid=_uid).first()
         if not d: return
         d.delete()
-        for i in get_available_ldap_usernames(_test_guy['name'],
-                                              _test_guy['surname'])[:9]:
+        for i in get_available_usernames(_test_guy['name'],
+                                         _test_guy['surname'])[:9]:
             d = LdapAcademiaUser.objects.filter(uid=i).first()
             if d: d.delete()
