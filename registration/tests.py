@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 _captcha = dict(created=timezone.now().isoformat(),
                 text="VlGYR")
-DATA = dict(name = 'Angelo',
-            surname = 'Furfaros',
+DATA = dict(name = 'Angèlo',
+            surname = 'Furfaròs',
             tin = 'PPPPpt80a01D086b',
             gender = '1',
             nation_of_birth = 'IT',

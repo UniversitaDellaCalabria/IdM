@@ -21,8 +21,11 @@ Please click on the following url to confirm:
 {url}
 
 Do not reply to this email,
-Regards
+Regards 
 """)
 
 ENCRYPTION_SECRET = b'thatsecret'
 ENCRYPTION_SALT = b'thatsalt'
+
+LDAP_UNIQUEID_TMPL = 'urn:schac:personalUniqueID:it:CF:{}'
+TIN_VALIDATION_FUNC = 'registration.utils.validate_tin'

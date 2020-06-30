@@ -34,8 +34,8 @@ matricola_dipendente = '982388{}'.format(randomString())
                            #  ('othst.gov', 'employee', matricola_dipendente),]
 additional_affiliations = []
 _test_guy = {'tin': 'abcdef{}'.format(randomString()),
-             'surname': 'posto',
-             'name': 'pasqualino antani',
+             'surname': 'pòsto',
+             'name': 'pàsqualino antani',
              'mail': '{}@yahoo.it'.format(_uid),
              'date_of_birth': get_date_from_string('16/05/1986'),
              'place_of_birth': 'Cosenza',
@@ -43,7 +43,6 @@ _test_guy = {'tin': 'abcdef{}'.format(randomString()),
              'affiliation': '',
              'gender': 1}
 
-_PURGE_LDAP_TEST_USER = True
 _WAIT_FOR_A_CHECK = False
 
 
@@ -334,9 +333,9 @@ class ProvisioningTestCase(TestCase):
     def tearDown(self):
         """cleanup"""
         d = LdapAcademiaUser.objects.filter(uid=_uid).first()
-        if _PURGE_LDAP_TEST_USER and d:
-            d.delete()
-            for i in get_available_ldap_usernames(_test_guy['name'],
-                                                  _test_guy['surname'])[:9]:
-                d = LdapAcademiaUser.objects.filter(uid=i).first()
-                if d: d.delete()
+        if not d: return
+        d.delete()
+        for i in get_available_ldap_usernames(_test_guy['name'],
+                                              _test_guy['surname'])[:9]:
+            d = LdapAcademiaUser.objects.filter(uid=i).first()
+            if d: d.delete()

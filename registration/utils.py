@@ -31,6 +31,10 @@ def validate_personal_id(value):
             pass
 
 
+def validate_tin(value):
+    return validate_personal_id(value)
+
+
 def serialize_dict(form_cleaned_data):
     serialized_dict = dict()
     for k,v in form_cleaned_data.items():

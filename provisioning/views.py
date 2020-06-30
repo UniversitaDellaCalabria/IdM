@@ -38,11 +38,6 @@ from ldap_peoples.models import LdapAcademiaUser
 
 
 logger = logging.getLogger(__name__)
-EDUPERSON_DEFAULT_ASSURANCE = getattr(settings, 'EDUPERSON_DEFAULT_ASSURANCE',
-                                      'https://refeds.org/assurance/IAP/low')
-SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE = \
-    getattr(settings, 'SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE',
-            'urn:schac:personalUniqueID:it:CF:')
 
 
 def account_create(request, token_value):
@@ -68,10 +63,10 @@ def account_create(request, token_value):
                 form = account_creation_form(initial=initial)
             else:
                 account_creation_form = AccountCreationSelectableUsernameForm
-                get_available_ldap_usernames_name = getattr(settings,
-                                                           'ACCOUNT_CREATE_USERNAME_CREATION_FUNC',
-                                                           'get_available_ldap_usernames')
+                get_available_ldap_usernames_name = settings.ACCOUNT_CREATE_USERNAME_CREATION_FUNC
                 get_available_ldap_usernames = import_string(get_available_ldap_usernames_name)
+
+                # filter out blacklisted and already used in the past usernames
                 usernames = [i for i in get_available_ldap_usernames(elements)
                              if not ChangedUsername.objects.filter(Q(new_username=i)|
                                                                    Q(old_username=i))]
@@ -111,7 +106,7 @@ def account_create(request, token_value):
                                            id_prov.identity.surname)),
                  'mail' : [form.cleaned_data['mail']],
                  'telephoneNumber' : [id_prov.identity.telephoneNumber,],
-                 'eduPersonAssurance': EDUPERSON_DEFAULT_ASSURANCE,
+                 'eduPersonAssurance': settings.EDUPERSON_DEFAULT_ASSURANCE,
                  'schacGender' : id_prov.identity.gender,
                  'schacPlaceOfBirth' : ','.join((id_prov.identity.nation_of_birth,
                                                  id_prov.identity.place_of_birth)),
@@ -569,7 +564,7 @@ def reset_password_ask(request):
                       INVALID_DATA_DISPLAY, status=403)
     username = form.cleaned_data['username']
     mail = form.cleaned_data['mail']
-    schacPersonalUniqueID = '{}:{}'.format(SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE,
+    schacPersonalUniqueID = '{}:{}'.format(settings.SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE,
                                            form.cleaned_data['tin'].upper())
     if username:
         lu = LdapAcademiaUser.objects.filter(uid=username,

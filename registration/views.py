@@ -11,6 +11,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import translation
+from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
 from django_form_builder.enc import encrypt, decrypt
 from django_form_builder.forms import BaseDynamicForm
@@ -20,17 +21,12 @@ from ldap_peoples.models import LdapAcademiaUser
 from provisioning.models import create_activation_token
 
 from . forms import AskForm_1, IdentityDocumentForm
-from . utils import (validate_personal_id,
-                     serialize_dict,
+from . utils import (serialize_dict,
                      create_registration_token,
                      build_registration_token_url)
 
 
 logger = logging.getLogger(__name__)
-
-
-LDAP_UNIQUEID_TMPL = getattr(settings, 'LDAP_UNIQUEID_TMPL',
-                             'urn:schac:personalUniqueID:it:CF:{}')
 
 
 def ask(request):
@@ -54,7 +50,10 @@ def ask(request):
             return render(request, 'ask.html', {'form': form,
                                                 'form_captcha': form_captcha})
         # validate tin
-        if not validate_personal_id(form.cleaned_data['tin']):
+        validate_tin_func_name = settings.TIN_VALIDATION_FUNC
+        validate_tin_func = import_string(validate_tin_func_name)
+
+        if not validate_tin_func(form.cleaned_data['tin']):
             logger.error('Registration form is not valid, tin validation failed: {}'\
                           .format(form.cleaned_data['tin']))
             return render(request,
@@ -129,7 +128,7 @@ def confirm(request, token):
         return render(request, 'custom_message.html', _msg, status=403)
 
     # TEST LDAP
-    tin = LDAP_UNIQUEID_TMPL.format(data['tin'])
+    tin = settings.LDAP_UNIQUEID_TMPL.format(data['tin'])
     spltd_tin = tin.split(':')
     tin2 = ':'.join((spltd_tin[0], spltd_tin[1], spltd_tin[2],
                       spltd_tin[3].upper(), spltd_tin[4].upper(),

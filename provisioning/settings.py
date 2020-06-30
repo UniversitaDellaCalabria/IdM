@@ -8,6 +8,9 @@ CHANGE_CONFIRMATION_EXPIRATION_MINUTES = 30
 EXPIRATION_NOTIFICATION_DAYS_BEFORE = 30
 IDENTITY_TOKEN_MSG_SUBJECT = _('Unical ID - Token for your Account')
 
+EDUPERSON_DEFAULT_ASSURANCE = 'https://refeds.org/assurance/IAP/low'
+SCHAC_PERSONALUNIQUEID_DEFAULT_PREFIX_COMPLETE = 'urn:schac:personalUniqueID:it:CF:'
+
 # if enabled they produce a username prefix like name.surname
 ACCOUNT_CREATE_USERNAME_PRESET = ('name', 'surname')
 ACCOUNT_CREATE_USERNAME_PRESET_SEP = '.'
