@@ -125,7 +125,6 @@ LDAP_CONNECTION_OPTIONS = {
                             ldap.OPT_X_TLS: ldap.OPT_X_TLS_DEMAND,
                             ldap.OPT_X_TLS_DEMAND: True,
 
-
                             # a cached connection to be dropped an
                             # recreated after it has been idle for the specified time
                             ldap.OPT_TIMEOUT: 180,
@@ -153,7 +152,6 @@ DATABASES = {
         # only in localhost
         'NAME': 'ldapi:///',
         #'NAME': 'ldaps://ldap.testunical.it',
-        # 'NAME': 'ldaps://127.0.0.1/',
         'USER': 'cn=admin,{}'.format(LDAP_BASEDN),
         'PASSWORD': 'slapdsecret',
         'PORT': 636,
@@ -195,13 +193,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'that-noreply@unical.it'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-# deprecated?
-#EMAIL_SEND_TOKEN = True
 ADMINS = [('That guy', 'thatguy@testunical.it'),]
 
 # DEPRECATED, use Cineca Esse3 and CSA API instead of Oracle DB
 CINECA_DB_URL = "oracle://thatuser:thatguy@192.168.1.3:1521/DBVISTE"
-
 
 LOGGING = {
     'version': 1,
