@@ -62,7 +62,8 @@ class RegistrationTestCase(TestCase):
         data = copy.copy(DATA)
         data['tin'] = '3wetgsd'
         req = c.post(url, data, follow=True, HTTP_ACCEPT_LANGUAGE='en')
-        self.assertContains(req, 'TIN code validation failed', status_code=403)
+        self.assertTrue('TIN code validation failed' in req.content.decode())
+        self.assertTrue(req.status_code == 403)
 
     def test_confirmation(self):
         c = Client()
