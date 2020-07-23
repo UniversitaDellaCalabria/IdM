@@ -202,7 +202,7 @@ def provisioning_login(request):
                             password=password)
         if user:
             login(request, user)
-            logger.info('Login of {} directly via LDAP'.format(user))
+            logger.info('Login of {} on local auth backend'.format(user))
             if request.POST.get('next'):
                 return HttpResponseRedirect(request.POST.get('next'))
             return HttpResponseRedirect(reverse('provisioning:dashboard'))
